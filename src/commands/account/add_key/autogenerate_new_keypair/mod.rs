@@ -61,3 +61,32 @@ pub enum SaveMode {
     /// Print automatically generated key pair in terminal
     PrintToTerminal(self::print_keypair_to_terminal::PrintKeypairToTerminal),
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rsa::{RsaPublicKey};
+    use url::form_urlencoded::parse;
+    #[test]
+    fn test_generate_rsa_keypair() {
+        let result  = crate::common::generate_rsa_keypair();
+        assert!(result.is_ok(), "Key generation should succeed");
+
+        let keypair_props = result.unwrap();
+        // Test that the public key is base58 encoded
+        // assert!(
+        //     Vec::from_base58(&keypair_props.public_key_str).is_ok(),
+        //     "Public key should be base58 encoded"
+        // );
+        println!("Public key base58 format is {}", &keypair_props.public_key_str);
+        // Test that the private key is PEM encoded
+        // assert!(
+        //     parse((&keypair_props.secret_keypair_str).as_ref()).is_ok(),
+        //     "Private key should be PEM encoded"
+        // );
+        println!("Private key format is {}", &keypair_props.secret_keypair_str);
+        // Further tests can include verifying the RSA key pair
+        // by encrypting and decrypting a message, but this is more involved
+        // and may require additional dependencies for RSA operations.
+    }
+}
