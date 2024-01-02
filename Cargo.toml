@@ -19,12 +19,6 @@ name = "near"
 path = "src/main.rs"
 
 [dependencies]
-rsa = "0.9.6"
-rand = "0.8"
-base58 = "0.2.0"
-pem = "1.1.1"
-pkcs1 = "0.3"
-
 clap = { version = "4.0.18", features = ["derive"] }
 inquire = "0.6"
 strum = { version = "0.24", features = ["derive"] }
@@ -90,7 +84,6 @@ interactive-clap = "0.2.7"
 interactive-clap-derive = "0.2.7"
 
 near-socialdb-client = "0.2.1"
-sha2 = "0.9.9"
 
 [features]
 default = ["ledger", "self-update"]

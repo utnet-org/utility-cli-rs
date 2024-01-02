@@ -10,7 +10,7 @@ use prettytable::Table;
 
 use near_primitives::{hash::CryptoHash, types::BlockReference, views::AccessKeyPermissionView};
 
-use rsa::{RsaPrivateKey, RsaPublicKey};
+use rsa::{PublicKey, RsaPrivateKey, RsaPublicKey, PaddingScheme};
 use rand::rngs::OsRng;
 use sha2::{Sha256, Digest};
 use base58::ToBase58;
@@ -76,8 +76,6 @@ impl std::fmt::Display for BlockHashAsBase58 {
 }
 
 pub use near_gas::NearGas;
-use rsa::pkcs1::EncodeRsaPublicKey;
-use rsa::pkcs8::EncodePrivateKey;
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, PartialOrd)]
 pub struct TransferAmount {
@@ -529,44 +527,6 @@ pub fn generate_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
         secret_keypair_str,
     };
     Ok(key_pair_properties)
-}
-
-pub fn generate_rsa_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
-    let generate_keypair: crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair =
-        crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair::default();
-    let mut rng = OsRng;
-    let bits = 4096;
-    let private_key = RsaPrivateKey::new(&mut rng, bits)
-        .map_err(|e| color_eyre::Report::msg(format!("Failed to generate RSA key: {}", e)))?;
-
-    let public_key = RsaPublicKey::from(&private_key);
-    let public_key_der = RsaPublicKey::to_pkcs1_der(&public_key)
-        .map_err(|e| color_eyre::Report::msg(format!("Failed to serialize public key: {}", e)))?.to_vec();
-
-    // let mut hasher = Sha256::new();
-    // hasher.update(&public_key_der);
-    // let implicit_account_id = hasher.finalize();
-
-    // let private_key_pem = private_key.to_pkcs1_pem(Default::default())
-    //     .map_err(|e| color_eyre::Report::msg(format!("Failed to serialize private key: {}", e)))?;
-    let private_key_pem = private_key.to_pkcs8_pem(Default::default())
-        .map_err(|e| color_eyre::Report::msg(format!("Failed to serialize private key: {}", e)))?;
-
-
-    let public_key_base58 = public_key_der.to_base58();
-    let mut hasher = Sha256::new();
-    hasher.update(&public_key_der);
-    let implicit_account_id_hash = hasher.finalize();
-    let implicit_account_id =
-        near_primitives::types::AccountId::try_from(hex::encode(implicit_account_id_hash))?;
-
-    Ok(KeyPairProperties {
-        seed_phrase_hd_path: generate_keypair.seed_phrase_hd_path, // Modify as needed
-        master_seed_phrase: "".to_string(), // Modify as needed
-        implicit_account_id,
-        public_key_str: public_key_base58,
-        secret_keypair_str: private_key_pem.to_string(),
-    })
 }
 
 pub fn print_full_signed_transaction(transaction: near_primitives::transaction::SignedTransaction) {

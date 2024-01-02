@@ -28,7 +28,7 @@ impl GenerateKeypairContext {
         _scope: &<GenerateKeypair as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let key_pair_properties: crate::common::KeyPairProperties =
-            crate::common::generate_rsa_keypair()?;
+            crate::common::generate_keypair()?;
         let public_key = near_crypto::PublicKey::from_str(&key_pair_properties.public_key_str)?;
         Ok(Self {
             global_context: previous_context.global_context,
