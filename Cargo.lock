@@ -2296,6 +2296,7 @@ dependencies = [
  "interactive-clap-derive",
  "keyring",
  "linked-hash-map",
+ "near-crypto",
  "near-gas",
  "near-jsonrpc-client",
  "near-jsonrpc-primitives",
