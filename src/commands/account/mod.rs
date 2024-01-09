@@ -11,7 +11,7 @@ pub mod storage_management;
 pub mod update_social_profile;
 mod view_account_summary;
 
-pub const MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH: usize = 32;
+pub const MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH: usize = 2;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(context = crate::GlobalContext)]
