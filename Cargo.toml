@@ -90,7 +90,7 @@ near-socialdb-client = "0.2.1"
 near-crypto = { git = "https://github.com/jong-un-crypto/near-crypto", branch = "0.17.0-patch" }
 
 [features]
-default = ["self-update"]
+default = ["ledger", "self-update"]
 ledger = ["near-ledger"]
 self-update = ["self_update", "semver"]
 
