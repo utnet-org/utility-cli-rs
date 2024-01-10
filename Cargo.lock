@@ -2339,7 +2339,7 @@ dependencies = [
 [[package]]
 name = "near-crypto"
 version = "0.17.0"
-source = "git+https://github.com/jong-un-crypto/near-crypto-0.17.0-patch#964f10b1183abb6fd90bbbb91d25cdb2836891fe"
+source = "git+https://github.com/jong-un-crypto/near-crypto?branch=0.17.0-patch#964f10b1183abb6fd90bbbb91d25cdb2836891fe"
 dependencies = [
  "blake2",
  "borsh 0.10.3",
