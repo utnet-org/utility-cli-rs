@@ -41,7 +41,6 @@ impl Initialize {
 #[derive(Debug, Clone)]
 pub struct InitializeContext {
     ctx: super::RsaFileContext,
-    op_type: u8,
     pass_args: Vec<u8>,
 }
 
@@ -62,7 +61,6 @@ impl InitializeContext {
                     public_key: previous_context.public_key,
                     private_key: previous_context.private_key,
                 },
-                op_type: 0u8,
                 pass_args,
             })
 
@@ -83,7 +81,7 @@ impl From<InitializeContext> for crate::commands::ActionContext {
                         actions: vec![near_primitives::transaction::Action::RegisterRsa2048Keys(
                             Box::new(near_primitives::transaction::RegisterRsa2048KeysAction {
                                 public_key: item.ctx.public_key.clone(), 
-                                operation_type: item.op_type.clone(), 
+                                operation_type: 0u8, 
                                 args: item.pass_args.clone(), })
                         )],
                     })
