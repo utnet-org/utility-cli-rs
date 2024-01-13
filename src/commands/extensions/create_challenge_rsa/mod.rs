@@ -4,10 +4,10 @@ pub mod constructor_mode;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = crate::GlobalContext)]
-#[interactive_clap(output_context = RegisterRsaKeysContext)]
-pub struct RegisterRsaKeysCommand {
+#[interactive_clap(output_context = CreateChallengeRsaContext)]
+pub struct CreateChallengeRsaCommand {
     #[interactive_clap(skip_default_input_arg)]
-    /// What is the CA(root/treasury) account ID?
+    /// What is the miner account ID?
     account_id: crate::types::account_id::AccountId,
     #[interactive_clap(named_arg)]
     /// Specify a path to pem file
@@ -15,16 +15,16 @@ pub struct RegisterRsaKeysCommand {
 }
 
 #[derive(Debug, Clone)]
-pub struct RegisterRsaKeysContext {
+pub struct CreateChallengeRsaContext {
     global_context: crate::GlobalContext,
     receiver_account_id: near_primitives::types::AccountId,
     signer_account_id: near_primitives::types::AccountId,
 }
 
-impl RegisterRsaKeysContext {
+impl CreateChallengeRsaContext {
     pub fn from_previous_context(
         previous_context: crate::GlobalContext,
-        scope: &<RegisterRsaKeysCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        scope: &<CreateChallengeRsaCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         Ok(Self {
             global_context: previous_context,
@@ -34,39 +34,39 @@ impl RegisterRsaKeysContext {
     }
 }
 
-impl RegisterRsaKeysCommand {
+impl CreateChallengeRsaCommand {
     pub fn input_account_id(
         context: &crate::GlobalContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
         crate::common::input_signer_account_id_from_used_account_list(
             &context.config.credentials_home_dir,
-            "What is the CA(root/treasury) account ID?",
+            "What is the miner account ID?",
         )
     }
 }
 
 #[derive(Debug, Clone, interactive_clap_derive::InteractiveClap)]
-#[interactive_clap(input_context = RegisterRsaKeysContext)]
-#[interactive_clap(output_context = RsaFileContext)]
+#[interactive_clap(input_context = CreateChallengeRsaContext)]
+#[interactive_clap(output_context = PemFileContext)]
 pub struct PemFile {
     /// What is a file location of the pem?
     pub file_path: crate::types::path_buf::PathBuf,
     #[interactive_clap(subcommand)]
-    constructor: self::constructor_mode::ConstructorMode,
+    initialize: self::constructor_mode::InitializeMode,
 }
 
 #[derive(Debug, Clone)]
-pub struct RsaFileContext {
+pub struct PemFileContext {
     pub global_context: crate::GlobalContext,
     pub receiver_account_id: near_primitives::types::AccountId,
     pub signer_account_id: near_primitives::types::AccountId,
     pub public_key: near_crypto::PublicKey,
-    pub private_key: String,
+    pub private_key: String, // aes encrypted only read from system keychain
 }
 
-impl RsaFileContext {
+impl PemFileContext {
     pub fn from_previous_context(
-        previous_context: RegisterRsaKeysContext,
+        previous_context: CreateChallengeRsaContext,
         scope: &<PemFile as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let data = std::fs::read_to_string(&scope.file_path).wrap_err_with(|| {
