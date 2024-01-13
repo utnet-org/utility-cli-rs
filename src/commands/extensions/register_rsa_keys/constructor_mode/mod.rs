@@ -10,6 +10,7 @@ pub enum ConstructorMode {
     /// Add an initialize
     #[strum_discriminants(strum(message = "with-init-args  - Add an initialize"))]
     WithInitCall(Initialize),
+
 }
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
