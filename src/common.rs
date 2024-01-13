@@ -670,6 +670,8 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                 };
                 print_unsigned_transaction(&prepopulated_transaction);
             }
+            near_primitives::transaction::Action::RegisterRsa2048Keys(_) => todo!(),
+            near_primitives::transaction::Action::CreateRsa2048Challenge(_) => todo!(),
         }
     }
 }
@@ -756,6 +758,8 @@ fn print_value_successful_transaction(
                     delegate_action.sender_id,
                 );
             }
+            near_primitives::views::ActionView::RegisterRsa2048Keys { public_key, operation_type, args } => todo!(),
+            near_primitives::views::ActionView::CreateRsa2048Challenge { public_key, args } => todo!(),
         }
     }
 }

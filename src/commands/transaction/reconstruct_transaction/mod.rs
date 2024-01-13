@@ -245,6 +245,8 @@ fn action_transformation(
         Action::Delegate(_) => {
             panic!("Internal error: Delegate action should have been handled before calling action_transformation.");
         }
+        Action::RegisterRsa2048Keys(_) => todo!(),
+        Action::CreateRsa2048Challenge(_) => todo!(),
     }
 }
 
