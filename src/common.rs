@@ -758,8 +758,18 @@ fn print_value_successful_transaction(
                     delegate_action.sender_id,
                 );
             }
-            near_primitives::views::ActionView::RegisterRsa2048Keys { public_key, operation_type, args } => todo!(),
-            near_primitives::views::ActionView::CreateRsa2048Challenge { public_key, args } => todo!(),
+            near_primitives::views::ActionView::RegisterRsa2048Keys { public_key, operation_type, args: _, } => {
+                eprintln!(
+                    "Rsa2048 key <{}>, op_type <{}> for account <{}> has been successfully registered.",
+                    public_key, operation_type, transaction_info.transaction.signer_id,
+                );
+            },
+            near_primitives::views::ActionView::CreateRsa2048Challenge { public_key, args: _, } => {
+                eprintln!(
+                    "Rsa2048  <{}> for account <{}> has been successfully challenge created.",
+                    public_key, transaction_info.transaction.signer_id,
+                );
+            },
         }
     }
 }
