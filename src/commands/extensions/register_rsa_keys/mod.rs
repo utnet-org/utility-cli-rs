@@ -80,7 +80,7 @@ impl RsaFileContext {
             receiver_account_id: previous_context.receiver_account_id,
             signer_account_id: previous_context.signer_account_id,
             public_key: rsa_json.public_key,
-            private_key: rsa_json.private_key,
+            private_key: rsa_json.secret_key,
         })
     }
 }

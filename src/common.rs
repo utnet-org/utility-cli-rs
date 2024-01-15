@@ -670,8 +670,41 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                 };
                 print_unsigned_transaction(&prepopulated_transaction);
             }
-            near_primitives::transaction::Action::RegisterRsa2048Keys(_) => todo!(),
-            near_primitives::transaction::Action::CreateRsa2048Challenge(_) => todo!(),
+            near_primitives::transaction::Action::RegisterRsa2048Keys(register_rsa2048_action) => {
+                eprintln!("{:>5} {:<20}", "--", "register rsa2048 key:");
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "", "public key:", &register_rsa2048_action.public_key
+                );
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "", "op type:", &register_rsa2048_action.operation_type
+                );
+            },
+            near_primitives::transaction::Action::CreateRsa2048Challenge(create_rsa2048keys_challenge_action) => {
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "", "public key:", &create_rsa2048keys_challenge_action.public_key
+                );
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "",
+                    "args:",
+                    match serde_json::from_slice::<serde_json::Value>(&create_rsa2048keys_challenge_action.args) {
+                        Ok(parsed_args) => {
+                            serde_json::to_string_pretty(&parsed_args)
+                                .unwrap_or_else(|_| "".to_string())
+                                .replace('\n', "\n                                 ")
+                        }
+                        Err(_) => {
+                            format!(
+                                "<non-printable data ({})>",
+                                bytesize::ByteSize(create_rsa2048keys_challenge_action.args.len() as u64)
+                            )
+                        }
+                    }
+                );
+            },
         }
     }
 }
