@@ -13,7 +13,11 @@ use near_primitives::{hash::CryptoHash, types::BlockReference, views::AccessKeyP
 pub type CliResult = color_eyre::eyre::Result<()>;
 
 use inquire::{Select, Text};
+use rand::Rng;
+use rsa::pkcs8::{EncodePrivateKey, EncodePublicKey, DecodePrivateKey, DecodePublicKey};
 use strum::IntoEnumIterator;
+
+use rsa::{RsaPrivateKey, RsaPublicKey};
 
 pub fn get_near_exec_path() -> String {
     std::env::args()
@@ -512,6 +516,96 @@ pub fn generate_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
     );
     let secret_keypair_str = format!(
         "ed25519:{}",
+        bs58::encode(secret_keypair.to_bytes()).into_string()
+    );
+    let key_pair_properties: KeyPairProperties = KeyPairProperties {
+        seed_phrase_hd_path: generate_keypair.seed_phrase_hd_path,
+        master_seed_phrase,
+        implicit_account_id,
+        public_key_str,
+        secret_keypair_str,
+    };
+    Ok(key_pair_properties)
+}
+
+/// An rsa2048 keypair.
+#[derive(Debug)]
+pub struct Rsa2048Keypair {
+    /// The secret half of this keypair.
+    pub priv_key: RsaPrivateKey,
+    /// The public half of this keypair.
+    pub pub_key: RsaPublicKey,
+}
+
+/// The length of a rsa `RsaPrivateKey`, in bytes.
+pub const RAW_SECRET_KEY_RSA_2048_LENGTH: usize = 1218;
+
+/// The length of an rsa `RsaPublicKey`, in bytes.
+pub const RAW_PUBLIC_KEY_RSA_2048_LENGTH: usize = 294;
+
+/// The length of an rsa `Keypair`, in bytes.
+pub const RSA2048_KEYPAIR_LENGTH: usize = RAW_SECRET_KEY_RSA_2048_LENGTH + RAW_PUBLIC_KEY_RSA_2048_LENGTH;
+
+impl Rsa2048Keypair {
+    pub fn to_bytes(&self) -> [u8; RSA2048_KEYPAIR_LENGTH] {
+        let mut bytes: [u8; RSA2048_KEYPAIR_LENGTH] = [0u8; RSA2048_KEYPAIR_LENGTH];
+
+        let der_sk_encoded: rsa::pkcs8::SecretDocument = self.priv_key.to_pkcs8_der().unwrap();
+        let der_pk_encoded = self.pub_key.to_public_key_der().unwrap();
+
+        bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH].copy_from_slice(der_sk_encoded.as_bytes());
+        bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..].copy_from_slice(der_pk_encoded.as_bytes());
+        bytes
+    }
+
+    pub fn from_bytes<'a>(bytes: &'a [u8]) -> color_eyre::eyre::Result<Rsa2048Keypair> {
+        if bytes.len() != RSA2048_KEYPAIR_LENGTH {
+            return Err(color_eyre::eyre::eyre!("perror occurred, Keypair length: {}", RSA2048_KEYPAIR_LENGTH));
+        }
+
+        let secret = RsaPrivateKey::from_pkcs8_der(&bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH]).unwrap();
+        let public = RsaPublicKey::from_public_key_der(&bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..]).unwrap();
+
+        Ok(Rsa2048Keypair{ priv_key: secret, pub_key: public })
+    }
+}
+
+// FIXME: generate keypair use trait object
+pub fn generate_rsa2048_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
+    let generate_keypair: crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair =
+        crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair::default();
+    let (master_seed_phrase, _master_seed) =
+        if let Some(master_seed_phrase) = generate_keypair.master_seed_phrase.as_deref() {
+            (
+                master_seed_phrase.to_owned(),
+                bip39::Mnemonic::parse(master_seed_phrase)?.to_seed(""),
+            )
+        } else {
+            let mnemonic =
+                bip39::Mnemonic::generate(generate_keypair.new_master_seed_phrase_words_count)?;
+            let master_seed_phrase = mnemonic.word_iter().collect::<Vec<&str>>().join(" ");
+            (master_seed_phrase, mnemonic.to_seed(""))
+        };
+
+    let mut rng = rand::thread_rng();
+    let bits = 2048;
+    let priv_key = RsaPrivateKey::new(&mut rng, bits)?;
+    let pub_key = RsaPublicKey::from(&priv_key);
+
+    let secret_keypair = {
+        Rsa2048Keypair { priv_key, pub_key }
+    };
+
+    let implicit_account_id =
+        near_primitives::types::AccountId::try_from(format!("test{}", rng.gen_range(0..10000)))?;
+    
+    let der_pk_encoded = secret_keypair.pub_key.to_public_key_der().unwrap();
+    let public_key_str = format!(
+        "rsa2048:{}",
+        bs58::encode(&der_pk_encoded.as_bytes()).into_string()
+    );
+    let secret_keypair_str = format!(
+        "rsa2048:{}",
         bs58::encode(secret_keypair.to_bytes()).into_string()
     );
     let key_pair_properties: KeyPairProperties = KeyPairProperties {

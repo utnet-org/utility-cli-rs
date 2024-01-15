@@ -33,6 +33,8 @@ futures = "0.3"
 # Ad-hoc fix for compilation errors (rustls is used instead of openssl to ease the deployment avoiding the system dependency on openssl)
 openssl = { version = "0.10", features = ["vendored"] }
 
+rsa = { version = "0.9.6" }
+rand = { version = "0.8"}
 bip39 = { version = "2.0.0", features = ["rand"] }
 bs58 = "0.5"
 ed25519-dalek = { version = "1" }
@@ -97,6 +99,9 @@ self-update = ["self_update", "semver"]
 [profile.dist]
 inherits = "release"
 lto = "thin"
+
+[profile.dev.package.num-bigint-dig]
+opt-level = 3
 
 # Config for 'cargo dist'
 [workspace.metadata.dist]
