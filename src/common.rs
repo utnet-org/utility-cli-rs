@@ -14,7 +14,7 @@ pub type CliResult = color_eyre::eyre::Result<()>;
 
 use inquire::{Select, Text};
 use rand::Rng;
-use rsa::pkcs8::{EncodePrivateKey, EncodePublicKey, DecodePrivateKey, DecodePublicKey};
+use rsa::pkcs8::{EncodePrivateKey, EncodePublicKey, DecodePrivateKey};
 use strum::IntoEnumIterator;
 
 use rsa::{RsaPrivateKey, RsaPublicKey};
@@ -533,8 +533,6 @@ pub fn generate_ed25519_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
 pub struct Rsa2048Keypair {
     /// The secret half of this keypair.
     pub priv_key: RsaPrivateKey,
-    /// The public half of this keypair.
-    pub pub_key: RsaPublicKey,
 }
 
 /// The length of a rsa `RsaPrivateKey`, in bytes.
@@ -543,30 +541,28 @@ pub const RAW_SECRET_KEY_RSA_2048_LENGTH: usize = 1218; //1218 raw key + 294 hea
 /// The length of an rsa `RsaPublicKey`, in bytes.
 pub const RAW_PUBLIC_KEY_RSA_2048_LENGTH: usize = 294;
 
-/// The length of an rsa `Keypair`, in bytes.
-pub const RSA2048_KEYPAIR_LENGTH: usize = RAW_SECRET_KEY_RSA_2048_LENGTH + RAW_PUBLIC_KEY_RSA_2048_LENGTH;
-
 impl Rsa2048Keypair {
-    pub fn to_bytes(&self) -> [u8; RSA2048_KEYPAIR_LENGTH] {
-        let mut bytes: [u8; RSA2048_KEYPAIR_LENGTH] = [0u8; RSA2048_KEYPAIR_LENGTH];
+    pub fn to_bytes(&self) -> [u8; RAW_SECRET_KEY_RSA_2048_LENGTH] {
+        let mut bytes: [u8; RAW_SECRET_KEY_RSA_2048_LENGTH] = [0u8; RAW_SECRET_KEY_RSA_2048_LENGTH];
 
-        let der_sk_encoded = self.priv_key.to_pkcs8_der().unwrap();
-        let der_pk_encoded = self.pub_key.to_public_key_der().unwrap();
-        println!("Length of private key in bytes: {}, as_bytes: {}", der_sk_encoded.len(), der_sk_encoded.as_bytes().len());   
-        bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH].copy_from_slice(der_sk_encoded.as_bytes());
-        bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..].copy_from_slice(der_pk_encoded.as_bytes());
+        let der_sk_encoded = self.priv_key.to_pkcs8_der().unwrap().to_bytes();
+        //let der_pk_encoded = self.pub_key.to_public_key_der().unwrap();
+
+        println!("Length of private key in bytes: {}, as_bytes: {}", der_sk_encoded.len(), der_sk_encoded.as_slice().len());
+        bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH].copy_from_slice(der_sk_encoded.as_slice());
+        //bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..].copy_from_slice(der_pk_encoded.as_bytes());
         bytes
     }
 
     pub fn from_bytes<'a>(bytes: &'a [u8]) -> color_eyre::eyre::Result<Rsa2048Keypair> {
-        if bytes.len() != RSA2048_KEYPAIR_LENGTH {
-            return Err(color_eyre::eyre::eyre!("perror occurred, Keypair length: {}", RSA2048_KEYPAIR_LENGTH));
+        if bytes.len() != RAW_SECRET_KEY_RSA_2048_LENGTH {
+            return Err(color_eyre::eyre::eyre!("perror occurred, Keypair length: {}", RAW_SECRET_KEY_RSA_2048_LENGTH));
         }
 
         let secret = RsaPrivateKey::from_pkcs8_der(&bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH]).unwrap();
-        let public = RsaPublicKey::from_public_key_der(&bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..]).unwrap();
+        //let public = RsaPublicKey::from_public_key_der(&bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..]).unwrap();
 
-        Ok(Rsa2048Keypair{ priv_key: secret, pub_key: public })
+        Ok(Rsa2048Keypair{ priv_key: secret })
     }
 }
 
@@ -602,13 +598,13 @@ pub fn generate_rsa2048_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
         pub_key = RsaPublicKey::from(&priv_key);
     }
     let secret_keypair = {
-        Rsa2048Keypair { priv_key, pub_key }
+        Rsa2048Keypair { priv_key }
     };
 
     let implicit_account_id =
         near_primitives::types::AccountId::try_from(format!("test{}", rng.gen_range(0..10000)))?;
     
-    let der_pk_encoded = secret_keypair.pub_key.to_public_key_der().unwrap();
+    let der_pk_encoded = pub_key.to_public_key_der().unwrap();
     let public_key_str = format!(
         "rsa2048:{}",
         bs58::encode(&der_pk_encoded.as_bytes()).into_string()
