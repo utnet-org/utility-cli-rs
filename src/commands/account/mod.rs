@@ -1,4 +1,5 @@
-use strum::{EnumDiscriminants, EnumIter, EnumMessage};
+use strum::{EnumDiscriminants, EnumIter, EnumMessage, IntoEnumIterator};
+use inquire::Select;
 
 mod add_key;
 pub mod create_account;
@@ -10,6 +11,7 @@ mod list_keys;
 pub mod storage_management;
 pub mod update_social_profile;
 mod view_account_summary;
+
 
 pub const MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH: usize = 2;
 
@@ -70,4 +72,63 @@ pub enum AccountActions {
     ))]
     /// Storage management for contract: deposit, withdrawal, balance review
     ManageStorageDeposit(self::storage_management::Contract),
+}
+
+
+#[derive(Debug, EnumDiscriminants, Clone, clap::ValueEnum)]
+#[strum_discriminants(derive(EnumMessage, EnumIter))]
+/// How do you want to pass the keys type?
+pub enum KeysType {
+    #[strum_discriminants(strum(
+        message = "rsa2048 keypairs    - generate rsa2048 keytype"
+    ))]
+    Rsa2048,
+    #[strum_discriminants(strum(message = "ed25519 keypairs    - generate ed25519 keytype"))]
+    Ed25519,
+}
+
+impl interactive_clap::ToCli for KeysType {
+    type CliVariant = KeysType;
+}
+
+impl std::str::FromStr for KeysType {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "rsa2048" => Ok(Self::Rsa2048),
+            "ed25519" => Ok(Self::Ed25519),
+            _ => Err("KeyType: incorrect value entered".to_string()),
+        }
+    }
+}
+
+impl std::fmt::Display for KeysType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::Rsa2048 => write!(f, "rsa2048"),
+            Self::Ed25519 => write!(f, "ed25519"),
+        }
+    }
+}
+
+impl std::fmt::Display for KeysTypeDiscriminants {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::Rsa2048 => write!(f, "rsa2048    - key type arguments"),
+            Self::Ed25519 => write!(f, "ed25519    - key type arguments"),
+        }
+    }
+}
+
+pub fn input_keys_type() -> color_eyre::eyre::Result<Option<KeysType>> {
+    let variants = KeysTypeDiscriminants::iter().collect::<Vec<_>>();
+    let selected = Select::new(
+        "How would you like to pass the key type?",
+        variants,
+    )
+    .prompt()?;
+    match selected {
+        KeysTypeDiscriminants::Rsa2048 => Ok(Some(KeysType::Rsa2048)),
+        KeysTypeDiscriminants::Ed25519 => Ok(Some(KeysType::Ed25519)),
+    }
 }

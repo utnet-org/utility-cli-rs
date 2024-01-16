@@ -474,7 +474,7 @@ pub fn get_public_key_from_seed_phrase(
     Ok(near_crypto::PublicKey::from_str(&public_key_str)?)
 }
 
-pub fn generate_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
+pub fn generate_ed25519_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
     let generate_keypair: crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair =
         crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair::default();
     let (master_seed_phrase, master_seed) =
@@ -538,7 +538,7 @@ pub struct Rsa2048Keypair {
 }
 
 /// The length of a rsa `RsaPrivateKey`, in bytes.
-pub const RAW_SECRET_KEY_RSA_2048_LENGTH: usize = 1218;
+pub const RAW_SECRET_KEY_RSA_2048_LENGTH: usize = 1218; //1218 raw key + 294 header
 
 /// The length of an rsa `RsaPublicKey`, in bytes.
 pub const RAW_PUBLIC_KEY_RSA_2048_LENGTH: usize = 294;
@@ -550,9 +550,9 @@ impl Rsa2048Keypair {
     pub fn to_bytes(&self) -> [u8; RSA2048_KEYPAIR_LENGTH] {
         let mut bytes: [u8; RSA2048_KEYPAIR_LENGTH] = [0u8; RSA2048_KEYPAIR_LENGTH];
 
-        let der_sk_encoded: rsa::pkcs8::SecretDocument = self.priv_key.to_pkcs8_der().unwrap();
+        let der_sk_encoded = self.priv_key.to_pkcs8_der().unwrap();
         let der_pk_encoded = self.pub_key.to_public_key_der().unwrap();
-
+        println!("Length of private key in bytes: {}, as_bytes: {}", der_sk_encoded.len(), der_sk_encoded.as_bytes().len());   
         bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH].copy_from_slice(der_sk_encoded.as_bytes());
         bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..].copy_from_slice(der_pk_encoded.as_bytes());
         bytes
@@ -589,9 +589,18 @@ pub fn generate_rsa2048_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
 
     let mut rng = rand::thread_rng();
     let bits = 2048;
-    let priv_key = RsaPrivateKey::new(&mut rng, bits)?;
-    let pub_key = RsaPublicKey::from(&priv_key);
-
+    let mut priv_key = RsaPrivateKey::new(&mut rng, bits)?;
+    let mut pub_key = RsaPublicKey::from(&priv_key);
+    
+    loop {
+        let der_sk_encoded = priv_key.to_pkcs8_der().unwrap();
+        let der_length = der_sk_encoded.as_bytes().len();
+        if der_length == RAW_SECRET_KEY_RSA_2048_LENGTH {
+            break;
+        }
+        priv_key = RsaPrivateKey::new(&mut rng, bits)?;
+        pub_key = RsaPublicKey::from(&priv_key);
+    }
     let secret_keypair = {
         Rsa2048Keypair { priv_key, pub_key }
     };

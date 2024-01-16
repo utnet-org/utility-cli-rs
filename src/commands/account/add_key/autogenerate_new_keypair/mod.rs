@@ -9,8 +9,21 @@ mod save_keypair_to_legacy_keychain;
 #[interactive_clap(input_context = super::access_key_type::AccessTypeContext)]
 #[interactive_clap(output_context = GenerateKeypairContext)]
 pub struct GenerateKeypair {
+    #[interactive_clap(value_enum)]
+    #[interactive_clap(skip_default_input_arg)]
+    /// How do you want to pass the keys type?
+    key_type: super::super::KeysType,
+
     #[interactive_clap(subcommand)]
     save_mode: SaveMode,
+}
+
+impl GenerateKeypair {
+    fn input_key_type(
+        _context: &super::access_key_type::AccessTypeContext,
+    ) -> color_eyre::eyre::Result<Option<super::super::KeysType>> {
+        super::super::input_keys_type()
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -25,10 +38,14 @@ pub struct GenerateKeypairContext {
 impl GenerateKeypairContext {
     pub fn from_previous_context(
         previous_context: super::access_key_type::AccessTypeContext,
-        _scope: &<GenerateKeypair as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        scope: &<GenerateKeypair as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let key_pair_properties: crate::common::KeyPairProperties =
-            crate::common::generate_keypair()?;
+
+        let key_type = scope.key_type.clone();
+        let key_pair_properties = match key_type {
+            super::super::KeysType::Rsa2048 => crate::common::generate_rsa2048_keypair()?,
+            super::super::KeysType::Ed25519 => crate::common::generate_ed25519_keypair()?,
+        };
         let public_key = near_crypto::PublicKey::from_str(&key_pair_properties.public_key_str)?;
         Ok(Self {
             global_context: previous_context.global_context,

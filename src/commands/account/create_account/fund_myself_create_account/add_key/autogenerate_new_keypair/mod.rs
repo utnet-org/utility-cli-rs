@@ -23,7 +23,7 @@ impl GenerateKeypairContext {
         _scope: &<GenerateKeypair as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let key_pair_properties: crate::common::KeyPairProperties =
-            crate::common::generate_keypair()?;
+            crate::common::generate_ed25519_keypair()?;
         let public_key = near_crypto::PublicKey::from_str(&key_pair_properties.public_key_str)?;
         let account_properties = super::super::AccountProperties {
             new_account_id: previous_context.new_account_id,
