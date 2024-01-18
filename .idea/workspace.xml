@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7bbdb7c6-ac8f-418a-8163-7841a04aac9a" name="更改" comment="RSA add key">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/common.rs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="pcrsmw3j" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2ahgx2oL8AL0WI1ehtNXDer5mFU" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cargo.Debug near.executor": "Debug",
+    "Cargo.Run near.executor": "Debug",
+    "Cargo.add-key.executor": "Debug",
+    "Cargo.create-account fund-myself named-32-jong.executor": "Debug",
+    "Cargo.create-challenge-rsa.executor": "Debug",
+    "Cargo.create-challenge.executor": "Debug",
+    "Cargo.delete-key.executor": "Debug",
+    "Cargo.send-money.executor": "Debug",
+    "Cargo.view-account-summary.executor": "Debug",
+    "Cargo.view-status.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "ext-command",
+    "last_opened_file_path": "/Users/es/near-cli-rs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Cargo.create-challenge-rsa">
+    <configuration name="add-key" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- account add-key root grant-full-access autogenerate-new-keypair save-to-keychain network-config aws-utility-test sign-with-keychain send" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="create-account fund-myself named-32-jong" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- account create-account fund-myself named-32-jong &quot;0.1 NEAR&quot; autogenerate-new-keypair save-to-keychain sign-as root network-config aws-utility-test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="create-challenge-rsa" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- extensions create-challenge-rsa bbc.root use-file $PROJECT_DIR$/../signer0_key.json without-init-call network-config local-utility-test sign-with-keychain" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="create-challenge" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- extensions" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="delete-key" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- account delete-account acce1dc432bc1d1bc79fc29433a0cc7219b4d7b0dc0850d2d8268e73904a56ab beneficiary root network-config aws-utility-test sign-with-keychain send " />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="send-money" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- tokens root send-near acce1dc432bc1d1bc79fc29433a0cc7219b4d7b0dc0850d2d8268e73904a56ab &quot;10 NEAR&quot; network-config aws-utility-test sign-with-keychain send" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="view-account-summary" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- account view-account-summary root network-config aws-utility-test now" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="view-status" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package near-cli-rs --bin near -- transaction view-status 4tJQcAtmBcaStJjPdiPj1QWisaXQUDP8nMsRa2W3W6Jb network-config local-utility-test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="所有测试" type="JavaScriptTestRunnerCypress" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <working-dir value="$PROJECT_DIR$" />
+      <cypress-options value="-q" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Cargo.view-status" />
+      <item itemvalue="Cargo.create-challenge" />
+      <item itemvalue="Cargo.delete-key" />
+      <item itemvalue="Cargo.view-account-summary" />
+      <item itemvalue="Cargo.create-account fund-myself named-32-jong" />
+      <item itemvalue="Cargo.add-key" />
+      <item itemvalue="Cargo.create-challenge-rsa" />
+      <item itemvalue="Cargo.send-money" />
+      <item itemvalue="Cypress.所有测试" />
+    </list>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$PROJECT_DIR$/../.cargo/bin" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="7bbdb7c6-ac8f-418a-8163-7841a04aac9a" name="更改" comment="" />
+      <created>1704776468566</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1704776468566</updated>
+      <workItem from="1704776470841" duration="325000" />
+      <workItem from="1704776799246" duration="5912000" />
+      <workItem from="1704877846021" duration="37559000" />
+      <workItem from="1705048295054" duration="1917000" />
+      <workItem from="1705294944001" duration="220000" />
+      <workItem from="1705295173012" duration="15995000" />
+      <workItem from="1705383518481" duration="9005000" />
+    </task>
+    <task id="LOCAL-00001" summary="config toolchain">
+      <option name="closed" value="true" />
+      <created>1704954196116</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1704954196116</updated>
+    </task>
+    <task id="LOCAL-00002" summary="debug cls idea">
+      <option name="closed" value="true" />
+      <created>1705294977115</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1705294977115</updated>
+    </task>
+    <task id="LOCAL-00003" summary="RSA add key">
+      <option name="closed" value="true" />
+      <created>1705386078383</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705386078383</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="config toolchain" />
+    <MESSAGE value="debug cls idea" />
+    <MESSAGE value="RSA add key" />
+    <option name="LAST_COMMIT_MESSAGE" value="RSA add key" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/common.rs</url>
+          <line>1278</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/common.rs</url>
+          <line>2078</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/main.rs</url>
+          <line>110</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network_for_transaction/mod.rs</url>
+          <line>120</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/mod.rs</url>
+          <line>115</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/mod.rs</url>
+          <line>102</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_private_key/mod.rs</url>
+          <line>132</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_private_key/mod.rs</url>
+          <line>67</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_private_key/mod.rs</url>
+          <line>88</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_private_key/mod.rs</url>
+          <line>51</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>129</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/mod.rs</url>
+          <line>156</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>139</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>157</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>172</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>170</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-0.17.0-patch-c6ba71e4166fd4dc/964f10b/src/signature.rs</url>
+          <line>385</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>203</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/common.rs</url>
+          <line>1296</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/common.rs</url>
+          <line>1291</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/account/import_account/mod.rs</url>
+          <line>81</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/account/import_account/mod.rs</url>
+          <line>120</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/main.rs</url>
+          <line>69</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/main.rs</url>
+          <line>74</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/main.rs</url>
+          <line>76</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/account/view_account_summary/mod.rs</url>
+          <line>40</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/account/view_account_summary/mod.rs</url>
+          <line>42</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/account/create_account/fund_myself_create_account/sign_as/mod.rs</url>
+          <line>52</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>329</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>334</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>296</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>289</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>310</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>88</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>242</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_legacy_keychain/mod.rs</url>
+          <line>114</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>320</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>68</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>118</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>142</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/tokens/send_near/mod.rs</url>
+          <line>47</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_private_key/mod.rs</url>
+          <line>101</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/registry/src/index.crates.io-6f17d22bba15001f/inquire-0.6.2/src/ui/render_config.rs</url>
+          <line>395</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network_for_transaction/mod.rs</url>
+          <line>125</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/network_for_transaction/mod.rs</url>
+          <line>131</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/types/secret_key.rs</url>
+          <line>14</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/types/secret_key.rs</url>
+          <line>13</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-9aabaefd5dd1bb5d/964f10b/src/signature.rs</url>
+          <line>479</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-9aabaefd5dd1bb5d/964f10b/src/signature.rs</url>
+          <line>471</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-9aabaefd5dd1bb5d/964f10b/src/signature.rs</url>
+          <line>470</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-9aabaefd5dd1bb5d/964f10b/src/signature.rs</url>
+          <line>481</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/common.rs</url>
+          <line>479</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/account/add_key/autogenerate_new_keypair/mod.rs</url>
+          <line>48</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/common.rs</url>
+          <line>552</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/common.rs</url>
+          <line>551</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/commands/account/delete_key/public_keys_to_delete.rs</url>
+          <line>85</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>81</line>
+          <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>126</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-9aabaefd5dd1bb5d/0bdcc7a/src/signature.rs</url>
+          <line>469</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-9aabaefd5dd1bb5d/0bdcc7a/src/signature.rs</url>
+          <line>480</line>
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../.cargo/git/checkouts/near-crypto-9aabaefd5dd1bb5d/0bdcc7a/src/signature.rs</url>
+          <line>478</line>
+          <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>93</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/transaction_signature_options/sign_with_keychain/mod.rs</url>
+          <line>107</line>
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

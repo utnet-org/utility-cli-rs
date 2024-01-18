@@ -21,7 +21,7 @@ impl LoginFromWebWalletContext {
 
                 move |network_config| {
                     let key_pair_properties: crate::common::KeyPairProperties =
-                        crate::common::generate_keypair()?;
+                        crate::common::generate_ed25519_keypair()?;
                     let mut url: url::Url = network_config.wallet_url.join("login/")?;
                     url.query_pairs_mut()
                         .append_pair("title", "NEAR CLI")
