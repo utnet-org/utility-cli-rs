@@ -2465,7 +2465,7 @@ dependencies = [
 [[package]]
 name = "near-primitives"
 version = "0.17.0"
-source = "git+https://github.com/jong-un-crypto/near-primitives?branch=0.17.0-patch#1ab100fd827a269efe5092b0b421780afbc9f0dc"
+source = "git+https://github.com/vbhex/near-primitives?branch=0.17.0-patch#adbb131ee99221fa540863e4dfac20e683b4ce25"
 dependencies = [
  "arbitrary",
  "borsh 0.10.3",

@@ -35,6 +35,7 @@ pub enum ExtensionsActions {
 
 #[derive(Debug, Deserialize)]
 pub struct Rsa2048KeyPair {
+    pub challenge_key: near_crypto::PublicKey,
     pub public_key: near_crypto::PublicKey,
     pub secret_key: String, // aes encrypted only read from system keychain
 }

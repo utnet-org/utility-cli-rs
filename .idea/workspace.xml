@@ -9,6 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7bbdb7c6-ac8f-418a-8163-7841a04aac9a" name="更改" comment="RSA add key">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/extensions/create_challenge_rsa/constructor_mode/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/extensions/create_challenge_rsa/constructor_mode/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/extensions/create_challenge_rsa/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/extensions/create_challenge_rsa/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/extensions/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/extensions/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/common.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,8 +56,8 @@
     "Cargo.view-status.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "ext-command",
-    "last_opened_file_path": "/Users/es/near-cli-rs",
+    "git-widget-placeholder": "james",
+    "last_opened_file_path": "/Library/WebServer/Documents/utility-cli-rs",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,9 +71,6 @@
     <configuration name="add-key" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- account add-key root grant-full-access autogenerate-new-keypair save-to-keychain network-config aws-utility-test sign-with-keychain send" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs>
-        <env name="RUST_LOG" value="debug,actix_web=info" />
-      </envs>
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -76,6 +78,9 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -85,9 +90,6 @@
     <configuration name="create-account fund-myself named-32-jong" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- account create-account fund-myself named-32-jong &quot;0.1 NEAR&quot; autogenerate-new-keypair save-to-keychain sign-as root network-config aws-utility-test" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs>
-        <env name="RUST_LOG" value="debug,actix_web=info" />
-      </envs>
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -95,6 +97,9 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -104,9 +109,6 @@
     <configuration name="create-challenge-rsa" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- extensions create-challenge-rsa bbc.root use-file $PROJECT_DIR$/../signer0_key.json without-init-call network-config local-utility-test sign-with-keychain" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs>
-        <env name="RUST_LOG" value="debug,actix_web=info" />
-      </envs>
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -114,6 +116,9 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -123,7 +128,6 @@
     <configuration name="create-challenge" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- extensions" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -131,6 +135,7 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs />
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -140,9 +145,6 @@
     <configuration name="delete-key" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- account delete-account acce1dc432bc1d1bc79fc29433a0cc7219b4d7b0dc0850d2d8268e73904a56ab beneficiary root network-config aws-utility-test sign-with-keychain send " />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs>
-        <env name="RUST_LOG" value="debug,actix_web=info" />
-      </envs>
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -150,6 +152,9 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -159,9 +164,6 @@
     <configuration name="send-money" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- tokens root send-near acce1dc432bc1d1bc79fc29433a0cc7219b4d7b0dc0850d2d8268e73904a56ab &quot;10 NEAR&quot; network-config aws-utility-test sign-with-keychain send" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs>
-        <env name="RUST_LOG" value="debug,actix_web=info" />
-      </envs>
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -169,6 +171,9 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -178,9 +183,6 @@
     <configuration name="view-account-summary" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- account view-account-summary root network-config aws-utility-test now" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs>
-        <env name="RUST_LOG" value="debug,actix_web=info" />
-      </envs>
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -188,6 +190,9 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -197,9 +202,6 @@
     <configuration name="view-status" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package near-cli-rs --bin near -- transaction view-status 4tJQcAtmBcaStJjPdiPj1QWisaXQUDP8nMsRa2W3W6Jb network-config local-utility-test" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs>
-        <env name="RUST_LOG" value="debug,actix_web=info" />
-      </envs>
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -207,6 +209,9 @@
       <option name="withSudo" value="false" />
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="debug,actix_web=info" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -251,6 +256,7 @@
       <workItem from="1705294944001" duration="220000" />
       <workItem from="1705295173012" duration="15995000" />
       <workItem from="1705383518481" duration="9005000" />
+      <workItem from="1706083058617" duration="5474000" />
     </task>
     <task id="LOCAL-00001" summary="config toolchain">
       <option name="closed" value="true" />
@@ -304,12 +310,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/common.rs</url>
-          <line>1278</line>
+          <line>1388</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/common.rs</url>
-          <line>2078</line>
+          <line>2188</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -394,12 +400,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/common.rs</url>
-          <line>1296</line>
+          <line>1406</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/common.rs</url>
-          <line>1291</line>
+          <line>1401</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -559,7 +565,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/common.rs</url>
-          <line>479</line>
+          <line>476</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -569,13 +575,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/common.rs</url>
-          <line>552</line>
+          <line>603</line>
           <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/common.rs</url>
-          <line>551</line>
-          <option name="timeStamp" value="68" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/commands/account/delete_key/public_keys_to_delete.rs</url>

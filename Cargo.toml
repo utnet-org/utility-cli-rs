@@ -88,7 +88,7 @@ near-socialdb-client = "0.2.1"
 
 [patch.crates-io]
 near-crypto = { git = "https://github.com/jong-un-crypto/near-crypto", branch = "0.17.0-patch" }
-near-primitives = { git = "https://github.com/jong-un-crypto/near-primitives", branch = "0.17.0-patch" }
+near-primitives = { git = "https://github.com/vbhex/near-primitives", branch = "0.17.0-patch" }
 
 [features]
 default = ["ledger", "self-update"]
