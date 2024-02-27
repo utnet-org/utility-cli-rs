@@ -9,9 +9,9 @@ pub struct Config {
 
 impl Default for Config {
     fn default() -> Self {
-        let document_dir = "/Library/WebServer/Documents/";
-        let mut credentials_home_dir = std::path::PathBuf::from(&document_dir);
-        credentials_home_dir.push("utility/~/Library/Near4");
+        let home_dir = dirs::home_dir().expect("Impossible to get your home dir!");
+        let mut credentials_home_dir = std::path::PathBuf::from(&home_dir);
+        credentials_home_dir.push(".near-credentials");
 
         let mut network_connection = linked_hash_map::LinkedHashMap::new();
         network_connection.insert(
@@ -43,22 +43,6 @@ impl Default for Config {
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
                 near_social_db_contract_account_id: Some("v1.social08.testnet".parse().unwrap()),
                 faucet_url: Some("https://helper.nearprotocol.com/account".parse().unwrap()),
-                meta_transaction_relayer_url: None,
-            },
-        );
-        network_connection.insert(
-            "my-private-chain-id".to_string(),
-            NetworkConfig {
-                network_name: "my-private-chain-id".to_string(),
-                rpc_url: "http://127.0.0.1:3030".parse().unwrap(),
-                wallet_url: "http://localhost:9005".parse().unwrap(),
-                explorer_transaction_url: "http://localhost:9001/transactions/"
-                    .parse()
-                    .unwrap(),
-                rpc_api_key: None,
-                linkdrop_account_id: Some("jamesavechives".parse().unwrap()),
-                near_social_db_contract_account_id: Some("v1.social08.jamesavechives".parse().unwrap()),
-                faucet_url: None,
                 meta_transaction_relayer_url: None,
             },
         );

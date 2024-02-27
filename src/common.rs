@@ -10,15 +10,14 @@ use prettytable::Table;
 
 use near_primitives::{hash::CryptoHash, types::BlockReference, views::AccessKeyPermissionView};
 
-use rsa::{PublicKey, RsaPrivateKey, RsaPublicKey, PaddingScheme};
-use rand::rngs::OsRng;
-use sha2::{Sha256, Digest};
-use base58::ToBase58;
-
 pub type CliResult = color_eyre::eyre::Result<()>;
 
 use inquire::{Select, Text};
+use rand::Rng;
+use rsa::pkcs8::{EncodePrivateKey, EncodePublicKey, DecodePrivateKey};
 use strum::IntoEnumIterator;
+
+use rsa::{RsaPrivateKey, RsaPublicKey};
 
 pub fn get_near_exec_path() -> String {
     std::env::args()
@@ -475,7 +474,7 @@ pub fn get_public_key_from_seed_phrase(
     Ok(near_crypto::PublicKey::from_str(&public_key_str)?)
 }
 
-pub fn generate_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
+pub fn generate_ed25519_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
     let generate_keypair: crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair =
         crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair::default();
     let (master_seed_phrase, master_seed) =
@@ -517,6 +516,101 @@ pub fn generate_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
     );
     let secret_keypair_str = format!(
         "ed25519:{}",
+        bs58::encode(secret_keypair.to_bytes()).into_string()
+    );
+    let key_pair_properties: KeyPairProperties = KeyPairProperties {
+        seed_phrase_hd_path: generate_keypair.seed_phrase_hd_path,
+        master_seed_phrase,
+        implicit_account_id,
+        public_key_str,
+        secret_keypair_str,
+    };
+    Ok(key_pair_properties)
+}
+
+/// An rsa2048 keypair.
+#[derive(Debug)]
+pub struct Rsa2048Keypair {
+    /// The secret half of this keypair.
+    pub priv_key: RsaPrivateKey,
+}
+
+/// The length of a rsa `RsaPrivateKey`, in bytes.
+pub const RAW_SECRET_KEY_RSA_2048_LENGTH: usize = 1218; //1218 raw key + 294 header
+
+/// The length of an rsa `RsaPublicKey`, in bytes.
+pub const RAW_PUBLIC_KEY_RSA_2048_LENGTH: usize = 294;
+
+impl Rsa2048Keypair {
+    pub fn to_bytes(&self) -> [u8; RAW_SECRET_KEY_RSA_2048_LENGTH] {
+        let mut bytes: [u8; RAW_SECRET_KEY_RSA_2048_LENGTH] = [0u8; RAW_SECRET_KEY_RSA_2048_LENGTH];
+
+        let der_sk_encoded = self.priv_key.to_pkcs8_der().unwrap().to_bytes();
+        //let der_pk_encoded = self.pub_key.to_public_key_der().unwrap();
+
+        println!("Length of private key in bytes: {}, as_bytes: {}", der_sk_encoded.len(), der_sk_encoded.as_slice().len());
+        bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH].copy_from_slice(der_sk_encoded.as_slice());
+        //bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..].copy_from_slice(der_pk_encoded.as_bytes());
+        bytes
+    }
+
+    pub fn from_bytes<'a>(bytes: &'a [u8]) -> color_eyre::eyre::Result<Rsa2048Keypair> {
+        if bytes.len() != RAW_SECRET_KEY_RSA_2048_LENGTH {
+            return Err(color_eyre::eyre::eyre!("perror occurred, Keypair length: {}", RAW_SECRET_KEY_RSA_2048_LENGTH));
+        }
+
+        let secret = RsaPrivateKey::from_pkcs8_der(&bytes[..RAW_SECRET_KEY_RSA_2048_LENGTH]).unwrap();
+        //let public = RsaPublicKey::from_public_key_der(&bytes[RAW_SECRET_KEY_RSA_2048_LENGTH..]).unwrap();
+
+        Ok(Rsa2048Keypair{ priv_key: secret })
+    }
+}
+
+// FIXME: generate keypair use trait object
+pub fn generate_rsa2048_keypair() -> color_eyre::eyre::Result<KeyPairProperties> {
+    let generate_keypair: crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair =
+        crate::utils_command::generate_keypair_subcommand::CliGenerateKeypair::default();
+    let (master_seed_phrase, _master_seed) =
+        if let Some(master_seed_phrase) = generate_keypair.master_seed_phrase.as_deref() {
+            (
+                master_seed_phrase.to_owned(),
+                bip39::Mnemonic::parse(master_seed_phrase)?.to_seed(""),
+            )
+        } else {
+            let mnemonic =
+                bip39::Mnemonic::generate(generate_keypair.new_master_seed_phrase_words_count)?;
+            let master_seed_phrase = mnemonic.word_iter().collect::<Vec<&str>>().join(" ");
+            (master_seed_phrase, mnemonic.to_seed(""))
+        };
+
+    let mut rng = rand::thread_rng();
+    let bits = 2048;
+    let mut priv_key = RsaPrivateKey::new(&mut rng, bits)?;
+    let mut pub_key = RsaPublicKey::from(&priv_key);
+    
+    loop {
+        let der_sk_encoded = priv_key.to_pkcs8_der().unwrap();
+        let der_length = der_sk_encoded.as_bytes().len();
+        if der_length == RAW_SECRET_KEY_RSA_2048_LENGTH {
+            break;
+        }
+        priv_key = RsaPrivateKey::new(&mut rng, bits)?;
+        pub_key = RsaPublicKey::from(&priv_key);
+    }
+    let secret_keypair = {
+        Rsa2048Keypair { priv_key }
+    };
+
+    let implicit_account_id =
+        near_primitives::types::AccountId::try_from(format!("test{}", rng.gen_range(0..10000)))?;
+    
+    let der_pk_encoded = pub_key.to_public_key_der().unwrap();
+    let public_key_str = format!(
+        "rsa2048:{}",
+        bs58::encode(&der_pk_encoded.as_bytes()).into_string()
+    );
+    let secret_keypair_str = format!(
+        "rsa2048:{}",
         bs58::encode(secret_keypair.to_bytes()).into_string()
     );
     let key_pair_properties: KeyPairProperties = KeyPairProperties {
@@ -675,6 +769,41 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                 };
                 print_unsigned_transaction(&prepopulated_transaction);
             }
+            near_primitives::transaction::Action::RegisterRsa2048Keys(register_rsa2048_action) => {
+                eprintln!("{:>5} {:<20}", "--", "register rsa2048 key:");
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "", "public key:", &register_rsa2048_action.public_key
+                );
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "", "op type:", &register_rsa2048_action.operation_type
+                );
+            },
+            near_primitives::transaction::Action::CreateRsa2048Challenge(create_rsa2048keys_challenge_action) => {
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "", "public key:", &create_rsa2048keys_challenge_action.public_key
+                );
+                eprintln!(
+                    "{:>18} {:<13} {}",
+                    "",
+                    "args:",
+                    match serde_json::from_slice::<serde_json::Value>(&create_rsa2048keys_challenge_action.args) {
+                        Ok(parsed_args) => {
+                            serde_json::to_string_pretty(&parsed_args)
+                                .unwrap_or_else(|_| "".to_string())
+                                .replace('\n', "\n                                 ")
+                        }
+                        Err(_) => {
+                            format!(
+                                "<non-printable data ({})>",
+                                bytesize::ByteSize(create_rsa2048keys_challenge_action.args.len() as u64)
+                            )
+                        }
+                    }
+                );
+            },
         }
     }
 }
@@ -761,6 +890,18 @@ fn print_value_successful_transaction(
                     delegate_action.sender_id,
                 );
             }
+            near_primitives::views::ActionView::RegisterRsa2048Keys { public_key, operation_type, args: _, } => {
+                eprintln!(
+                    "Rsa2048 key <{}>, op_type <{}> for account <{}> has been successfully registered.",
+                    public_key, operation_type, transaction_info.transaction.signer_id,
+                );
+            },
+            near_primitives::views::ActionView::CreateRsa2048Challenge { public_key, args: _, } => {
+                eprintln!(
+                    "Rsa2048  <{}> for account <{}> has been successfully challenge created.",
+                    public_key, transaction_info.transaction.signer_id,
+                );
+            },
         }
     }
 }
