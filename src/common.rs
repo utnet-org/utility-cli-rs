@@ -851,10 +851,10 @@ fn print_value_successful_transaction(
                     public_key, operation_type, transaction_info.transaction.signer_id,
                 );
             },
-            near_primitives::views::ActionView::CreateRsa2048Challenge { public_key, args: _, } => {
+            near_primitives::views::ActionView::CreateRsa2048Challenge { public_key, challenge_key, args: _, } => {
                 eprintln!(
-                    "Rsa2048  <{}> for account <{}> has been successfully challenge created.",
-                    public_key, transaction_info.transaction.signer_id,
+                    "Rsa2048  <{}> with ChallengeKey <{}> for account <{}> has been successfully challenge created.",
+                    public_key, challenge_key, transaction_info.transaction.signer_id,
                 );
             },
         }
@@ -1053,8 +1053,8 @@ pub fn print_action_error(action_error: &near_primitives::errors::ActionError) -
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: DelegateAction Invalid Delegate Nonce: {delegate_nonce} upper bound: {upper_bound}"))
         }
         near_primitives::errors::ActionErrorKind::RsaKeysNotFound { account_id, public_key } => {
-            color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: The given public key {account_id} _ {public_key} doesn't exist for the sender"))
-        }
+            color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: RSA key not found for account <{}> and public key <{}>.", account_id, public_key))
+        },
     }
 }
 

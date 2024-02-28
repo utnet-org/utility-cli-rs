@@ -32,6 +32,7 @@ impl NoInitializeContext {
             receiver_account_id: previous_context.receiver_account_id,
             signer_account_id: previous_context.signer_account_id,
             public_key: previous_context.public_key,
+            challenge_key: previous_context.challenge_key,
             private_key: previous_context.private_key,
         }))
     }
@@ -50,7 +51,8 @@ impl From<NoInitializeContext> for crate::commands::ActionContext {
                         receiver_id: receiver_account_id.clone(),
                         actions: vec![near_primitives::transaction::Action::CreateRsa2048Challenge(
                             Box::new(near_primitives::transaction::CreateRsa2048ChallengeAction {
-                                public_key: item.0.public_key.clone(), 
+                                public_key: item.0.public_key.clone(),
+                                challenge_key: item.0.challenge_key.clone(),
                                 args: vec![],
                             }),
                         )],

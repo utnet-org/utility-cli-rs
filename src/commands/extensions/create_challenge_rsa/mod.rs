@@ -61,6 +61,7 @@ pub struct PemFileContext {
     pub receiver_account_id: near_primitives::types::AccountId,
     pub signer_account_id: near_primitives::types::AccountId,
     pub public_key: near_crypto::PublicKey,
+    pub challenge_key: near_crypto::PublicKey,
     pub private_key: String, // aes encrypted only read from system keychain
 }
 
@@ -79,6 +80,7 @@ impl PemFileContext {
             global_context: previous_context.global_context,
             receiver_account_id: previous_context.receiver_account_id,
             signer_account_id: previous_context.signer_account_id,
+            challenge_key: rsa_json.challenge_key,
             public_key: rsa_json.public_key,
             private_key: rsa_json.secret_key,
         })
