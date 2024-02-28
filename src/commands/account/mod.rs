@@ -9,7 +9,6 @@ mod export_account;
 mod import_account;
 mod list_keys;
 pub mod storage_management;
-pub mod update_social_profile;
 mod view_account_summary;
 
 
@@ -47,9 +46,6 @@ pub enum AccountActions {
     #[strum_discriminants(strum(
         message = "update-social-profile   - Update NEAR Social profile"
     ))]
-    /// Update NEAR Social profile
-    UpdateSocialProfile(self::update_social_profile::UpdateSocialProfile),
-    #[strum_discriminants(strum(message = "delete-account          - Delete an account"))]
     /// Delete an account
     DeleteAccount(self::delete_account::DeleteAccount),
     #[strum_discriminants(strum(
