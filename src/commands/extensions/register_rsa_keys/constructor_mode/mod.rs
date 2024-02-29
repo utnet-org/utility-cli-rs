@@ -1,6 +1,6 @@
+use color_eyre::eyre::Context;
 use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 
-mod call_function_args_type;
 
 #[derive(Debug, Clone, EnumDiscriminants, interactive_clap_derive::InteractiveClap)]
 #[interactive_clap(context = super::RsaFileContext)]
@@ -17,54 +17,54 @@ pub enum ConstructorMode {
 #[interactive_clap(input_context = super::RsaFileContext)]
 #[interactive_clap(output_context = InitializeContext)]
 pub struct Initialize {
-    #[interactive_clap(value_enum)]
-    #[interactive_clap(skip_default_input_arg)]
-    /// How do you want to pass the call arguments?
-    function_args_type: call_function_args_type::FunctionArgsType,
-    /// Enter the arguments to this call:
-    function_args: String,
-
     #[interactive_clap(named_arg)]
     /// Select network
     network_config: crate::network_for_transaction::NetworkForTransactionArgs,
 }
 
-impl Initialize {
-    fn input_function_args_type(
-        _context: &super::RsaFileContext,
-    ) -> color_eyre::eyre::Result<
-        Option<call_function_args_type::FunctionArgsType>,
-    > {
-        call_function_args_type::input_function_args_type()
-    }
-}
-
 #[derive(Debug, Clone)]
 pub struct InitializeContext {
     ctx: super::RsaFileContext,
-    pass_args: Vec<u8>,
+    action: Vec<near_primitives::transaction::Action>,
 }
 
 impl InitializeContext {
     pub fn from_previous_context(
         previous_context: super::RsaFileContext,
-        scope: &<Initialize as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        _scope: &<Initialize as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let pass_args = call_function_args_type::function_args(
-                scope.function_args.clone(),
-                scope.function_args_type.clone(),
-            )?;
-            Ok(Self {
-                ctx:  super::RsaFileContext {
-                    global_context: previous_context.global_context,
-                    receiver_account_id: previous_context.receiver_account_id,
-                    signer_account_id: previous_context.signer_account_id,
-                    public_key: previous_context.public_key,
-                    private_key: previous_context.private_key,
-                },
-                pass_args,
-            })
 
+        let mut actions = Vec::new();
+        for m in previous_context.miners.iter() {
+            let data = format!(r#"
+            {{
+                "power": "{}"
+            }}
+            "#, m.power);
+
+            let data_json: serde_json::Value = serde_json::from_str(&data).unwrap();
+            let args = serde_json::to_vec(&data_json).wrap_err("Internal error!").unwrap();
+
+            actions.push(
+                near_primitives::transaction::Action::RegisterRsa2048Keys(
+                    Box::new(near_primitives::transaction::RegisterRsa2048KeysAction {
+                        public_key: m.public_key.clone(),
+                        operation_type: 0u8,
+                        args: args.clone(),
+                    }),
+                )
+            )
+            
+        }
+        Ok(Self {
+            ctx:  super::RsaFileContext {
+                global_context: previous_context.global_context,
+                receiver_account_id: previous_context.receiver_account_id,
+                signer_account_id: previous_context.signer_account_id,
+                miners: previous_context.miners,
+            },
+            action: actions,
+        })
     }
 }
 
@@ -74,17 +74,12 @@ impl From<InitializeContext> for crate::commands::ActionContext {
             std::sync::Arc::new({
                 let signer_account_id = item.ctx.signer_account_id.clone();
                 let receiver_account_id = item.ctx.receiver_account_id.clone();
-
+                let actions = item.action.clone();
                 move |_network_config| {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: receiver_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::RegisterRsa2048Keys(
-                            Box::new(near_primitives::transaction::RegisterRsa2048KeysAction {
-                                public_key: item.ctx.public_key.clone(), 
-                                operation_type: 0u8, 
-                                args: item.pass_args.clone(), })
-                        )],
+                        actions: actions.clone(),
                     })
                 }
             });

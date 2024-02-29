@@ -15,7 +15,7 @@ path-guid = "3A5A99B6-61EC-4DFB-AA36-763EE316AF18"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
-name = "near"
+name = "unc"
 path = "src/main.rs"
 
 [dependencies]

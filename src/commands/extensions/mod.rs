@@ -37,5 +37,11 @@ pub enum ExtensionsActions {
 pub struct Rsa2048KeyPair {
     pub challenge_key: near_crypto::PublicKey,
     pub public_key: near_crypto::PublicKey,
-    pub secret_key: String, // aes encrypted only read from system keychain
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Miner {
+    pub miner_id: String,
+    pub public_key: near_crypto::PublicKey,
+    pub power: u64,
 }

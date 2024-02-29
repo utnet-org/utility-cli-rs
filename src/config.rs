@@ -34,7 +34,7 @@ impl Default for Config {
             "testnet".to_string(),
             NetworkConfig {
                 network_name: "testnet".to_string(),
-                rpc_url: "https://archival-rpc.testnet.near.org".parse().unwrap(),
+                rpc_url: "http://127.0.0.1:3030".parse().unwrap(),
                 wallet_url: "https://testnet.mynearwallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.testnet.near.org/transactions/"
                     .parse()

@@ -33,7 +33,6 @@ impl NoInitializeContext {
             signer_account_id: previous_context.signer_account_id,
             public_key: previous_context.public_key,
             challenge_key: previous_context.challenge_key,
-            private_key: previous_context.private_key,
         }))
     }
 }

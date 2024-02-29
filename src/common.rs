@@ -1316,14 +1316,14 @@ pub fn save_access_key_to_legacy_keychain(
 
 pub fn get_config_toml() -> color_eyre::eyre::Result<crate::config::Config> {
     if let Some(mut path_config_toml) = dirs::config_dir() {
-        path_config_toml.extend(&["near-cli", "config.toml"]);
+        path_config_toml.extend(&["unc-cli", "config.toml"]);
 
         if !path_config_toml.is_file() {
             write_config_toml(crate::config::Config::default())?;
         };
         let config_toml = std::fs::read_to_string(&path_config_toml)?;
         toml::from_str(&config_toml).or_else(|err| {
-            eprintln!("Warning: `near` CLI configuration file stored at {path_config_toml:?} could not be parsed due to: {err}");
+            eprintln!("Warning: `unc` CLI configuration file stored at {path_config_toml:?} could not be parsed due to: {err}");
             eprintln!("Note: The default configuration printed below will be used instead:\n");
             let default_config = crate::config::Config::default();
             eprintln!("{}", toml::to_string(&default_config)?);
@@ -1336,14 +1336,14 @@ pub fn get_config_toml() -> color_eyre::eyre::Result<crate::config::Config> {
 pub fn write_config_toml(config: crate::config::Config) -> CliResult {
     let config_toml = toml::to_string(&config)?;
     let mut path_config_toml = dirs::config_dir().wrap_err("Impossible to get your config dir!")?;
-    path_config_toml.push("near-cli");
+    path_config_toml.push("unc-cli");
     std::fs::create_dir_all(&path_config_toml)?;
     path_config_toml.push("config.toml");
     std::fs::File::create(&path_config_toml)
         .wrap_err_with(|| format!("Failed to create file: {path_config_toml:?}"))?
         .write(config_toml.as_bytes())
         .wrap_err_with(|| format!("Failed to write to file: {path_config_toml:?}"))?;
-    eprintln!("Note: `near` CLI configuration is stored in {path_config_toml:?}");
+    eprintln!("Note: `unc` CLI configuration is stored in {path_config_toml:?}");
     Ok(())
 }
 
