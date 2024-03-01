@@ -1,6 +1,7 @@
 use color_eyre::eyre::Context;
 use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 
+const ONE_TERA: u64 = 10u64.pow(12);
 
 #[derive(Debug, Clone, EnumDiscriminants, interactive_clap_derive::InteractiveClap)]
 #[interactive_clap(context = super::RsaFileContext)]
@@ -40,7 +41,7 @@ impl InitializeContext {
             {{
                 "power": "{}"
             }}
-            "#, m.power);
+            "#, m.power * ONE_TERA);
 
             let data_json: serde_json::Value = serde_json::from_str(&data).unwrap();
             let args = serde_json::to_vec(&data_json).wrap_err("Internal error!").unwrap();
