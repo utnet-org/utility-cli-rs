@@ -43,9 +43,7 @@ pub enum AccountActions {
     #[strum_discriminants(strum(message = "create-account          - Create a new account"))]
     /// Create a new account
     CreateAccount(self::create_account::CreateAccount),
-    #[strum_discriminants(strum(
-        message = "update-social-profile   - Update NEAR Social profile"
-    ))]
+    #[strum_discriminants(strum(message = "delete-account          - Delete a account"))]
     /// Delete an account
     DeleteAccount(self::delete_account::DeleteAccount),
     #[strum_discriminants(strum(
