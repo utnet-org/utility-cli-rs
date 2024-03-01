@@ -1,0 +1,17 @@
+[
+    {
+        "miner_id": "miner1",
+        "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrCMSpEgPSE5su9Yb614FCHCbn4PyxgQGgFKRXYQWR824uPKdixfki4eafkq7t6Eobk1eMGkXSPTX17Hj6jCWKHc8u1WWgnK8vYZcV8d6rFG678vjvmRQpCJaer4VnbMLTp9WgWwDPouDVaPzrhSkXVdMLE7NrV5FeatGY7BwZ664zrTh9vKW1GS5beWXiRW1ywh6GFS6Vqi31Vb4hWcESdAr3wpa2m9P7tEa7j6YPADxQzZWV4BiztypovqmnznZ5fenHebwXrVbCz742VeEkjuueXiDfXF37ZHW8LFpGjrVEwS5NmRFPX8AcxER1tGhgXhfzkNpfLuWswvFCbxJZcE7oLba8CNiw4DjRS",
+        "power": 100
+    },
+    {
+        "miner_id": "miner2",
+        "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrCNPsoHySi4ox6LeQfLtgorwUsPv4tyHqqUqgKD4u8Lk6tb31KLGHijksRrv5CQVo3dSEAiW3J2Nqt8hHAvkgt7TPKyRAYn6CCnTAafMX7kHmKBHJFW5rJk7Mu5REfB49fvkHpMkeigXCnNxuqPXbHgYoVN3vTk6D7VMyJZQ1TvJgbtzdE4XZx1hnP4iAZ6jFwYqa4n3XfENP6AxRmV8zHAWtFM1DjpowB2jLwz7YbggAdoiCK51TAbmvE5vbYmHpEKwNsWkV2SBp9y5f7Sfoyrx8FSzPhMxiGgLfZrScFKc34gXv4CZBAX2idvBKQm4Gbw2qcrXwpTJ3Nzyw1CB9kfFij2o6vs6b5MAbi",
+        "power": 200
+    },
+    {
+        "miner_id": "miner3",
+        "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrCqKFAT9q95bPLBHHiyrXfoWtmfX4JHnWbLVCdLrh3pVykUjTxkxULs58wXoG2xgpqVLJ3HnutSb5eypXfqFoJVUVHWu5y1Q6ykPXqFsXqsbacXBs2nptzVxhtmepj6Qf1hofquTuduqQ8kDzNkcwEr9eQ5uz2Kzdp76uPKL9uNHmgHMstYqWWtu55SQGA4HsnQ3u9jYJsnfCJ2tu7wuFrW75ZHPTJ1stfdRq8rCcXp4wB5GWD9rqSdN3sS5CSpjt1FRBNKtXLmqCtPJG711K73vbzY3ekqvuZUKcUzioq8KyzkSuyafXmGr9xBwLAWUaEHBCZmrmHPT8WavXc21BkGzBTCWkVjkditqRA",
+        "power": 300
+    }
+]
