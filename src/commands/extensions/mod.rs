@@ -44,4 +44,7 @@ pub struct Miner {
     pub miner_id: String,
     pub public_key: near_crypto::PublicKey,
     pub power: u64,
+    pub sn: String,
+    pub bus_id: String,
+    pub p2key: String,
 }
