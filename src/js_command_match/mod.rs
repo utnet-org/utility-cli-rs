@@ -61,7 +61,7 @@ impl JsCmd {
         //NEAR_ENV=testnet default
         let network_config = std::env::var("NEAR_ENV").unwrap_or_else(|_| "testnet".to_owned());
         let message = "The command you tried to run is deprecated in the new NEAR CLI, but we tried our best to match the old command with the new syntax, try it instead:".to_string();
-        let near_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called near-validator.\nPlease, follow the installation instructions here: https://github.com/near-cli-rs/near-validator-cli-rs/blob/master/README.md\nThen run the following command:".to_string();
+        let near_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called near-validator.\nPlease, follow the installation instructions here: https://github.com/unc-cli-rs/near-validator-cli-rs/blob/master/README.md\nThen run the following command:".to_string();
         let err_message = "The command you tried to run is deprecated in the new NEAR CLI and there is no equivalent command in the new NEAR CLI.".to_string();
         match self {
             Self::CreateAccount(create_account_args) => Ok((create_account_args.to_cli_args(network_config), message)),

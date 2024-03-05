@@ -13,4 +13,4 @@ jobs:
           npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_REGISTRY_TOKEN }}
       - name: Publish to npmjs.com
         run: |
-          npm publish https://github.com/near/near-cli-rs/releases/latest/download/near-cli-rs-npm-package.tar.gz
+          npm publish https://github.com/near/unc-cli-rs/releases/latest/download/unc-cli-rs-npm-package.tar.gz

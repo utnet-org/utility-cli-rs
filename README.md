@@ -10,30 +10,30 @@ Just run `near` and let it guide you through!
 
 ## Install
 
-You can find binary releases of `near` CLI for your OS on the [Releases page](https://github.com/near/near-cli-rs/releases/).
+You can find binary releases of `near` CLI for your OS on the [Releases page](https://github.com/near/unc-cli-rs/releases/).
 
 ### Install prebuilt binaries via shell script (macOS, Linux, WSL)
 
 ```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/near-cli-rs/releases/latest/download/near-cli-rs-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/unc-cli-rs/releases/latest/download/unc-cli-rs-installer.sh | sh
 ```
 
 ### Install prebuilt binaries via powershell script (Windows)
 
 ```sh
-irm https://github.com/near/near-cli-rs/releases/latest/download/near-cli-rs-installer.ps1 | iex
+irm https://github.com/near/unc-cli-rs/releases/latest/download/unc-cli-rs-installer.ps1 | iex
 ```
 
 ### Run prebuilt binaries with npx (Node.js)
 
 ```sh
-npx near-cli-rs
+npx unc-cli-rs
 ```
 
 ### Install prebuilt binaries into your npm project (Node.js)
 
 ```sh
-npm install near-cli-rs
+npm install unc-cli-rs
 ```
 
 ### Install from source code (Cargo)
@@ -41,13 +41,13 @@ npm install near-cli-rs
 Install it with `cargo`, just make sure you have [Rust](https://rustup.rs) installed on your computer.
 
 ```bash
-cargo install near-cli-rs
+cargo install unc-cli-rs
 ```
 
 or, install the most recent version from git repository:
 
 ```bash
-$ cargo install --git https://github.com/near/near-cli-rs
+$ cargo install --git https://github.com/near/unc-cli-rs
 ```
 
 ### Install on CI (GitHub Actions)
@@ -77,7 +77,7 @@ jobs:
 
     - name: Install near CLI
       run: |
-        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/near-cli-rs/releases/download/v0.7.4/near-cli-rs-installer.sh | sh
+        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/unc-cli-rs/releases/download/v0.7.4/unc-cli-rs-installer.sh | sh
 
     - name: Call some function
       run: |

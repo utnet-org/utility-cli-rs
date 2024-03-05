@@ -4,18 +4,18 @@ use clap::Parser;
 use color_eyre::eyre::WrapErr;
 use interactive_clap::ToCliArgs;
 
-pub use near_cli_rs::commands;
-pub use near_cli_rs::common::{self, CliResult};
-pub use near_cli_rs::config;
-pub use near_cli_rs::js_command_match;
-pub use near_cli_rs::network;
-pub use near_cli_rs::network_for_transaction;
-pub use near_cli_rs::network_view_at_block;
-pub use near_cli_rs::transaction_signature_options;
-pub use near_cli_rs::types;
-pub use near_cli_rs::utils_command;
+pub use unc_cli_rs::commands;
+pub use unc_cli_rs::common::{self, CliResult};
+pub use unc_cli_rs::config;
+pub use unc_cli_rs::js_command_match;
+pub use unc_cli_rs::network;
+pub use unc_cli_rs::network_for_transaction;
+pub use unc_cli_rs::network_view_at_block;
+pub use unc_cli_rs::transaction_signature_options;
+pub use unc_cli_rs::types;
+pub use unc_cli_rs::utils_command;
 
-pub use near_cli_rs::GlobalContext;
+pub use unc_cli_rs::GlobalContext;
 
 type ConfigContext = (crate::config::Config,);
 

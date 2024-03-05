@@ -49,7 +49,7 @@ However, using _near CLI_, you can press _Enter_ anywhere in the command line an
 ## Installation
 
 At this stage of the development of the utility, installation of the program is not required.  
-It is enough to [download](https://github.com/near/near-cli-rs/releases/) the archive file suitable for your operating system installed on the computer and unzip it.  
+It is enough to [download](https://github.com/near/unc-cli-rs/releases/) the archive file suitable for your operating system installed on the computer and unzip it.  
 The resulting directory contains the executable file _near CLI_, which is accompanied by detailed [user guide](GUIDE.en.md).
 
 ## User Guide
@@ -75,8 +75,8 @@ _near CLI_ compiles with Rust 1.64.0 (stable) or newer. In general, _near CLI_ t
 To build _near CLI_:
 
 ```txt
-$ git clone https://github.com/near/near-cli-rs.git
-$ cd near-cli-rs
+$ git clone https://github.com/near/unc-cli-rs.git
+$ cd unc-cli-rs
 $ cargo build --release
 $ ./target/release/near --version
 near 0.2.4

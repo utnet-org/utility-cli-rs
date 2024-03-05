@@ -20,9 +20,9 @@ impl SelfUpdateCommandContext {
     ) -> color_eyre::eyre::Result<Self> {
         let status = self_update::backends::github::Update::configure()
             .repo_owner("near")
-            .repo_name("near-cli-rs")
+            .repo_name("unc-cli-rs")
             .bin_path_in_archive(
-                format!("near-cli-rs-{}/{}", self_update::get_target(), BIN_NAME).as_str(),
+                format!("unc-cli-rs-{}/{}", self_update::get_target(), BIN_NAME).as_str(),
             )
             .bin_name(BIN_NAME)
             .show_download_progress(true)
@@ -39,11 +39,11 @@ impl SelfUpdateCommandContext {
                 "!".green().bold()
             );
             println!("Report any bugs:\n");
-            println!("\thttps://github.com/near/near-cli-rs/issues\n");
+            println!("\thttps://github.com/near/unc-cli-rs/issues\n");
             println!("What's new:\n");
             println!(
                 "\t{}{}\n",
-                "https://github.com/near/near-cli-rs/releases/tag/v".truecolor(0, 160, 150),
+                "https://github.com/near/unc-cli-rs/releases/tag/v".truecolor(0, 160, 150),
                 release.truecolor(0, 160, 150)
             );
         }
@@ -55,7 +55,7 @@ impl SelfUpdateCommandContext {
 pub fn get_latest_version() -> color_eyre::eyre::Result<String> {
     Ok(self_update::backends::github::Update::configure()
         .repo_owner("near")
-        .repo_name("near-cli-rs")
+        .repo_name("unc-cli-rs")
         .bin_name("near")
         .current_version(self_update::cargo_crate_version!())
         .build()

@@ -1,11 +1,11 @@
 [package]
-name = "near-cli-rs"
-version = "0.7.6"
+name = "unc-cli-rs"
+version = "0.1.0"
 authors = ["FroVolod <frol_off@meta.ua>", "Near Inc <hello@nearprotocol.com>"]
 license = "MIT OR Apache-2.0"
 edition = "2021"
 homepage = "https://near.cli.rs"
-repository = "https://github.com/near/near-cli-rs"
+repository = "https://github.com/near/unc-cli-rs"
 description = "human-friendly console utility that helps to interact with NEAR Protocol from command line."
 
 [package.metadata.wix]
@@ -83,8 +83,6 @@ near-token = { version = "0.2.0", features = [
 keyring = "2.0.5"
 interactive-clap = "0.2.8"
 interactive-clap-derive = "0.2.8"
-
-near-socialdb-client = "0.2.1"
 
 [patch.crates-io]
 near-crypto = { git = "https://github.com/jong-un-crypto/near-crypto", branch = "0.17.0-patch" }
