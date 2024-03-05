@@ -84,6 +84,8 @@ keyring = "2.0.5"
 interactive-clap = "0.2.8"
 interactive-clap-derive = "0.2.8"
 
+near-socialdb-client = "0.2.1"
+
 [patch.crates-io]
 near-crypto = { git = "https://github.com/jong-un-crypto/near-crypto", branch = "0.17.0-patch" }
 near-primitives = { git = "https://github.com/jong-un-crypto/near-primitives", branch = "0.17.0-patch" }
