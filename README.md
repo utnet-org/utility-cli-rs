@@ -1,6 +1,6 @@
 # unc CLI
 
-unc CLI is your **human-friendly** companion that helps to interact with [unc Protocol](https://unc.org) from command line.
+unc CLI is your **human-friendly** companion that helps to interact with [UNC Protocol](https://unc.org) from command line.
 
 Just run `unc` and let it guide you through!
 
@@ -126,10 +126,3 @@ The CLI interactively guides you through some pretty complex topics, helping you
   - [User Guide](docs/README.en.md#user-guide)
   - [Config](docs/README.en.md#config)
   - [Building](docs/README.en.md#building)
-
-## [Больше информации на русском языке (in Russian)](docs/README.ru.md)
-  - [Применение](docs/README.ru.md#применение)
-  - [Установка](docs/README.ru.md#установка)
-  - [Инструкция](docs/README.ru.md#инструкция)
-  - [Конфигурационный файл](docs/README.ru.md#конфигурационный-файл)
-  - [Сборка](docs/README.ru.md#сборка)
