@@ -19,7 +19,7 @@ pub struct SignKeychain {
     block_hash: Option<crate::types::crypto_hash::CryptoHash>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_default_input_arg)]
-    block_height: Option<near_primitives::types::BlockHeight>,
+    block_height: Option<unc_primitives::types::BlockHeight>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_interactive_input)]
     meta_transaction_valid_for: Option<u64>,
@@ -59,7 +59,7 @@ impl SignKeychainContext {
         let network_config = previous_context.network_config.clone();
 
         let service_name = std::borrow::Cow::Owned(format!(
-            "near-{}-{}",
+            "unc-{}-{}",
             network_config.network_name,
             previous_context.prepopulated_transaction.signer_id.as_str()
         ));
@@ -94,7 +94,7 @@ impl SignKeychainContext {
                 .json_rpc_client()
                 .blocking_call_view_access_key_list(
                     &previous_context.prepopulated_transaction.signer_id,
-                    near_primitives::types::Finality::Final.into(),
+                    unc_primitives::types::Finality::Final.into(),
                 )
                 .wrap_err_with(|| {
                     format!(
@@ -110,7 +110,7 @@ impl SignKeychainContext {
                 .filter(|key| {
                     matches!(
                         key.access_key.permission,
-                        near_primitives::views::AccessKeyPermissionView::FullAccess
+                        unc_primitives::views::AccessKeyPermissionView::FullAccess
                     )
                 })
                 .map(|key| key.public_key)
@@ -144,7 +144,7 @@ impl SignKeychainContext {
             .blocking_call_view_access_key(
                 &previous_context.prepopulated_transaction.signer_id,
                 &account_json.public_key,
-                near_primitives::types::BlockReference::latest(),
+                unc_primitives::types::BlockReference::latest(),
             )
             .wrap_err_with(||
                 format!("Cannot sign a transaction due to an error while fetching the most recent nonce value on network <{}>", network_config.network_name)
@@ -154,7 +154,7 @@ impl SignKeychainContext {
             .wrap_err("Error current_nonce")?
             .nonce;
 
-        let mut unsigned_transaction = near_primitives::transaction::Transaction {
+        let mut unsigned_transaction = unc_primitives::transaction::Transaction {
             public_key: account_json.public_key.clone(),
             block_hash: rpc_query_response.block_hash,
             nonce: current_nonce + 1,
@@ -193,7 +193,7 @@ impl SignKeychainContext {
             });
         }
 
-        let signed_transaction = near_primitives::transaction::SignedTransaction::new(
+        let signed_transaction = unc_primitives::transaction::SignedTransaction::new(
             signature.clone(),
             unsigned_transaction,
         );
@@ -289,10 +289,10 @@ impl SignKeychain {
 
     fn input_block_height(
         context: &crate::commands::TransactionContext,
-    ) -> color_eyre::eyre::Result<Option<near_primitives::types::BlockHeight>> {
+    ) -> color_eyre::eyre::Result<Option<unc_primitives::types::BlockHeight>> {
         if context.global_context.offline {
             return Ok(Some(
-                CustomType::<near_primitives::types::BlockHeight>::new(
+                CustomType::<unc_primitives::types::BlockHeight>::new(
                     "Enter recent block height:",
                 )
                 .prompt()?,

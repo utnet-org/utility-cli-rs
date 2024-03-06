@@ -58,7 +58,7 @@ impl DeployArgs {
                 "prepaid-gas".to_owned(),
                 format!("{} TeraGas", self.init_gas / 1_000_000_000_000),
                 "attached-deposit".to_owned(),
-                format!("{} NEAR", self.init_deposit),
+                format!("{} unc", self.init_deposit),
                 "network-config".to_owned(),
                 network_config,
                 "sign-with-keychain".to_owned(),

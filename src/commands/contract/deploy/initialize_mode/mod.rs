@@ -52,8 +52,8 @@ impl From<NoInitializeContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: receiver_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::DeployContract(
-                            near_primitives::transaction::DeployContractAction {
+                        actions: vec![unc_primitives::transaction::Action::DeployContract(
+                            unc_primitives::transaction::DeployContractAction {
                                 code: item.0.code.clone(),
                             },
                         )],

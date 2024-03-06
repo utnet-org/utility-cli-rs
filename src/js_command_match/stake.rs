@@ -16,7 +16,7 @@ impl StakeArgs {
             "stake-proposal".to_owned(),
             self.account_id.to_owned(),
             self.staking_key.to_owned(),
-            format!("{} NEAR", self.amount),
+            format!("{} unc", self.amount),
             "network-config".to_owned(),
             network_config,
             "sign-with-keychain".to_owned(),

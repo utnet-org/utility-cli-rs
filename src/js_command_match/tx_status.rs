@@ -2,7 +2,7 @@
 /// This is a legacy `tx-status` command. Once you run it with the specified arguments, new syntax command will be suggested.
 pub struct TxStatusArgs {
     transaction_hash: String,
-    #[clap(long, aliases = ["account_id", "accountId"], default_value = "near")]
+    #[clap(long, aliases = ["account_id", "accountId"], default_value = "unc")]
     account_id: String,
     #[clap(allow_hyphen_values = true, num_args = 0..)]
     _unknown_args: Vec<String>,

@@ -22,7 +22,7 @@ pub struct SignPrivateKey {
     pub block_hash: Option<crate::types::crypto_hash::CryptoHash>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_default_input_arg)]
-    pub block_height: Option<near_primitives::types::BlockHeight>,
+    pub block_height: Option<unc_primitives::types::BlockHeight>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_interactive_input)]
     meta_transaction_valid_for: Option<u64>,
@@ -47,8 +47,8 @@ impl SignPrivateKeyContext {
         scope: &<SignPrivateKey as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let network_config = previous_context.network_config.clone();
-        let signer_secret_key: near_crypto::SecretKey = scope.signer_private_key.clone().into();
-        let public_key: near_crypto::PublicKey = scope.signer_public_key.clone().into();
+        let signer_secret_key: unc_crypto::SecretKey = scope.signer_private_key.clone().into();
+        let public_key: unc_crypto::PublicKey = scope.signer_public_key.clone().into();
 
         let (nonce, block_hash, block_height) = if previous_context.global_context.offline {
             (
@@ -69,7 +69,7 @@ impl SignPrivateKeyContext {
                 .blocking_call_view_access_key(
                     &previous_context.prepopulated_transaction.signer_id,
                     &public_key,
-                    near_primitives::types::BlockReference::latest()
+                    unc_primitives::types::BlockReference::latest()
                 )
                 .wrap_err_with(||
                     format!("Cannot sign a transaction due to an error while fetching the most recent nonce value on network <{}>", network_config.network_name)
@@ -85,7 +85,7 @@ impl SignPrivateKeyContext {
             )
         };
 
-        let mut unsigned_transaction = near_primitives::transaction::Transaction {
+        let mut unsigned_transaction = unc_primitives::transaction::Transaction {
             public_key: public_key.clone(),
             block_hash,
             nonce,
@@ -122,7 +122,7 @@ impl SignPrivateKeyContext {
             });
         }
 
-        let signed_transaction = near_primitives::transaction::SignedTransaction::new(
+        let signed_transaction = unc_primitives::transaction::SignedTransaction::new(
             signature.clone(),
             unsigned_transaction,
         );
@@ -184,10 +184,10 @@ impl SignPrivateKey {
 
     fn input_block_height(
         context: &crate::commands::TransactionContext,
-    ) -> color_eyre::eyre::Result<Option<near_primitives::types::BlockHeight>> {
+    ) -> color_eyre::eyre::Result<Option<unc_primitives::types::BlockHeight>> {
         if context.global_context.offline {
             return Ok(Some(
-                CustomType::<near_primitives::types::BlockHeight>::new(
+                CustomType::<unc_primitives::types::BlockHeight>::new(
                     "Enter recent block height:",
                 )
                 .prompt()?,

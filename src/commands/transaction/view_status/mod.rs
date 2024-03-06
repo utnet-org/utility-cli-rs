@@ -29,11 +29,11 @@ impl TransactionInfoContext {
                     let query_view_transaction_status = network_config
                     .json_rpc_client()
                     .blocking_call(
-                        near_jsonrpc_client::methods::tx::RpcTransactionStatusRequest {
+                        unc_jsonrpc_client::methods::tx::RpcTransactionStatusRequest {
                             transaction_info:
-                                near_jsonrpc_client::methods::tx::TransactionInfo::TransactionId {
-                                    hash: transaction_hash.into(),
-                                    account_id: "near".parse::<near_primitives::types::AccountId>()?,
+                                unc_jsonrpc_client::methods::tx::TransactionInfo::TransactionId {
+                                    tx_hash: transaction_hash.into(),
+                                    sender_account_id: "unc".parse::<unc_primitives::types::AccountId>()?,
                                 },
                         },
                     )

@@ -25,16 +25,16 @@ impl AddAccessWithSeedPhraseActionContext {
             seed_phrase_hd_path_default,
             &scope.master_seed_phrase,
         )?;
-        let access_key = near_primitives::account::AccessKey {
+        let access_key = unc_primitives::account::AccessKey {
             nonce: 0,
             permission: previous_context.access_key_permission,
         };
-        let action = near_primitives::transaction::Action::AddKey(
-            near_primitives::transaction::AddKeyAction {
+        let action = unc_primitives::transaction::Action::AddKey(Box::new(
+            unc_primitives::transaction::AddKeyAction {
                 public_key,
                 access_key,
             },
-        );
+        ));
         let mut actions = previous_context.actions;
         actions.push(action);
         Ok(Self(

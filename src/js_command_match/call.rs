@@ -34,7 +34,7 @@ impl CallArgs {
             "prepaid-gas".to_owned(),
             format!("{} TeraGas", self.gas / 1_000_000_000_000),
             "attached-deposit".to_owned(),
-            format!("{} NEAR", self.deposit),
+            format!("{} unc", self.deposit),
             "sign-as".to_owned(),
             self.account_id.to_owned(),
             "network-config".to_owned(),

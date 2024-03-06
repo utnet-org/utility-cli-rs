@@ -29,6 +29,6 @@ pub enum KeysToView {
 #[derive(Debug, Clone)]
 pub struct KeysContext {
     pub global_context: crate::GlobalContext,
-    pub contract_account_id: near_primitives::types::AccountId,
-    pub prefix: near_primitives::types::StoreKey,
+    pub contract_account_id: unc_primitives::types::AccountId,
+    pub prefix: unc_primitives::types::StoreKey,
 }

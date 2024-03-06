@@ -5,7 +5,7 @@ pub mod network;
 pub struct SponsorServiceContext {
     pub config: crate::config::Config,
     pub new_account_id: crate::types::account_id::AccountId,
-    pub public_key: near_crypto::PublicKey,
+    pub public_key: unc_crypto::PublicKey,
     pub on_after_getting_network_callback: self::network::OnAfterGettingNetworkCallback,
     pub on_before_creating_account_callback: self::network::OnBeforeCreatingAccountCallback,
 }
@@ -65,7 +65,7 @@ impl NewAccount {
 pub fn before_creating_account(
     network_config: &crate::config::NetworkConfig,
     new_account_id: &crate::types::account_id::AccountId,
-    public_key: &near_crypto::PublicKey,
+    public_key: &unc_crypto::PublicKey,
     credentials_home_dir: &std::path::Path,
 ) -> crate::CliResult {
     let faucet_service_url = match &network_config.faucet_url {
@@ -91,9 +91,9 @@ pub fn before_creating_account(
 
             let account_creation_transaction =
                 response
-                    .json::<near_jsonrpc_client::methods::tx::RpcTransactionStatusResponse>()?;
+                    .json::<unc_jsonrpc_client::methods::tx::RpcTransactionStatusResponse>()?;
             match account_creation_transaction.status {
-                near_primitives::views::FinalExecutionStatus::SuccessValue(ref value) => {
+                unc_primitives::views::FinalExecutionStatus::SuccessValue(ref value) => {
                     if value == b"false" {
                         eprintln!(
                             "The new account <{}> could not be created successfully.",

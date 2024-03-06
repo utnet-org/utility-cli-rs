@@ -22,9 +22,9 @@ pub struct ImportAccountCommand {
 /// How would you like to import the account?
 pub enum ImportAccountActions {
     #[strum_discriminants(strum(
-        message = "using-web-wallet          - Import existing account using NEAR Wallet (a.k.a. \"sign in\")"
+        message = "using-web-wallet          - Import existing account using unc Wallet (a.k.a. \"sign in\")"
     ))]
-    /// Import existing account using NEAR Wallet (a.k.a. "sign in")
+    /// Import existing account using unc Wallet (a.k.a. "sign in")
     UsingWebWallet(self::using_web_wallet::LoginFromWebWallet),
     #[strum_discriminants(strum(
         message = "using-seed-phrase         - Import existing account using a seed phrase"
@@ -45,7 +45,7 @@ pub fn login(
     public_key_str: &str,
     error_message: &str,
 ) -> crate::CliResult {
-    let public_key: near_crypto::PublicKey = near_crypto::PublicKey::from_str(public_key_str)?;
+    let public_key: unc_crypto::PublicKey = unc_crypto::PublicKey::from_str(public_key_str)?;
 
     let account_id = loop {
         let account_id_from_cli = input_account_id()?;
@@ -89,12 +89,12 @@ pub fn login(
     Ok(())
 }
 
-fn input_account_id() -> color_eyre::eyre::Result<near_primitives::types::AccountId> {
+fn input_account_id() -> color_eyre::eyre::Result<unc_primitives::types::AccountId> {
     Ok(CustomType::new("Enter account ID:").prompt()?)
 }
 
 fn save_access_key(
-    account_id: near_primitives::types::AccountId,
+    account_id: unc_primitives::types::AccountId,
     key_pair_properties_buf: &str,
     public_key_str: &str,
     network_config: crate::config::NetworkConfig,
@@ -105,7 +105,7 @@ fn save_access_key(
         #[strum(to_string = "Store the access key in my keychain")]
         SaveToKeychain,
         #[strum(
-            to_string = "Store the access key in my legacy keychain (compatible with the old near CLI)"
+            to_string = "Store the access key in my legacy keychain (compatible with the old unc CLI)"
         )]
         SaveToLegacyKeychain,
     }
@@ -122,7 +122,7 @@ fn save_access_key(
             network_config,
             key_pair_properties_buf,
             public_key_str,
-            &account_id,
+            account_id.as_ref(),
         )
         .wrap_err_with(|| {
             format!(
@@ -139,7 +139,7 @@ fn save_access_key(
         credentials_home_dir,
         key_pair_properties_buf,
         public_key_str,
-        &account_id,
+        account_id.as_ref(),
     )
     .wrap_err_with(|| format!("Failed to save a file with access key: {}", public_key_str))?;
     eprintln!("{}", storage_message);

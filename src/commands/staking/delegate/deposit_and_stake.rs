@@ -2,8 +2,8 @@
 #[interactive_clap(input_context = super::StakeDelegationContext)]
 #[interactive_clap(output_context = DepositAndStakeContext)]
 pub struct DepositAndStake {
-    /// Enter the attached amount to be deposited and then staked into the predecessor's internal account (example: 10NEAR or 0.5near or 10000yoctonear):
-    amount: crate::types::near_token::NearToken,
+    /// Enter the attached amount to be deposited and then staked into the predecessor's internal account (example: 10unc or 0.5unc or 10000yoctounc):
+    amount: crate::types::unc_token::UncToken,
     #[interactive_clap(skip_default_input_arg)]
     /// What is validator account ID?
     validator_account_id: crate::types::account_id::AccountId,
@@ -23,7 +23,7 @@ impl DepositAndStakeContext {
         let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
             std::sync::Arc::new({
                 let signer_id = previous_context.account_id.clone();
-                let validator_account_id: near_primitives::types::AccountId =
+                let validator_account_id: unc_primitives::types::AccountId =
                     scope.validator_account_id.clone().into();
                 let amount = scope.amount;
 
@@ -31,13 +31,13 @@ impl DepositAndStakeContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_id.clone(),
                         receiver_id: validator_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::FunctionCall(
-                            near_primitives::transaction::FunctionCallAction {
+                        actions: vec![unc_primitives::transaction::Action::FunctionCall(
+                            Box::new(unc_primitives::transaction::FunctionCallAction {
                                 method_name: "deposit_and_stake".to_string(),
                                 args: serde_json::to_vec(&serde_json::json!({}))?,
-                                gas: crate::common::NearGas::from_tgas(50).as_gas(),
-                                deposit: amount.as_yoctonear(),
-                            },
+                                gas: crate::common::UncGas::from_tgas(50).as_gas(),
+                                deposit: amount.as_yoctounc(),
+                            }),
                         )],
                     })
                 }
@@ -49,7 +49,7 @@ impl DepositAndStakeContext {
             let amount = scope.amount;
 
             move |outcome_view, _network_config| {
-                if let near_primitives::views::FinalExecutionStatus::SuccessValue(_) = outcome_view.status {
+                if let unc_primitives::views::FinalExecutionStatus::SuccessValue(_) = outcome_view.status {
                     eprintln!("<{signer_id}> has successfully delegated {amount} to stake with <{validator_id}>.")
                 }
                 Ok(())

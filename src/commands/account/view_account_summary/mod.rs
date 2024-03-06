@@ -24,7 +24,7 @@ impl ViewAccountSummaryContext {
         scope: &<ViewAccountSummary as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let on_after_getting_block_reference_callback: crate::network_view_at_block::OnAfterGettingBlockReferenceCallback = std::sync::Arc::new({
-            let account_id: near_primitives::types::AccountId = scope.account_id.clone().into();
+            let account_id: unc_primitives::types::AccountId = scope.account_id.clone().into();
 
             move |network_config, block_reference| {
                 let json_rpc_client = network_config.json_rpc_client();
@@ -60,7 +60,7 @@ impl ViewAccountSummaryContext {
                     .enable_all()
                     .build()?;
                 let concurrency = 10;
-                let delegated_stake: std::collections::BTreeMap<near_primitives::types::AccountId, near_token::NearToken> = runtime
+                let delegated_stake: std::collections::BTreeMap<unc_primitives::types::AccountId, unc_token::UncToken> = runtime
                     .block_on(
                         futures::stream::iter(validators_stake.into_keys())
                         .map(|validator_account_id| async {
@@ -81,15 +81,13 @@ impl ViewAccountSummaryContext {
                         .try_collect(),
                     )?;
 
-
                 crate::common::display_account_info(
                     &rpc_query_response.block_hash,
                     &rpc_query_response.block_height,
                     &account_id,
                     &delegated_stake,
                     &account_view,
-                    &access_key_list.keys,
-                    None
+                    &access_key_list.keys
                 );
 
                 Ok(())
@@ -121,18 +119,18 @@ impl ViewAccountSummary {
 }
 
 async fn get_delegated_staked_balance(
-    json_rpc_client: &near_jsonrpc_client::JsonRpcClient,
-    block_reference: &near_primitives::types::BlockReference,
-    staking_pool_account_id: &near_primitives::types::AccountId,
-    account_id: &near_primitives::types::AccountId,
-) -> color_eyre::eyre::Result<near_token::NearToken> {
+    json_rpc_client: &unc_jsonrpc_client::JsonRpcClient,
+    block_reference: &unc_primitives::types::BlockReference,
+    staking_pool_account_id: &unc_primitives::types::AccountId,
+    account_id: &unc_primitives::types::AccountId,
+) -> color_eyre::eyre::Result<unc_token::UncToken> {
     let account_staked_balance_response = json_rpc_client
-        .call(near_jsonrpc_client::methods::query::RpcQueryRequest {
+        .call(unc_jsonrpc_client::methods::query::RpcQueryRequest {
             block_reference: block_reference.clone(),
-            request: near_primitives::views::QueryRequest::CallFunction {
+            request: unc_primitives::views::QueryRequest::CallFunction {
                 account_id: staking_pool_account_id.clone(),
                 method_name: "get_account_staked_balance".to_string(),
-                args: near_primitives::types::FunctionArgs::from(serde_json::to_vec(
+                args: unc_primitives::types::FunctionArgs::from(serde_json::to_vec(
                     &serde_json::json!({
                         "account_id": account_id,
                     }),
@@ -141,21 +139,21 @@ async fn get_delegated_staked_balance(
         })
         .await;
     match account_staked_balance_response {
-        Ok(response) => Ok(near_token::NearToken::from_yoctonear(
+        Ok(response) => Ok(unc_token::UncToken::from_yoctounc(
             response
                 .call_result()?
                 .parse_result_from_json::<String>()
                 .wrap_err("Failed to parse return value of view function call for String.")?
                 .parse::<u128>()?,
         )),
-        Err(near_jsonrpc_client::errors::JsonRpcError::ServerError(
-            near_jsonrpc_client::errors::JsonRpcServerError::HandlerError(
-                near_jsonrpc_client::methods::query::RpcQueryError::NoContractCode { .. }
-                | near_jsonrpc_client::methods::query::RpcQueryError::ContractExecutionError {
+        Err(unc_jsonrpc_client::errors::JsonRpcError::ServerError(
+            unc_jsonrpc_client::errors::JsonRpcServerError::HandlerError(
+                unc_jsonrpc_client::methods::query::RpcQueryError::NoContractCode { .. }
+                | unc_jsonrpc_client::methods::query::RpcQueryError::ContractExecutionError {
                     ..
                 },
             ),
-        )) => Ok(near_token::NearToken::from_yoctonear(0)),
+        )) => Ok(unc_token::UncToken::from_yoctounc(0)),
         Err(err) => Err(err.into()),
     }
 }

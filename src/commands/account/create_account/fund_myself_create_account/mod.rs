@@ -16,7 +16,7 @@ pub struct NewAccount {
     new_account_id: crate::types::account_id::AccountId,
     #[interactive_clap(skip_default_input_arg)]
     /// Enter the amount for the account:
-    initial_balance: crate::types::near_token::NearToken,
+    initial_balance: crate::types::unc_token::UncToken,
     #[interactive_clap(subcommand)]
     access_key_mode: add_key::AccessKeyMode,
 }
@@ -24,8 +24,8 @@ pub struct NewAccount {
 #[derive(Debug, Clone)]
 pub struct NewAccountContext {
     global_context: crate::GlobalContext,
-    new_account_id: near_primitives::types::AccountId,
-    initial_balance: crate::types::near_token::NearToken,
+    new_account_id: unc_primitives::types::AccountId,
+    initial_balance: crate::types::unc_token::UncToken,
 }
 
 impl NewAccountContext {
@@ -101,7 +101,7 @@ impl NewAccount {
                 } else {
                     let parent_account_id =
                         account_id.clone().get_parent_account_id_from_sub_account();
-                    if !near_primitives::types::AccountId::from(parent_account_id.clone())
+                    if !unc_primitives::types::AccountId::from(parent_account_id.clone())
                         .is_top_level()
                     {
                         if crate::common::find_network_where_account_exist(
@@ -133,10 +133,10 @@ impl NewAccount {
 
     fn input_initial_balance(
         _context: &crate::GlobalContext,
-    ) -> color_eyre::eyre::Result<Option<crate::types::near_token::NearToken>> {
+    ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
-        match crate::types::near_token::NearToken::from_str(&Text::new("Enter the amount of the NEAR tokens you want to fund the new account with (example: 10NEAR or 0.5near or 10000yoctonear):")
-            .with_initial_value("0.1 NEAR")
+        match crate::types::unc_token::UncToken::from_str(&Text::new("Enter the amount of the unc tokens you want to fund the new account with (example: 10unc or 0.5unc or 10000yoctounc):")
+            .with_initial_value("0.1 unc")
             .prompt()?
             ) {
                 Ok(initial_balance) => Ok(Some(initial_balance)),
@@ -157,7 +157,7 @@ pub struct AccountPropertiesContext {
 
 #[derive(Debug, Clone)]
 pub struct AccountProperties {
-    pub new_account_id: near_primitives::types::AccountId,
-    pub public_key: near_crypto::PublicKey,
-    pub initial_balance: crate::types::near_token::NearToken,
+    pub new_account_id: unc_primitives::types::AccountId,
+    pub public_key: unc_crypto::PublicKey,
+    pub initial_balance: crate::types::unc_token::UncToken,
 }

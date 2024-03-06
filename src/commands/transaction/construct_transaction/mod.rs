@@ -21,9 +21,9 @@ pub struct ConstructTransaction {
 #[derive(Debug, Clone)]
 pub struct ConstructTransactionContext {
     pub global_context: crate::GlobalContext,
-    pub signer_account_id: near_primitives::types::AccountId,
-    pub receiver_account_id: near_primitives::types::AccountId,
-    pub actions: Vec<near_primitives::transaction::Action>,
+    pub signer_account_id: unc_primitives::types::AccountId,
+    pub receiver_account_id: unc_primitives::types::AccountId,
+    pub actions: Vec<unc_primitives::transaction::Action>,
 }
 
 impl ConstructTransactionContext {

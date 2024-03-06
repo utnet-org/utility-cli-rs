@@ -15,7 +15,7 @@ pub struct ViewStorage {
 #[derive(Debug, Clone)]
 pub struct ViewStorageContext {
     global_context: crate::GlobalContext,
-    contract_account_id: near_primitives::types::AccountId,
+    contract_account_id: unc_primitives::types::AccountId,
 }
 
 impl ViewStorageContext {

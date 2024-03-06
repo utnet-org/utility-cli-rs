@@ -20,9 +20,9 @@ impl DeleteAccountActionContext {
         previous_context: super::super::super::ConstructTransactionContext,
         scope: &<DeleteAccountAction as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let beneficiary_id: near_primitives::types::AccountId = scope.beneficiary_id.clone().into();
-        let action = near_primitives::transaction::Action::DeleteAccount(
-            near_primitives::transaction::DeleteAccountAction { beneficiary_id },
+        let beneficiary_id: unc_primitives::types::AccountId = scope.beneficiary_id.clone().into();
+        let action = unc_primitives::transaction::Action::DeleteAccount(
+            unc_primitives::transaction::DeleteAccountAction { beneficiary_id },
         );
         let mut actions = previous_context.actions;
         actions.push(action);
@@ -78,7 +78,7 @@ impl DeleteAccountAction {
                 .is_none()
                 {
                     eprintln!(
-                        "\nHeads up! You will lose remaining NEAR tokens on the account you delete if you specify the account <{}> as the beneficiary as it does not exist on [{}] networks.",
+                        "\nHeads up! You will lose remaining unc tokens on the account you delete if you specify the account <{}> as the beneficiary as it does not exist on [{}] networks.",
                         account_id,
                         context.global_context.config.network_names().join(", ")
                     );

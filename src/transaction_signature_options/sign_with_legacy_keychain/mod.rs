@@ -23,7 +23,7 @@ pub struct SignLegacyKeychain {
     pub block_hash: Option<crate::types::crypto_hash::CryptoHash>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_default_input_arg)]
-    pub block_height: Option<near_primitives::types::BlockHeight>,
+    pub block_height: Option<unc_primitives::types::BlockHeight>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_interactive_input)]
     meta_transaction_valid_for: Option<u64>,
@@ -89,7 +89,7 @@ impl SignLegacyKeychainContext {
                         .json_rpc_client()
                         .blocking_call_view_access_key_list(
                             &previous_context.prepopulated_transaction.signer_id,
-                            near_primitives::types::Finality::Final.into(),
+                            unc_primitives::types::Finality::Final.into(),
                         )
                         .wrap_err_with(|| {
                             format!(
@@ -112,8 +112,8 @@ impl SignLegacyKeychainContext {
                     'outer: for access_key in access_key_list.keys {
                         let account_public_key = access_key.public_key.to_string();
                         let is_full_access_key: bool = match &access_key.access_key.permission {
-                            near_primitives::views::AccessKeyPermissionView::FullAccess => true,
-                            near_primitives::views::AccessKeyPermissionView::FunctionCall {
+                            unc_primitives::views::AccessKeyPermissionView::FullAccess => true,
+                            unc_primitives::views::AccessKeyPermissionView::FunctionCall {
                                 allowance: _,
                                 receiver_id: _,
                                 method_names: _,
@@ -175,7 +175,7 @@ impl SignLegacyKeychainContext {
                 .blocking_call_view_access_key(
                     &previous_context.prepopulated_transaction.signer_id,
                     &account_json.public_key,
-                    near_primitives::types::BlockReference::latest()
+                    unc_primitives::types::BlockReference::latest()
                 )
                 .wrap_err(
                     "Cannot sign a transaction due to an error while fetching the most recent nonce value",
@@ -191,7 +191,7 @@ impl SignLegacyKeychainContext {
             )
         };
 
-        let mut unsigned_transaction = near_primitives::transaction::Transaction {
+        let mut unsigned_transaction = unc_primitives::transaction::Transaction {
             public_key: account_json.public_key.clone(),
             block_hash,
             nonce,
@@ -230,7 +230,7 @@ impl SignLegacyKeychainContext {
             .private_key
             .sign(unsigned_transaction.get_hash_and_size().0.as_ref());
 
-        let signed_transaction = near_primitives::transaction::SignedTransaction::new(
+        let signed_transaction = unc_primitives::transaction::SignedTransaction::new(
             signature.clone(),
             unsigned_transaction,
         );
@@ -324,10 +324,10 @@ impl SignLegacyKeychain {
 
     fn input_block_height(
         context: &crate::commands::TransactionContext,
-    ) -> color_eyre::eyre::Result<Option<near_primitives::types::BlockHeight>> {
+    ) -> color_eyre::eyre::Result<Option<unc_primitives::types::BlockHeight>> {
         if context.global_context.offline {
             return Ok(Some(
-                CustomType::<near_primitives::types::BlockHeight>::new(
+                CustomType::<unc_primitives::types::BlockHeight>::new(
                     "Enter recent block height:",
                 )
                 .prompt()?,

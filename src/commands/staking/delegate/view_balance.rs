@@ -23,7 +23,7 @@ impl ViewBalanceContext {
         scope: &<ViewBalance as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let account_id = previous_context.account_id.clone();
-        let validator_account_id: near_primitives::types::AccountId =
+        let validator_account_id: unc_primitives::types::AccountId =
             scope.validator_account_id.clone().into();
         let interacting_with_account_ids = vec![account_id.clone(), validator_account_id.clone()];
 
@@ -40,9 +40,9 @@ impl ViewBalanceContext {
                 };
 
                 eprintln!("Delegated stake balance with validator <{validator_account_id}> by <{account_id}>:");
-                eprintln!("      Staked balance:     {:>38}", near_token::NearToken::from_yoctonear(user_staked_balance).to_string());
-                eprintln!("      Unstaked balance:   {:>38} {withdrawal_availability_message}", near_token::NearToken::from_yoctonear(user_unstaked_balance).to_string());
-                eprintln!("      Total balance:      {:>38}", near_token::NearToken::from_yoctonear(user_total_balance).to_string());
+                eprintln!("      Staked balance:     {:>38}", unc_token::UncToken::from_yoctounc(user_staked_balance).to_string());
+                eprintln!("      Unstaked balance:   {:>38} {withdrawal_availability_message}", unc_token::UncToken::from_yoctounc(user_unstaked_balance).to_string());
+                eprintln!("      Total balance:      {:>38}", unc_token::UncToken::from_yoctounc(user_total_balance).to_string());
 
                 Ok(())
             }
@@ -71,9 +71,9 @@ impl ViewBalance {
 
 pub fn get_user_staked_balance(
     network_config: &crate::config::NetworkConfig,
-    block_reference: &near_primitives::types::BlockReference,
-    validator_account_id: &near_primitives::types::AccountId,
-    account_id: &near_primitives::types::AccountId,
+    block_reference: &unc_primitives::types::BlockReference,
+    validator_account_id: &unc_primitives::types::AccountId,
+    account_id: &unc_primitives::types::AccountId,
 ) -> color_eyre::eyre::Result<u128> {
     Ok(network_config
         .json_rpc_client()
@@ -98,9 +98,9 @@ pub fn get_user_staked_balance(
 
 pub fn get_user_unstaked_balance(
     network_config: &crate::config::NetworkConfig,
-    block_reference: &near_primitives::types::BlockReference,
-    validator_account_id: &near_primitives::types::AccountId,
-    account_id: &near_primitives::types::AccountId,
+    block_reference: &unc_primitives::types::BlockReference,
+    validator_account_id: &unc_primitives::types::AccountId,
+    account_id: &unc_primitives::types::AccountId,
 ) -> color_eyre::eyre::Result<u128> {
     Ok(network_config
         .json_rpc_client()
@@ -125,9 +125,9 @@ pub fn get_user_unstaked_balance(
 
 pub fn get_user_total_balance(
     network_config: &crate::config::NetworkConfig,
-    block_reference: &near_primitives::types::BlockReference,
-    validator_account_id: &near_primitives::types::AccountId,
-    account_id: &near_primitives::types::AccountId,
+    block_reference: &unc_primitives::types::BlockReference,
+    validator_account_id: &unc_primitives::types::AccountId,
+    account_id: &unc_primitives::types::AccountId,
 ) -> color_eyre::eyre::Result<u128> {
     Ok(network_config
         .json_rpc_client()
@@ -152,8 +152,8 @@ pub fn get_user_total_balance(
 
 pub fn is_account_unstaked_balance_available_for_withdrawal(
     network_config: &crate::config::NetworkConfig,
-    validator_account_id: &near_primitives::types::AccountId,
-    account_id: &near_primitives::types::AccountId,
+    validator_account_id: &unc_primitives::types::AccountId,
+    account_id: &unc_primitives::types::AccountId,
 ) -> color_eyre::eyre::Result<bool> {
     network_config
         .json_rpc_client()
@@ -163,8 +163,8 @@ pub fn is_account_unstaked_balance_available_for_withdrawal(
             serde_json::to_vec(&serde_json::json!({
                 "account_id": account_id.to_string(),
             }))?,
-            near_primitives::types::BlockReference::Finality(
-                near_primitives::types::Finality::Final,
+            unc_primitives::types::BlockReference::Finality(
+                unc_primitives::types::Finality::Final,
             ),
         )
         .wrap_err_with(||{

@@ -14,7 +14,7 @@ pub struct SignedTransaction {
 #[derive(Debug, Clone)]
 pub struct SignedTransactionContext {
     config: crate::config::Config,
-    signed_transaction: near_primitives::transaction::SignedTransaction,
+    signed_transaction: unc_primitives::transaction::SignedTransaction,
 }
 
 impl SignedTransactionContext {

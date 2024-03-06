@@ -92,7 +92,7 @@ pub fn function_args(
         }
         super::call_function_args_type::FunctionArgsType::TextArgs => Ok(args.into_bytes()),
         super::call_function_args_type::FunctionArgsType::Base64Args => {
-            Ok(near_primitives::serialize::from_base64(&args)
+            Ok(unc_primitives::serialize::from_base64(&args)
                 .map_err(|_| color_eyre::eyre::eyre!("Data cannot be decoded with base64"))?)
         }
         super::call_function_args_type::FunctionArgsType::FileArgs => {

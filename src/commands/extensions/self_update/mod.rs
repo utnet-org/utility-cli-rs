@@ -1,7 +1,7 @@
 #[cfg(windows)]
-const BIN_NAME: &str = "near.exe";
+const BIN_NAME: &str = "unc.exe";
 #[cfg(not(windows))]
-const BIN_NAME: &str = "near";
+const BIN_NAME: &str = "unc";
 
 use color_eyre::{eyre::WrapErr, owo_colors::OwoColorize};
 
@@ -19,7 +19,7 @@ impl SelfUpdateCommandContext {
         _scope: &<SelfUpdateCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let status = self_update::backends::github::Update::configure()
-            .repo_owner("near")
+            .repo_owner("unc")
             .repo_name("unc-cli-rs")
             .bin_path_in_archive(
                 format!("unc-cli-rs-{}/{}", self_update::get_target(), BIN_NAME).as_str(),
@@ -30,20 +30,20 @@ impl SelfUpdateCommandContext {
             .build()
             .wrap_err("Failed to build self_update")?
             .update()
-            .wrap_err("Failed to update near CLI")?;
+            .wrap_err("Failed to update unc CLI")?;
         if let self_update::Status::Updated(release) = status {
             println!(
                 "\n{}{}{}\n",
-                "Welcome to `near` CLI v".green().bold(),
+                "Welcome to `unc` CLI v".green().bold(),
                 release.green().bold(),
                 "!".green().bold()
             );
             println!("Report any bugs:\n");
-            println!("\thttps://github.com/near/unc-cli-rs/issues\n");
+            println!("\thttps://github.com/unc/unc-cli-rs/issues\n");
             println!("What's new:\n");
             println!(
                 "\t{}{}\n",
-                "https://github.com/near/unc-cli-rs/releases/tag/v".truecolor(0, 160, 150),
+                "https://github.com/unc/unc-cli-rs/releases/tag/v".truecolor(0, 160, 150),
                 release.truecolor(0, 160, 150)
             );
         }
@@ -54,9 +54,9 @@ impl SelfUpdateCommandContext {
 
 pub fn get_latest_version() -> color_eyre::eyre::Result<String> {
     Ok(self_update::backends::github::Update::configure()
-        .repo_owner("near")
+        .repo_owner("unc")
         .repo_name("unc-cli-rs")
-        .bin_name("near")
+        .bin_name("unc")
         .current_version(self_update::cargo_crate_version!())
         .build()
         .wrap_err("Failed to build self_update")?

@@ -1,41 +1,41 @@
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = super::TokensCommandsContext)]
-#[interactive_clap(output_context = SendNearCommandContext)]
-pub struct SendNearCommand {
+#[interactive_clap(output_context = SenduncCommandContext)]
+pub struct SenduncCommand {
     #[interactive_clap(skip_default_input_arg)]
     /// What is the receiver account ID?
     receiver_account_id: crate::types::account_id::AccountId,
-    /// How many NEAR Tokens do you want to transfer? (example: 10NEAR or 0.5near or 10000yoctonear)
-    amount_in_near: crate::types::near_token::NearToken,
+    /// How many unc Tokens do you want to transfer? (example: 10unc or 0.5unc or 10000yoctounc)
+    amount_in_unc: crate::types::unc_token::UncToken,
     #[interactive_clap(named_arg)]
     /// Select network
     network_config: crate::network_for_transaction::NetworkForTransactionArgs,
 }
 
 #[derive(Debug, Clone)]
-pub struct SendNearCommandContext {
+pub struct SenduncCommandContext {
     global_context: crate::GlobalContext,
-    signer_account_id: near_primitives::types::AccountId,
-    receiver_account_id: near_primitives::types::AccountId,
-    amount_in_near: crate::types::near_token::NearToken,
+    signer_account_id: unc_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
+    amount_in_unc: crate::types::unc_token::UncToken,
 }
 
-impl SendNearCommandContext {
+impl SenduncCommandContext {
     pub fn from_previous_context(
         previous_context: super::TokensCommandsContext,
-        scope: &<SendNearCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        scope: &<SenduncCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         Ok(Self {
             global_context: previous_context.global_context,
             signer_account_id: previous_context.owner_account_id,
             receiver_account_id: scope.receiver_account_id.clone().into(),
-            amount_in_near: scope.amount_in_near,
+            amount_in_unc: scope.amount_in_unc,
         })
     }
 }
 
-impl From<SendNearCommandContext> for crate::commands::ActionContext {
-    fn from(item: SendNearCommandContext) -> Self {
+impl From<SenduncCommandContext> for crate::commands::ActionContext {
+    fn from(item: SenduncCommandContext) -> Self {
         let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
             std::sync::Arc::new({
                 let signer_account_id = item.signer_account_id.clone();
@@ -45,9 +45,9 @@ impl From<SendNearCommandContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: receiver_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::Transfer(
-                            near_primitives::transaction::TransferAction {
-                                deposit: item.amount_in_near.as_yoctonear(),
+                        actions: vec![unc_primitives::transaction::Action::Transfer(
+                            unc_primitives::transaction::TransferAction {
+                                deposit: item.amount_in_unc.as_yoctounc(),
                             },
                         )],
                     })
@@ -71,7 +71,7 @@ impl From<SendNearCommandContext> for crate::commands::ActionContext {
     }
 }
 
-impl SendNearCommand {
+impl SenduncCommand {
     pub fn input_receiver_account_id(
         context: &super::TokensCommandsContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {

@@ -10,10 +10,10 @@ pub struct PrintKeypairToTerminal {
 #[derive(Debug, Clone)]
 pub struct PrintKeypairToTerminalContext {
     global_context: crate::GlobalContext,
-    signer_account_id: near_primitives::types::AccountId,
-    permission: near_primitives::account::AccessKeyPermission,
+    signer_account_id: unc_primitives::types::AccountId,
+    permission: unc_primitives::account::AccessKeyPermission,
     key_pair_properties: crate::common::KeyPairProperties,
-    public_key: near_crypto::PublicKey,
+    public_key: unc_crypto::PublicKey,
 }
 
 impl PrintKeypairToTerminalContext {
@@ -41,15 +41,15 @@ impl From<PrintKeypairToTerminalContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: signer_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::AddKey(
-                            near_primitives::transaction::AddKeyAction {
+                        actions: vec![unc_primitives::transaction::Action::AddKey(Box::new(
+                            unc_primitives::transaction::AddKeyAction {
                                 public_key: item.public_key.clone(),
-                                access_key: near_primitives::account::AccessKey {
+                                access_key: unc_primitives::account::AccessKey {
                                     nonce: 0,
                                     permission: item.permission.clone(),
                                 },
                             },
-                        )],
+                        ))],
                     })
                 }
             });

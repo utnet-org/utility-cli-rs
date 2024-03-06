@@ -22,7 +22,7 @@ pub struct AddAction {
 /// Select an action that you want to add to the action:
 pub enum ActionSubcommand {
     #[strum_discriminants(strum(
-        message = "transfer             - The transfer is carried out in NEAR tokens"
+        message = "transfer             - The transfer is carried out in unc tokens"
     ))]
     /// Specify data for transfer tokens
     Transfer(self::transfer::TransferAction),
@@ -31,8 +31,8 @@ pub enum ActionSubcommand {
     ))]
     /// Specify data to call the function
     FunctionCall(self::call_function::FunctionCallAction),
-    #[strum_discriminants(strum(message = "stake                - Stake NEAR Tokens"))]
-    /// Specify data to stake NEAR Tokens
+    #[strum_discriminants(strum(message = "stake                - Stake unc Tokens"))]
+    /// Specify data to stake unc Tokens
     Stake(self::stake::StakeAction),
     #[strum_discriminants(strum(message = "create-account       - Create a new sub-account"))]
     /// Specify data to create a sub-account

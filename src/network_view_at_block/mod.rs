@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use color_eyre::eyre::ContextCompat;
-use near_primitives::types::{BlockId, BlockReference, Finality};
+use unc_primitives::types::{BlockId, BlockReference, Finality};
 use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 
 pub type OnAfterGettingBlockReferenceCallback =
@@ -10,7 +10,7 @@ pub type OnAfterGettingBlockReferenceCallback =
 #[derive(Clone)]
 pub struct ArgsForViewContext {
     pub config: crate::config::Config,
-    pub interacting_with_account_ids: Vec<near_primitives::types::AccountId>,
+    pub interacting_with_account_ids: Vec<unc_primitives::types::AccountId>,
     pub on_after_getting_block_reference_callback: OnAfterGettingBlockReferenceCallback,
 }
 
@@ -107,7 +107,7 @@ impl NowContext {
 #[interactive_clap(output_context = AtBlockHeightContext)]
 pub struct AtBlockHeight {
     /// Type the block ID height:
-    block_id_height: near_primitives::types::BlockHeight,
+    block_id_height: unc_primitives::types::BlockHeight,
 }
 
 #[derive(Debug, Clone)]
@@ -145,7 +145,7 @@ impl BlockIdHashContext {
         scope: &<BlockIdHash as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let block_reference = BlockReference::BlockId(BlockId::Hash(
-            near_primitives::hash::CryptoHash::from_str(&scope.block_id_hash).unwrap(),
+            unc_primitives::hash::CryptoHash::from_str(&scope.block_id_hash).unwrap(),
         ));
 
         (previous_context.on_after_getting_block_reference_callback)(

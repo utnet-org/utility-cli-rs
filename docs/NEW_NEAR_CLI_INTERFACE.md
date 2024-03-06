@@ -1,24 +1,24 @@
-# New NEAR CLI interface
+# New unc CLI interface
 
-NEAR CLI is built for:
-- **NEAR dApp developers**, who build smart-contracts, UIs, and tooling on NEAR.
+unc CLI is built for:
+- **unc dApp developers**, who build smart-contracts, UIs, and tooling on unc.
 - **Tech-savvy people** automating their routines.
 - **Validators**
 
-NEAR CLI is using extensions to satisfy all groups of users.
-- **Core NEAR CLI** commands should be usefull for all groups of users.
+unc CLI is using extensions to satisfy all groups of users.
+- **Core unc CLI** commands should be usefull for all groups of users.
 - **Extensions** are used by a particular group or several groups of users.
-- **Core NEAR CLI** is a single binary, there is no extensions that are installed *by default*.
-- Each extension is a separate binary that can be installed and executed from **NEAR CLI**.
-- **Core NEAR CLI** extensions system only allows to introduce top-level commands through its design.
+- **Core unc CLI** is a single binary, there is no extensions that are installed *by default*.
+- Each extension is a separate binary that can be installed and executed from **unc CLI**.
+- **Core unc CLI** extensions system only allows to introduce top-level commands through its design.
 
 
-NEAR CLI UX principles:
+unc CLI UX principles:
 - All altering actions should have a confirmation step with an option to skip confirmation with an explicit command line parameter (e.g. `send` at the end of the command)
 - All direct children commands of a single parent command should be aligned (either represent an action or a resource, but never a mix of those on the same hierarchy level): `contract` -> `state` (resource) and `contract` -> `deploy` (action) are not aligned, so it should be either `contract` -> `get-state` + `contract` -> `deploy` or `contract` -> `state` -> `view` + `contract` -> `code` -> `deploy`
 - Interactive mode should look like: `command - description`. It will help people to learn the commands.
 
-## Core NEAR CLI commands
+## Core unc CLI commands
 
 ```
 account
@@ -62,7 +62,7 @@ account
         - transaction signature options here (see below)
       - use-manually-provided-public-key "ed25519:..." network <"mainnet"|"testnet"|...>
         - transaction signature options here (see below)
-    - grant-function-call-access --receiver-account-id <account-id> --method-names 'comma,separated,list' --allowance '0.25NEAR'
+    - grant-function-call-access --receiver-account-id <account-id> --method-names 'comma,separated,list' --allowance '0.25unc'
       - (use the same follow-up parameters as for `grant-full-access`)
 
   - delete-key <account-id> <public-key> network <"mainnet"|"testnet"|...>
@@ -89,7 +89,7 @@ contract
 
 ```
 tokens <owner-account-id>
-  - send-near <receiver-account-id> <amount-in-NEAR> network <"mainnet"|"testnet"|...>
+  - send-unc <receiver-account-id> <amount-in-unc> network <"mainnet"|"testnet"|...>
     - transaction signature options here (see below)
 
   - send-ft <ft-contract-account-id> <receiver-account-id> <amount-in-fungible-tokens> network <"mainnet"|"testnet"|...>
@@ -98,7 +98,7 @@ tokens <owner-account-id>
   - send-nft <nft-contract-account-id> <receiver-account-id> <token-id> network <"mainnet"|"testnet"|...>
     - transaction signature options here (see below)
 
-  - view-near-balance network <"mainnet"|"testnet"|...> <now|at-timestamp|at-block-height|at-block-hash>
+  - view-unc-balance network <"mainnet"|"testnet"|...> <now|at-timestamp|at-block-height|at-block-hash>
 
   - view-ft-balance <ft-contract-account-id> network <"mainnet"|"testnet"|...> <now|at-timestamp|at-block-height|at-block-hash>
 
@@ -139,7 +139,7 @@ config
 local-keys
 (WIP: maybe merge into the `account` command)
   - add-using
-    - near-wallet
+    - unc-wallet
     - seed-phrase <seed-phrase>
     - ledger
     - private-key <private-key>
@@ -154,7 +154,7 @@ Transaction signature options:
   * `sign-with-seed-phrase <seed-phrase> --hd-path "m/44'/397'/0'"`
   * `sign-with-plaintext-private-key "ed25519:..."`
 
-### Top-level `Core NEAR CLI` flags
+### Top-level `Core unc CLI` flags
 ```txt
 --verbose (print all available error info)
 --json (show answer in json format)
@@ -162,7 +162,7 @@ Transaction signature options:
 ```
 
 ## Extensions
-Extensions design is a work in progress. They are here mostly to show that we haven't forgotten about particular functionality and that this functionality will not be a part of `Core NEAR CLI`.
+Extensions design is a work in progress. They are here mostly to show that we haven't forgotten about particular functionality and that this functionality will not be a part of `Core unc CLI`.
 
 ### `developer` extension
 ```txt

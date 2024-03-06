@@ -1,7 +1,7 @@
 #[derive(Eq, Hash, Clone, Debug, PartialEq)]
-pub struct ApiKey(pub near_jsonrpc_client::auth::ApiKey);
+pub struct ApiKey(pub unc_jsonrpc_client::auth::ApiKey);
 
-impl From<ApiKey> for near_jsonrpc_client::auth::ApiKey {
+impl From<ApiKey> for unc_jsonrpc_client::auth::ApiKey {
     fn from(api_key: ApiKey) -> Self {
         api_key.0
     }
@@ -17,7 +17,7 @@ impl std::str::FromStr for ApiKey {
     type Err = color_eyre::eyre::Report;
 
     fn from_str(api_key: &str) -> Result<Self, Self::Err> {
-        Ok(Self(near_jsonrpc_client::auth::ApiKey::new(api_key)?))
+        Ok(Self(unc_jsonrpc_client::auth::ApiKey::new(api_key)?))
     }
 }
 

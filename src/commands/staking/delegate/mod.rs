@@ -23,7 +23,7 @@ pub struct StakeDelegation {
 #[derive(Debug, Clone)]
 pub struct StakeDelegationContext {
     global_context: crate::GlobalContext,
-    account_id: near_primitives::types::AccountId,
+    account_id: unc_primitives::types::AccountId,
 }
 
 impl StakeDelegationContext {
@@ -61,38 +61,38 @@ pub enum StakeDelegationCommand {
     /// View the delegated stake balance for a given account
     ViewBalance(self::view_balance::ViewBalance),
     #[strum_discriminants(strum(
-        message = "deposit-and-stake    - Delegate NEAR tokens to a validator's staking pool"
+        message = "deposit-and-stake    - Delegate unc tokens to a validator's staking pool"
     ))]
-    /// Delegate NEAR tokens to a validator's staking pool
+    /// Delegate unc tokens to a validator's staking pool
     DepositAndStake(self::deposit_and_stake::DepositAndStake),
     #[strum_discriminants(strum(
-        message = "stake                - Delegate a certain amount of previously deposited or unstaked NEAR tokens to a validator's staking pool"
+        message = "stake                - Delegate a certain amount of previously deposited or unstaked unc tokens to a validator's staking pool"
     ))]
-    /// Delegate a certain amount of previously deposited or unstaked NEAR tokens to a validator's staking pool
+    /// Delegate a certain amount of previously deposited or unstaked unc tokens to a validator's staking pool
     Stake(self::stake::Stake),
     #[strum_discriminants(strum(
-        message = "stake-all            - Delegate all previously deposited or unstaked NEAR tokens to a validator's staking pool"
+        message = "stake-all            - Delegate all previously deposited or unstaked unc tokens to a validator's staking pool"
     ))]
-    /// Delegate all previously deposited or unstaked NEAR tokens to a validator's staking pool
+    /// Delegate all previously deposited or unstaked unc tokens to a validator's staking pool
     StakeAll(self::stake_all::StakeAll),
     #[strum_discriminants(strum(
-        message = "unstake              - Unstake a certain amount of delegated NEAR tokens from a avalidator's staking pool"
+        message = "unstake              - Unstake a certain amount of delegated unc tokens from a avalidator's staking pool"
     ))]
-    /// Unstake a certain amount of delegated NEAR tokens from a avalidator's staking pool
+    /// Unstake a certain amount of delegated unc tokens from a avalidator's staking pool
     Unstake(self::unstake::Unstake),
     #[strum_discriminants(strum(
-        message = "unstake-all          - Unstake all delegated NEAR tokens from a avalidator's staking pool"
+        message = "unstake-all          - Unstake all delegated unc tokens from a avalidator's staking pool"
     ))]
-    /// Unstake all delegated NEAR tokens from a avalidator's staking pool
+    /// Unstake all delegated unc tokens from a avalidator's staking pool
     UnstakeAll(self::unstake_all::UnstakeAll),
     #[strum_discriminants(strum(
-        message = "withdraw             - Withdraw a certain amount of unstaked NEAR tokens from a avalidator's staking pool"
+        message = "withdraw             - Withdraw a certain amount of unstaked unc tokens from a avalidator's staking pool"
     ))]
-    /// Withdraw a certain amount of unstaked NEAR tokens from a avalidator's staking pool
+    /// Withdraw a certain amount of unstaked unc tokens from a avalidator's staking pool
     Withdraw(self::withdraw::Withdraw),
     #[strum_discriminants(strum(
-        message = "withdraw-all         - Withdraw all unstaked NEAR tokens from a avalidator's staking pool"
+        message = "withdraw-all         - Withdraw all unstaked unc tokens from a avalidator's staking pool"
     ))]
-    /// Withdraw all unstaked NEAR tokens from a avalidator's staking pool
+    /// Withdraw all unstaked unc tokens from a avalidator's staking pool
     WithdrawAll(self::withdraw_all::WithdrawAll),
 }

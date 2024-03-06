@@ -1,10 +1,8 @@
 use std::str::FromStr;
 
 use color_eyre::eyre::{ContextCompat, WrapErr};
-use inquire::{CustomType, Select, Text};
-
-use near_primitives::borsh::BorshSerialize;
-use slip10::BIP32Path;
+use inquire::{CustomType, Text};
+use unc_primitives::borsh;
 
 use crate::common::JsonRpcClientExt;
 use crate::common::RpcQueryResponseExt;
@@ -40,84 +38,15 @@ pub struct SignLedgerContext {
     on_after_sending_transaction_callback:
         crate::transaction_signature_options::OnAfterSendingTransactionCallback,
 }
-const BLIND_SIGN_MEMO: &str = "Blind signature means that transaction is prepared by CLI, but cannot be reviewed on the Ledger device. \
-    In order to be absolutely sure that the transaction you are signing is not forged, take the constructed transaction, \
-    verify its content using NEAR CLI on another host or use any other tool capable of displaying unsigned NEAR transactions, \
-    and confirm that the SHA256 hash matches the one displayed above and another identical one, that will be displayed on your Ledger device after confirming the prompt. \
-    Following helper command on NEAR CLI can be used:";
 
 impl SignLedgerContext {
-    fn input_blind_agree() -> color_eyre::eyre::Result<bool> {
-        let options: Vec<&str> = vec!["Yes", "No"];
-
-        Ok(
-            Select::new("Do you agree to continue with blind signature? ", options)
-                .prompt()
-                .map(|selected| selected == "Yes")?,
-        )
-    }
-
-    fn blind_sign_subflow(
-        hash: near_primitives::hash::CryptoHash,
-        hd_path: BIP32Path,
-        unsigned_transaction: near_primitives::transaction::Transaction,
-    ) -> color_eyre::eyre::Result<near_crypto::Signature> {
-        eprintln!("\n\nBuffer overflow on Ledger device occured. Transaction is too large for normal signature.");
-        eprintln!("\nThe following is Base58-encoded SHA-256 hash of unsigned transaction:");
-        eprintln!("{}", hash);
-
-        eprintln!(
-            "\nUnsigned transaction (serialized as base64):\n{}\n",
-            crate::types::transaction::TransactionAsBase64::from(unsigned_transaction)
-        );
-        eprintln!("{}", BLIND_SIGN_MEMO);
-        eprintln!(
-            "$ {} transaction print-transaction unsigned\n\n",
-            crate::common::get_near_exec_path()
-        );
-
-        eprintln!("Make sure to enable blind sign in NEAR app's settings on Ledger device\n");
-        let agree = Self::input_blind_agree()?;
-        if agree {
-            eprintln!(
-                "Confirm transaction blind signing on your Ledger device (HD Path: {})",
-                hd_path,
-            );
-            let result = near_ledger::blind_sign_transaction(hash, hd_path);
-            let signature = result.map_err(|err| {
-                match err {
-                    near_ledger::NEARLedgerError::BlindSignatureDisabled => {
-                        color_eyre::Report::msg("Blind signature is disabled in NEAR app's settings on Ledger device".to_string())
-                    },
-                    near_ledger::NEARLedgerError::BlindSignatureNotSupported => {
-                        color_eyre::Report::msg("Blind signature is not supported by the version of NEAR app installed on Ledger device. \
-                        Version of the app with the feature available is tracked in https://github.com/LedgerHQ/app-near/pull/32".to_string())
-                    },
-                    err => {
-                        color_eyre::Report::msg(format!(
-                            "Error occurred while signing the transaction: {:?}",
-                            err
-                        ))
-                    }
-                }
-            })?;
-            let signature =
-                near_crypto::Signature::from_parts(near_crypto::KeyType::ED25519, &signature)
-                    .wrap_err("Signature is not expected to fail on deserialization")?;
-
-            Ok(signature)
-        } else {
-            Err(color_eyre::Report::msg("signing with ledger aborted"))
-        }
-    }
-
     pub fn from_previous_context(
         previous_context: crate::commands::TransactionContext,
         scope: &<SignLedger as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let network_config = previous_context.network_config.clone();
         let seed_phrase_hd_path: slip10::BIP32Path = scope.seed_phrase_hd_path.clone().into();
-        let public_key: near_crypto::PublicKey = scope.signer_public_key.clone().into();
+        let public_key: unc_crypto::PublicKey = scope.signer_public_key.clone().into();
 
         let (nonce, block_hash) = if previous_context.global_context.offline {
             (
@@ -135,7 +64,7 @@ impl SignLedgerContext {
                 .blocking_call_view_access_key(
                     &previous_context.prepopulated_transaction.signer_id,
                     &public_key,
-                    near_primitives::types::BlockReference::latest()
+                    unc_primitives::types::BlockReference::latest()
                 )
                 .wrap_err_with(||
                     format!("Cannot sign a transaction due to an error while fetching the most recent nonce value on network <{}>", network_config.network_name)
@@ -148,7 +77,7 @@ impl SignLedgerContext {
             (current_nonce + 1, rpc_query_response.block_hash)
         };
 
-        let mut unsigned_transaction = near_primitives::transaction::Transaction {
+        let mut unsigned_transaction = unc_primitives::transaction::Transaction {
             public_key: scope.signer_public_key.clone().into(),
             block_hash,
             nonce,
@@ -164,31 +93,23 @@ impl SignLedgerContext {
             seed_phrase_hd_path,
         );
 
-        let signature = match near_ledger::sign_transaction(
-            unsigned_transaction
-                .try_to_vec()
+        let signature = match unc_ledger::sign_transaction(
+            borsh::to_vec(&unsigned_transaction)
                 .wrap_err("Transaction is not expected to fail on serialization")?,
             seed_phrase_hd_path.clone(),
         ) {
             Ok(signature) => {
-                near_crypto::Signature::from_parts(near_crypto::KeyType::ED25519, &signature)
+                unc_crypto::Signature::from_parts(unc_crypto::KeyType::ED25519, &signature)
                     .wrap_err("Signature is not expected to fail on deserialization")?
             }
-            Err(near_ledger::NEARLedgerError::BufferOverflow { transaction_hash }) => {
-                Self::blind_sign_subflow(
-                    transaction_hash,
-                    seed_phrase_hd_path,
-                    unsigned_transaction.clone(),
-                )?
-            }
-            Err(near_ledger_error) => {
+            Err(unc_ledger_error) => {
                 return Err(color_eyre::Report::msg(format!(
                     "Error occurred while signing the transaction: {:?}",
-                    near_ledger_error
+                    unc_ledger_error
                 )));
             }
         };
-        let signed_transaction = near_primitives::transaction::SignedTransaction::new(
+        let signed_transaction = unc_primitives::transaction::SignedTransaction::new(
             signature.clone(),
             unsigned_transaction,
         );
@@ -254,18 +175,18 @@ impl interactive_clap::FromCli for SignLedger {
             "Please allow getting the PublicKey on Ledger device (HD Path: {})",
             seed_phrase_hd_path
         );
-        let public_key = match near_ledger::get_public_key(seed_phrase_hd_path.clone().into())
-            .map_err(|near_ledger_error| {
+        let public_key = match unc_ledger::get_public_key(seed_phrase_hd_path.clone().into())
+            .map_err(|unc_ledger_error| {
                 color_eyre::Report::msg(format!(
                     "An error occurred while trying to get PublicKey from Ledger device: {:?}",
-                    near_ledger_error
+                    unc_ledger_error
                 ))
             }) {
             Ok(public_key) => public_key,
             Err(err) => return interactive_clap::ResultFromCli::Err(Some(clap_variant), err),
         };
         let signer_public_key: crate::types::public_key::PublicKey =
-            near_crypto::PublicKey::ED25519(near_crypto::ED25519PublicKey::from(
+            unc_crypto::PublicKey::ED25519(unc_crypto::ED25519PublicKey::from(
                 public_key.to_bytes(),
             ))
             .into();

@@ -1,8 +1,3 @@
-use crate::common::{CallResultExt, JsonRpcClientExt};
-use color_eyre::eyre::WrapErr;
-
-const STORAGE_COST_PER_BYTE: u128 = 10u128.pow(19);
-
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = super::ContractContext)]
 #[interactive_clap(output_context = AccountContext)]
@@ -25,42 +20,10 @@ impl AccountContext {
     ) -> color_eyre::eyre::Result<Self> {
         let on_after_getting_block_reference_callback: crate::network_view_at_block::OnAfterGettingBlockReferenceCallback =
             std::sync::Arc::new({
-                let account_id = scope.account_id.clone();
+                let _account_id = scope.account_id.clone();
 
-                move |network_config, block_reference| {
-                    let contract_account_id = (previous_context.get_contract_account_id)(network_config)?;
-
-                    let storage_balance = network_config
-                        .json_rpc_client()
-                        .blocking_call_view_function(
-                            &contract_account_id,
-                            "storage_balance_of",
-                            serde_json::to_vec(&serde_json::json!({
-                                "account_id": account_id.to_string(),
-                            }))?,
-                            block_reference.clone(),
-                        )
-                        .wrap_err_with(|| {
-                            format!("Failed to fetch query for view method: 'storage_balance_of' (contract <{}> on network <{}>)",
-                                contract_account_id,
-                                network_config.network_name
-                            )
-                        })?
-                        .parse_result_from_json::<near_socialdb_client::StorageBalance>()
-                        .wrap_err("Failed to parse return value of view function call for StorageBalance.")?;
-                    eprintln!("storage balance for <{account_id}>:");
-                    eprintln!(" {:<13} {:>10}   ({} [{:>28} yoctoNEAR])",
-                        "available:",
-                        bytesize::ByteSize(u64::try_from(storage_balance.available / STORAGE_COST_PER_BYTE).unwrap()),
-                        near_token::NearToken::from_yoctonear(storage_balance.available),
-                        storage_balance.available
-                    );
-                    eprintln!(" {:<13} {:>10}   ({} [{:>28} yoctoNEAR])",
-                        "total:",
-                        bytesize::ByteSize(u64::try_from(storage_balance.total / STORAGE_COST_PER_BYTE).unwrap()),
-                        near_token::NearToken::from_yoctonear(storage_balance.total),
-                        storage_balance.total
-                    );
+                move |network_config, _block_reference| {
+                    let _contract_account_id = (previous_context.get_contract_account_id)(network_config)?;
 
                     Ok(())
                 }

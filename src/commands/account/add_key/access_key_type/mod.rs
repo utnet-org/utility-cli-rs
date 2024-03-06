@@ -5,8 +5,8 @@ use inquire::{CustomType, Select, Text};
 #[derive(Debug, Clone)]
 pub struct AccessTypeContext {
     pub global_context: crate::GlobalContext,
-    pub signer_account_id: near_primitives::types::AccountId,
-    pub permission: near_primitives::account::AccessKeyPermission,
+    pub signer_account_id: unc_primitives::types::AccountId,
+    pub permission: unc_primitives::account::AccessKeyPermission,
 }
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
@@ -20,8 +20,8 @@ pub struct FullAccessType {
 #[derive(Debug, Clone)]
 pub struct FullAccessTypeContext {
     global_context: crate::GlobalContext,
-    signer_account_id: near_primitives::types::AccountId,
-    permission: near_primitives::account::AccessKeyPermission,
+    signer_account_id: unc_primitives::types::AccountId,
+    permission: unc_primitives::account::AccessKeyPermission,
 }
 
 impl FullAccessTypeContext {
@@ -32,7 +32,7 @@ impl FullAccessTypeContext {
         Ok(Self {
             global_context: previous_context.global_context,
             signer_account_id: previous_context.owner_account_id.into(),
-            permission: near_primitives::account::AccessKeyPermission::FullAccess,
+            permission: unc_primitives::account::AccessKeyPermission::FullAccess,
         })
     }
 }
@@ -53,7 +53,7 @@ impl From<FullAccessTypeContext> for AccessTypeContext {
 pub struct FunctionCallType {
     #[interactive_clap(long)]
     #[interactive_clap(skip_default_input_arg)]
-    allowance: Option<crate::types::near_token::NearToken>,
+    allowance: Option<crate::types::unc_token::UncToken>,
     #[interactive_clap(long)]
     /// Enter a receiver to use by this access key to pay for function call gas and transaction fees:
     receiver_account_id: crate::types::account_id::AccountId,
@@ -67,8 +67,8 @@ pub struct FunctionCallType {
 #[derive(Debug, Clone)]
 pub struct FunctionCallTypeContext {
     global_context: crate::GlobalContext,
-    signer_account_id: near_primitives::types::AccountId,
-    allowance: Option<crate::types::near_token::NearToken>,
+    signer_account_id: unc_primitives::types::AccountId,
+    allowance: Option<crate::types::unc_token::UncToken>,
     receiver_account_id: crate::types::account_id::AccountId,
     method_names: crate::types::vec_string::VecString,
 }
@@ -93,9 +93,9 @@ impl From<FunctionCallTypeContext> for AccessTypeContext {
         Self {
             global_context: item.global_context,
             signer_account_id: item.signer_account_id,
-            permission: near_primitives::account::AccessKeyPermission::FunctionCall(
-                near_primitives::account::FunctionCallPermission {
-                    allowance: item.allowance.map(|allowance| allowance.as_yoctonear()),
+            permission: unc_primitives::account::AccessKeyPermission::FunctionCall(
+                unc_primitives::account::FunctionCallPermission {
+                    allowance: item.allowance.map(|allowance| allowance.as_yoctounc()),
                     receiver_id: item.receiver_account_id.to_string(),
                     method_names: item.method_names.into(),
                 },
@@ -144,7 +144,7 @@ impl FunctionCallType {
 
     pub fn input_allowance(
         _context: &super::AddKeyCommandContext,
-    ) -> color_eyre::eyre::Result<Option<crate::types::near_token::NearToken>> {
+    ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
         #[derive(strum_macros::Display)]
         enum ConfirmOptions {
@@ -159,10 +159,10 @@ impl FunctionCallType {
         )
         .prompt()?;
         if let ConfirmOptions::Yes = select_choose_input {
-            let allowance_near_balance: crate::types::near_token::NearToken =
-                    CustomType::new("Enter an allowance which is a balance limit to use by this access key to pay for function call gas and transaction fees (example: 10NEAR or 0.5near or 10000yoctonear):")
+            let allowance_unc_balance: crate::types::unc_token::UncToken =
+                    CustomType::new("Enter an allowance which is a balance limit to use by this access key to pay for function call gas and transaction fees (example: 10unc or 0.5unc or 10000yoctounc):")
                     .prompt()?;
-            Ok(Some(allowance_near_balance))
+            Ok(Some(allowance_unc_balance))
         } else {
             Ok(None)
         }

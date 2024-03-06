@@ -65,7 +65,7 @@ fn main() -> crate::common::CliResult {
         crate::commands::extensions::self_update::get_latest_version()
     });
 
-    let near_cli_exec_path = crate::common::get_near_exec_path();
+    let unc_cli_exec_path = crate::common::get_unc_exec_path();
 
     let cli = match Cmd::try_parse() {
         Ok(cli) => cli,
@@ -81,7 +81,7 @@ fn main() -> crate::common::CliResult {
                                 eprintln!(
                                     "{}",
                                     shell_words::join(
-                                        std::iter::once(near_cli_exec_path).chain(vec_cmd)
+                                        std::iter::once(unc_cli_exec_path).chain(vec_cmd)
                                     )
                                 );
                             }
@@ -112,15 +112,15 @@ fn main() -> crate::common::CliResult {
         interactive_clap::ResultFromCli::Ok(cli_cmd)
         | interactive_clap::ResultFromCli::Cancel(Some(cli_cmd)) => {
             eprintln!(
-                "Here is your console command if you need to script it or re-run:\n{}",
+                "\nHere is your console command if you need to script it or re-run:\n{}",
                 shell_words::join(
-                    std::iter::once(&near_cli_exec_path).chain(&cli_cmd.to_cli_args())
+                    std::iter::once(&unc_cli_exec_path).chain(&cli_cmd.to_cli_args())
                 )
             );
             Ok(Some(cli_cmd))
         }
         interactive_clap::ResultFromCli::Cancel(None) => {
-            eprintln!("Goodbye!");
+            eprintln!("\nGoodbye!");
             Ok(None)
         }
         interactive_clap::ResultFromCli::Back => {
@@ -129,9 +129,9 @@ fn main() -> crate::common::CliResult {
         interactive_clap::ResultFromCli::Err(optional_cli_cmd, err) => {
             if let Some(cli_cmd) = optional_cli_cmd {
                 eprintln!(
-                    "Here is your console command if you need to script it or re-run:\n{}",
+                    "\nHere is your console command if you need to script it or re-run:\n{}",
                     shell_words::join(
-                        std::iter::once(&near_cli_exec_path).chain(&cli_cmd.to_cli_args())
+                        std::iter::once(&unc_cli_exec_path).chain(&cli_cmd.to_cli_args())
                     )
                 );
             }
@@ -158,15 +158,14 @@ fn main() -> crate::common::CliResult {
     ) {
         if let Ok(Ok(latest_version)) = handle.join() {
             let current_version = semver::Version::parse(self_update::cargo_crate_version!())
-                .wrap_err("Failed to parse current version of `near` CLI")?;
+                .wrap_err("Failed to parse current version of `unc` CLI")?;
 
             let latest_version = semver::Version::parse(&latest_version)
-                .wrap_err("Failed to parse latest version of `near` CLI")?;
+                .wrap_err("Failed to parse latest version of `unc` CLI")?;
 
             if current_version < latest_version {
-                eprintln!();
                 eprintln!(
-                    "`near` CLI has a new update available \x1b[2m{current_version}\x1b[0m →  \x1b[32m{latest_version}\x1b[0m"
+                    "\n`unc` CLI has a new update available \x1b[2m{current_version}\x1b[0m →  \x1b[32m{latest_version}\x1b[0m"
                 );
                 let self_update_cli_cmd = CliCmd {
                     offline: false,
@@ -181,9 +180,9 @@ fn main() -> crate::common::CliResult {
                         )),
                 };
                 eprintln!(
-                    "To update `near` CLI use: {}",
+                    "To update `unc` CLI use: {}",
                     shell_words::join(
-                        std::iter::once(near_cli_exec_path)
+                        std::iter::once(unc_cli_exec_path)
                             .chain(self_update_cli_cmd.to_cli_args())
                     )
                 );

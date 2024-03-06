@@ -58,11 +58,11 @@ impl JsCmd {
     pub fn rust_command_generation(
         &self,
     ) -> color_eyre::eyre::Result<(Vec<String>, String), String> {
-        //NEAR_ENV=testnet default
-        let network_config = std::env::var("NEAR_ENV").unwrap_or_else(|_| "testnet".to_owned());
-        let message = "The command you tried to run is deprecated in the new NEAR CLI, but we tried our best to match the old command with the new syntax, try it instead:".to_string();
-        let near_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called near-validator.\nPlease, follow the installation instructions here: https://github.com/unc-cli-rs/near-validator-cli-rs/blob/master/README.md\nThen run the following command:".to_string();
-        let err_message = "The command you tried to run is deprecated in the new NEAR CLI and there is no equivalent command in the new NEAR CLI.".to_string();
+        //unc_ENV=testnet default
+        let network_config = std::env::var("unc_ENV").unwrap_or_else(|_| "testnet".to_owned());
+        let message = "The command you tried to run is deprecated in the new unc CLI, but we tried our best to match the old command with the new syntax, try it instead:".to_string();
+        let unc_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called unc-validator.\nPlease, follow the installation instructions here: https://github.com/unc-cli-rs/unc-validator-cli-rs/blob/master/README.md\nThen run the following command:".to_string();
+        let err_message = "The command you tried to run is deprecated in the new unc CLI and there is no equivalent command in the new unc CLI.".to_string();
         match self {
             Self::CreateAccount(create_account_args) => Ok((create_account_args.to_cli_args(network_config), message)),
             Self::State(state_args) => Ok((state_args.to_cli_args(network_config), message)),
@@ -79,7 +79,7 @@ impl JsCmd {
             Self::ViewState(view_state_args) => Ok((view_state_args.to_cli_args(network_config), message)),
             Self::Send(send_args) => Ok((send_args.to_cli_args(network_config), message)),
             Self::Clean(_) => Err(format!("{err_message}\n\n`clean` command is not implemented, yet. It will be implemented in a dev extension. Meanwhile, keep using the old CLI.")),
-            Self::Stake(stake_args) => Ok((stake_args.to_cli_args(network_config), near_validator_extension_message)),
+            Self::Stake(stake_args) => Ok((stake_args.to_cli_args(network_config), unc_validator_extension_message)),
             Self::Login(login_args) => Ok((login_args.to_cli_args(network_config), message)),
             Self::Repl(_) => Err(format!("{err_message}\n\n`repl` command is not implemented. Use shell scripting for the new CLI.")),
             Self::GenerateKey(generate_key_args) => {
@@ -90,8 +90,8 @@ impl JsCmd {
             },
             Self::AddKey(add_key_args) => Ok((add_key_args.to_cli_args(network_config), message)),
             Self::DeleteKey(delete_key_args) => Ok((delete_key_args.to_cli_args(network_config), message)),
-            Self::Validators(validators_args) => Ok((validators_args.to_cli_args(network_config), near_validator_extension_message)),
-            Self::Proposals(proposals_args) => Ok((proposals_args.to_cli_args(network_config), near_validator_extension_message)),
+            Self::Validators(validators_args) => Ok((validators_args.to_cli_args(network_config), unc_validator_extension_message)),
+            Self::Proposals(proposals_args) => Ok((proposals_args.to_cli_args(network_config), unc_validator_extension_message)),
             Self::EvmCall(_) => Err(format!("{err_message}\n\n`evm-call` command is not implemented, yet. It will be implemented in an evm extension. Meanwhile, keep using the old CLI.")),
             Self::EvmDevInit(_) => Err(format!("{err_message}\n\n`evm-dev-init` command is not implemented, yet. It will be implemented in an evm extension. Meanwhile, keep using the old CLI.")),
             Self::EvmView(_) => Err(format!("{err_message}\n\n`evm-view` command is not implemented, yet. It will be implemented in an evm extension. Meanwhile, keep using the old CLI.")),

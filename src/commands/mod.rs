@@ -22,9 +22,9 @@ pub enum TopLevelCommand {
     /// View account summary, create subaccount, delete account, list keys, add key, delete key, import account
     Account(self::account::AccountCommands),
     #[strum_discriminants(strum(
-        message = "tokens      - Manage token assets such as NEAR, FT, NFT"
+        message = "tokens      - Manage token assets such as unc, FT, NFT"
     ))]
-    /// Use this for token actions: send or view balances of NEAR, FT, or NFT
+    /// Use this for token actions: send or view balances of unc, FT, or NFT
     Tokens(self::tokens::TokensCommands),
     #[strum_discriminants(strum(
         message = "staking     - Manage staking: view, add and withdraw stake"
@@ -45,14 +45,14 @@ pub enum TopLevelCommand {
     /// Use this to manage connections in a configuration file (config.toml).
     Config(self::config::ConfigCommands),
     #[cfg(feature = "self-update")]
-    #[strum_discriminants(strum(message = "extension   - Manage near CLI and extensions"))]
-    /// Use this to manage near CLI and extensions
+    #[strum_discriminants(strum(message = "extension   - Manage unc CLI and extensions"))]
+    /// Use this to manage unc CLI and extensions
     Extensions(self::extensions::ExtensionsCommands),
 }
 
 pub type OnBeforeSigningCallback = std::sync::Arc<
     dyn Fn(
-        &mut near_primitives::transaction::Transaction,
+        &mut unc_primitives::transaction::Transaction,
         &crate::config::NetworkConfig,
     ) -> crate::CliResult,
 >;
@@ -63,13 +63,13 @@ pub type OnAfterGettingNetworkCallback = std::sync::Arc<
 
 #[derive(Debug, Clone)]
 pub struct PrepopulatedTransaction {
-    pub signer_id: near_primitives::types::AccountId,
-    pub receiver_id: near_primitives::types::AccountId,
-    pub actions: Vec<near_primitives::transaction::Action>,
+    pub signer_id: unc_primitives::types::AccountId,
+    pub receiver_id: unc_primitives::types::AccountId,
+    pub actions: Vec<unc_primitives::transaction::Action>,
 }
 
-impl From<near_primitives::transaction::Transaction> for PrepopulatedTransaction {
-    fn from(value: near_primitives::transaction::Transaction) -> Self {
+impl From<unc_primitives::transaction::Transaction> for PrepopulatedTransaction {
+    fn from(value: unc_primitives::transaction::Transaction) -> Self {
         Self {
             signer_id: value.signer_id,
             receiver_id: value.receiver_id,
@@ -81,7 +81,7 @@ impl From<near_primitives::transaction::Transaction> for PrepopulatedTransaction
 #[derive(Clone)]
 pub struct ActionContext {
     pub global_context: crate::GlobalContext,
-    pub interacting_with_account_ids: Vec<near_primitives::types::AccountId>,
+    pub interacting_with_account_ids: Vec<unc_primitives::types::AccountId>,
     pub on_after_getting_network_callback: OnAfterGettingNetworkCallback,
     pub on_before_signing_callback: OnBeforeSigningCallback,
     pub on_before_sending_transaction_callback:

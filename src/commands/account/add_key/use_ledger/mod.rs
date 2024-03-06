@@ -10,8 +10,8 @@ pub struct AddLedgerKeyAction {
 #[derive(Debug, Clone)]
 pub struct AddLedgerKeyActionContext {
     global_context: crate::GlobalContext,
-    signer_account_id: near_primitives::types::AccountId,
-    permission: near_primitives::account::AccessKeyPermission,
+    signer_account_id: unc_primitives::types::AccountId,
+    permission: unc_primitives::account::AccessKeyPermission,
     public_key: crate::types::public_key::PublicKey,
 }
 
@@ -25,15 +25,15 @@ impl AddLedgerKeyActionContext {
             "Please allow getting the PublicKey on Ledger device (HD Path: {})",
             seed_phrase_hd_path
         );
-        let public_key = near_ledger::get_public_key(seed_phrase_hd_path.into()).map_err(
-            |near_ledger_error| {
+        let public_key = unc_ledger::get_public_key(seed_phrase_hd_path.into()).map_err(
+            |unc_ledger_error| {
                 color_eyre::Report::msg(format!(
                     "An error occurred while trying to get PublicKey from Ledger device: {:?}",
-                    near_ledger_error
+                    unc_ledger_error
                 ))
             },
         )?;
-        let public_key = near_crypto::PublicKey::ED25519(near_crypto::ED25519PublicKey::from(
+        let public_key = unc_crypto::PublicKey::ED25519(unc_crypto::ED25519PublicKey::from(
             public_key.to_bytes(),
         ));
 
@@ -56,15 +56,15 @@ impl From<AddLedgerKeyActionContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: signer_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::AddKey(
-                            near_primitives::transaction::AddKeyAction {
+                        actions: vec![unc_primitives::transaction::Action::AddKey(Box::new(
+                            unc_primitives::transaction::AddKeyAction {
                                 public_key: item.public_key.clone().into(),
-                                access_key: near_primitives::account::AccessKey {
+                                access_key: unc_primitives::account::AccessKey {
                                     nonce: 0,
                                     permission: item.permission.clone(),
                                 },
                             },
-                        )],
+                        ))],
                     })
                 }
             });

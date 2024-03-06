@@ -19,8 +19,8 @@ pub struct RegisterRsaKeysCommand {
 #[derive(Debug, Clone)]
 pub struct RegisterRsaKeysContext {
     global_context: crate::GlobalContext,
-    receiver_account_id: near_primitives::types::AccountId,
-    signer_account_id: near_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
+    signer_account_id: unc_primitives::types::AccountId,
 }
 
 impl RegisterRsaKeysContext {
@@ -60,8 +60,8 @@ pub struct PemFile {
 #[derive(Debug, Clone)]
 pub struct RsaFileContext {
     pub global_context: crate::GlobalContext,
-    pub receiver_account_id: near_primitives::types::AccountId,
-    pub signer_account_id: near_primitives::types::AccountId,
+    pub receiver_account_id: unc_primitives::types::AccountId,
+    pub signer_account_id: unc_primitives::types::AccountId,
     pub miners: Vec<Miner>,
 }
 

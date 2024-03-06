@@ -29,15 +29,15 @@ impl From<SaveKeypairToKeychainContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: signer_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::AddKey(
-                            near_primitives::transaction::AddKeyAction {
+                        actions: vec![unc_primitives::transaction::Action::AddKey(Box::new(
+                            unc_primitives::transaction::AddKeyAction {
                                 public_key: item.0.public_key.clone(),
-                                access_key: near_primitives::account::AccessKey {
+                                access_key: unc_primitives::account::AccessKey {
                                     nonce: 0,
                                     permission: item.0.permission.clone(),
                                 },
                             },
-                        )],
+                        ))],
                     })
                 }
             });
@@ -48,7 +48,7 @@ impl From<SaveKeypairToKeychainContext> for crate::commands::ActionContext {
                         network_config.clone(),
                         &serde_json::to_string(&item.0.key_pair_properties)?,
                         &item.0.key_pair_properties.public_key_str,
-                        &signed_transaction.transaction.signer_id,
+                        signed_transaction.transaction.signer_id.as_ref(),
                     )?;
                     Ok(())
                 },

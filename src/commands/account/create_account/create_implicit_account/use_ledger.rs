@@ -27,17 +27,17 @@ impl SaveWithLedgerContext {
                         "Please allow getting the PublicKey on Ledger device (HD Path: {})",
                         seed_phrase_hd_path
                     );
-                    let public_key = near_ledger::get_public_key(seed_phrase_hd_path.clone().into())
-                    .map_err(|near_ledger_error| {
+                    let public_key = unc_ledger::get_public_key(seed_phrase_hd_path.clone().into())
+                    .map_err(|unc_ledger_error| {
                         color_eyre::Report::msg(format!(
                             "An error occurred while trying to get PublicKey from Ledger device: {:?}",
-                            near_ledger_error
+                            unc_ledger_error
                         ))
                     })?;
                     let public_key_str =
                         format!("ed25519:{}", bs58::encode(&public_key).into_string());
                     let implicit_account_id =
-                        near_primitives::types::AccountId::try_from(hex::encode(public_key))?;
+                        unc_primitives::types::AccountId::try_from(hex::encode(public_key))?;
                     let buf = serde_json::json!({
                         "seed_phrase_hd_path": seed_phrase_hd_path.to_string(),
                         "implicit_account_id": implicit_account_id.to_string(),

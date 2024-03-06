@@ -26,7 +26,7 @@ impl ViewNftAssetsContext {
     ) -> color_eyre::eyre::Result<Self> {
         let on_after_getting_block_reference_callback: crate::network_view_at_block::OnAfterGettingBlockReferenceCallback = std::sync::Arc::new({
             let owner_account_id = previous_context.owner_account_id.clone();
-            let nft_contract_account_id: near_primitives::types::AccountId =
+            let nft_contract_account_id: unc_primitives::types::AccountId =
                 scope.nft_contract_account_id.clone().into();
 
             move |network_config, block_reference| {

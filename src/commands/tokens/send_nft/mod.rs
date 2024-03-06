@@ -18,11 +18,11 @@ pub struct SendNftCommand {
     #[interactive_clap(long = "prepaid-gas")]
     #[interactive_clap(skip_default_input_arg)]
     /// Enter gas for function call:
-    gas: crate::common::NearGas,
+    gas: crate::common::UncGas,
     #[interactive_clap(long = "attached-deposit")]
     #[interactive_clap(skip_default_input_arg)]
     /// Enter deposit for a function call:
-    deposit: crate::types::near_token::NearToken,
+    deposit: crate::types::unc_token::UncToken,
     #[interactive_clap(named_arg)]
     /// Select network
     network_config: crate::network_for_transaction::NetworkForTransactionArgs,
@@ -31,12 +31,12 @@ pub struct SendNftCommand {
 #[derive(Debug, Clone)]
 pub struct SendNftCommandContext {
     global_context: crate::GlobalContext,
-    signer_account_id: near_primitives::types::AccountId,
-    nft_contract_account_id: near_primitives::types::AccountId,
-    receiver_account_id: near_primitives::types::AccountId,
+    signer_account_id: unc_primitives::types::AccountId,
+    nft_contract_account_id: unc_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
     token_id: String,
-    gas: crate::common::NearGas,
-    deposit: crate::types::near_token::NearToken,
+    gas: crate::common::UncGas,
+    deposit: crate::types::unc_token::UncToken,
 }
 
 impl SendNftCommandContext {
@@ -69,16 +69,16 @@ impl From<SendNftCommandContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: nft_contract_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::FunctionCall(
-                            near_primitives::transaction::FunctionCallAction {
+                        actions: vec![unc_primitives::transaction::Action::FunctionCall(
+                            Box::new(unc_primitives::transaction::FunctionCallAction {
                                 method_name: "nft_transfer".to_string(),
                                 args: serde_json::to_vec(&json!({
                                     "receiver_id": receiver_account_id.to_string(),
                                     "token_id": token_id
                                 }))?,
                                 gas: item.gas.as_gas(),
-                                deposit: item.deposit.as_yoctonear(),
-                            },
+                                deposit: item.deposit.as_yoctounc(),
+                            }),
                         )],
                     })
                 }
@@ -91,7 +91,7 @@ impl From<SendNftCommandContext> for crate::commands::ActionContext {
             let token_id = item.token_id.clone();
 
             move |outcome_view, _network_config| {
-                if let near_primitives::views::FinalExecutionStatus::SuccessValue(_) = outcome_view.status {
+                if let unc_primitives::views::FinalExecutionStatus::SuccessValue(_) = outcome_view.status {
                     eprintln!(
                         "<{signer_account_id}> has successfully transferred NFT token_id=\"{token_id}\" to <{receiver_account_id}> on contract <{nft_contract_account_id}>.",
                     );
@@ -140,16 +140,16 @@ impl SendNftCommand {
 
     fn input_gas(
         _context: &super::TokensCommandsContext,
-    ) -> color_eyre::eyre::Result<Option<crate::common::NearGas>> {
+    ) -> color_eyre::eyre::Result<Option<crate::common::UncGas>> {
         eprintln!();
         let gas = loop {
-            match crate::common::NearGas::from_str(
+            match crate::common::UncGas::from_str(
                 &Text::new("Enter gas for function call:")
                     .with_initial_value("100 TeraGas")
                     .prompt()?,
             ) {
                 Ok(input_gas) => {
-                    if input_gas <= near_gas::NearGas::from_tgas(300) {
+                    if input_gas <= unc_gas::UncGas::from_tgas(300) {
                         break input_gas;
                     } else {
                         eprintln!("You need to enter a value of no more than 300 TERAGAS")
@@ -163,13 +163,13 @@ impl SendNftCommand {
 
     fn input_deposit(
         _context: &super::TokensCommandsContext,
-    ) -> color_eyre::eyre::Result<Option<crate::types::near_token::NearToken>> {
+    ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
-        match crate::types::near_token::NearToken::from_str(
+        match crate::types::unc_token::UncToken::from_str(
             &Text::new(
-                "Enter deposit for a function call (example: 10NEAR or 0.5near or 10000yoctonear):",
+                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000yoctounc):",
             )
-            .with_initial_value("1 yoctoNEAR")
+            .with_initial_value("1 yoctounc")
             .prompt()?,
         ) {
             Ok(deposit) => Ok(Some(deposit)),

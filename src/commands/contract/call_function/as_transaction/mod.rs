@@ -25,7 +25,7 @@ pub struct CallFunctionProperties {
 #[derive(Debug, Clone)]
 pub struct CallFunctionPropertiesContext {
     global_context: crate::GlobalContext,
-    receiver_account_id: near_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
     function_name: String,
     function_args: Vec<u8>,
 }
@@ -71,7 +71,7 @@ impl CallFunctionProperties {
 pub struct PrepaidGas {
     #[interactive_clap(skip_default_input_arg)]
     /// Enter gas for function call:
-    gas: crate::common::NearGas,
+    gas: crate::common::UncGas,
     #[interactive_clap(named_arg)]
     /// Enter deposit for a function call
     attached_deposit: Deposit,
@@ -80,10 +80,10 @@ pub struct PrepaidGas {
 #[derive(Debug, Clone)]
 pub struct PrepaidGasContext {
     global_context: crate::GlobalContext,
-    receiver_account_id: near_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
     function_name: String,
     function_args: Vec<u8>,
-    gas: crate::common::NearGas,
+    gas: crate::common::UncGas,
 }
 
 impl PrepaidGasContext {
@@ -104,16 +104,16 @@ impl PrepaidGasContext {
 impl PrepaidGas {
     fn input_gas(
         _context: &CallFunctionPropertiesContext,
-    ) -> color_eyre::eyre::Result<Option<crate::common::NearGas>> {
+    ) -> color_eyre::eyre::Result<Option<crate::common::UncGas>> {
         eprintln!();
         let gas = loop {
-            match crate::common::NearGas::from_str(
+            match crate::common::UncGas::from_str(
                 &Text::new("Enter gas for function call:")
                     .with_initial_value("100 TeraGas")
                     .prompt()?,
             ) {
                 Ok(input_gas) => {
-                    if input_gas <= near_gas::NearGas::from_tgas(300) {
+                    if input_gas <= unc_gas::UncGas::from_tgas(300) {
                         break input_gas;
                     } else {
                         eprintln!("You need to enter a value of no more than 300 TERAGAS")
@@ -132,7 +132,7 @@ impl PrepaidGas {
 pub struct Deposit {
     #[interactive_clap(skip_default_input_arg)]
     /// Enter deposit for a function call:
-    deposit: crate::types::near_token::NearToken,
+    deposit: crate::types::unc_token::UncToken,
     #[interactive_clap(named_arg)]
     /// What is the signer account ID?
     sign_as: SignerAccountId,
@@ -141,11 +141,11 @@ pub struct Deposit {
 #[derive(Debug, Clone)]
 pub struct DepositContext {
     global_context: crate::GlobalContext,
-    receiver_account_id: near_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
     function_name: String,
     function_args: Vec<u8>,
-    gas: crate::common::NearGas,
-    deposit: crate::types::near_token::NearToken,
+    gas: crate::common::UncGas,
+    deposit: crate::types::unc_token::UncToken,
 }
 
 impl DepositContext {
@@ -167,13 +167,13 @@ impl DepositContext {
 impl Deposit {
     fn input_deposit(
         _context: &PrepaidGasContext,
-    ) -> color_eyre::eyre::Result<Option<crate::types::near_token::NearToken>> {
+    ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
-        match crate::types::near_token::NearToken::from_str(
+        match crate::types::unc_token::UncToken::from_str(
             &Text::new(
-                "Enter deposit for a function call (example: 10NEAR or 0.5near or 10000yoctonear):",
+                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000yoctounc):",
             )
-            .with_initial_value("0 NEAR")
+            .with_initial_value("0 unc")
             .prompt()?,
         ) {
             Ok(deposit) => Ok(Some(deposit)),
@@ -197,12 +197,12 @@ pub struct SignerAccountId {
 #[derive(Debug, Clone)]
 pub struct SignerAccountIdContext {
     global_context: crate::GlobalContext,
-    receiver_account_id: near_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
     function_name: String,
     function_args: Vec<u8>,
-    gas: crate::common::NearGas,
-    deposit: crate::types::near_token::NearToken,
-    signer_account_id: near_primitives::types::AccountId,
+    gas: crate::common::UncGas,
+    deposit: crate::types::unc_token::UncToken,
+    signer_account_id: unc_primitives::types::AccountId,
 }
 
 impl SignerAccountIdContext {
@@ -233,13 +233,13 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: receiver_account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::FunctionCall(
-                            near_primitives::transaction::FunctionCallAction {
+                        actions: vec![unc_primitives::transaction::Action::FunctionCall(
+                            Box::new(unc_primitives::transaction::FunctionCallAction {
                                 method_name: item.function_name.clone(),
                                 args: item.function_args.clone(),
                                 gas: item.gas.as_gas(),
-                                deposit: item.deposit.as_yoctonear(),
-                            },
+                                deposit: item.deposit.as_yoctounc(),
+                            }),
                         )],
                     })
                 }

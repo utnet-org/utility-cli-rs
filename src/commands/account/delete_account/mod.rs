@@ -15,7 +15,7 @@ pub struct DeleteAccount {
 #[derive(Debug, Clone)]
 pub struct DeleteAccountContext {
     global_context: crate::GlobalContext,
-    account_id: near_primitives::types::AccountId,
+    account_id: unc_primitives::types::AccountId,
 }
 
 impl DeleteAccountContext {
@@ -56,8 +56,8 @@ pub struct BeneficiaryAccount {
 #[derive(Debug, Clone)]
 pub struct BeneficiaryAccountContext {
     global_context: crate::GlobalContext,
-    account_id: near_primitives::types::AccountId,
-    beneficiary_account_id: near_primitives::types::AccountId,
+    account_id: unc_primitives::types::AccountId,
+    beneficiary_account_id: unc_primitives::types::AccountId,
 }
 
 impl BeneficiaryAccountContext {
@@ -83,8 +83,8 @@ impl From<BeneficiaryAccountContext> for crate::commands::ActionContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: account_id.clone(),
                         receiver_id: account_id.clone(),
-                        actions: vec![near_primitives::transaction::Action::DeleteAccount(
-                            near_primitives::transaction::DeleteAccountAction {
+                        actions: vec![unc_primitives::transaction::Action::DeleteAccount(
+                            unc_primitives::transaction::DeleteAccountAction {
                                 beneficiary_id: item.beneficiary_account_id.clone(),
                             },
                         )],
@@ -152,7 +152,7 @@ impl BeneficiaryAccount {
                 )
                 .is_none()
                 {
-                    eprintln!("\nHeads up! You will lose remaining NEAR tokens on the account you delete if you specify the account <{}> as the beneficiary as it does not exist on [{}] networks.",
+                    eprintln!("\nHeads up! You will lose remaining unc tokens on the account you delete if you specify the account <{}> as the beneficiary as it does not exist on [{}] networks.",
                         account_id,
                         context.global_context.config.network_names().join(", ")
                     );

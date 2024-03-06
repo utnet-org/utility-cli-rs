@@ -19,7 +19,7 @@ impl SignTransactionContext {
     ) -> color_eyre::eyre::Result<Self> {
         let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
             std::sync::Arc::new({
-                let unsigned_transaction: near_primitives::transaction::Transaction =
+                let unsigned_transaction: unc_primitives::transaction::Transaction =
                     scope.unsigned_transaction.clone().into();
 
                 move |_network_config| {

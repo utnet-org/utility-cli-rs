@@ -5,7 +5,7 @@ use inquire::{CustomType, Select};
 #[interactive_clap(output_context = AddNetworkConnectionContext)]
 pub struct AddNetworkConnection {
     #[interactive_clap(long)]
-    /// What is the NEAR network? (e.g. mainnet, testnet, shardnet)
+    /// What is the unc network? (e.g. mainnet, testnet, shardnet)
     network_name: String,
     #[interactive_clap(long)]
     /// What is the connection name? (e.g. pagoda-mainnet)
@@ -27,7 +27,7 @@ pub struct AddNetworkConnection {
     linkdrop_account_id: Option<crate::types::account_id::AccountId>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_default_input_arg)]
-    near_social_db_contract_account_id: Option<crate::types::account_id::AccountId>,
+    unc_social_db_contract_account_id: Option<crate::types::account_id::AccountId>,
     #[interactive_clap(long)]
     #[interactive_clap(skip_default_input_arg)]
     faucet_url: Option<crate::types::url::Url>,
@@ -57,11 +57,11 @@ impl AddNetworkConnectionContext {
                     .linkdrop_account_id
                     .clone()
                     .map(|linkdrop_account_id| linkdrop_account_id.into()),
-                near_social_db_contract_account_id: scope
-                    .near_social_db_contract_account_id
+                unc_social_db_contract_account_id: scope
+                    .unc_social_db_contract_account_id
                     .clone()
-                    .map(|near_social_db_contract_account_id| {
-                        near_social_db_contract_account_id.into()
+                    .map(|unc_social_db_contract_account_id| {
+                        unc_social_db_contract_account_id.into()
                     }),
                 faucet_url: scope.faucet_url.clone().map(|faucet_url| faucet_url.into()),
                 meta_transaction_relayer_url: scope
@@ -126,34 +126,34 @@ impl AddNetworkConnection {
         .prompt()?;
         if let ConfirmOptions::Yes = select_choose_input {
             let account_id: crate::types::account_id::AccountId =
-            CustomType::new("What is the name of the account that hosts the \"linkdrop\" program? (e.g. on mainnet it is near, and on testnet it is testnet)").prompt()?;
+            CustomType::new("What is the name of the account that hosts the \"linkdrop\" program? (e.g. on mainnet it is unc, and on testnet it is testnet)").prompt()?;
             Ok(Some(account_id))
         } else {
             Ok(None)
         }
     }
 
-    fn input_near_social_db_contract_account_id(
+    fn input_unc_social_db_contract_account_id(
         _context: &crate::GlobalContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
         eprintln!();
         #[derive(strum_macros::Display)]
         enum ConfirmOptions {
-            #[strum(to_string = "Yes, and I want to enter the NEAR Social DB contract account ID")]
+            #[strum(to_string = "Yes, and I want to enter the unc Social DB contract account ID")]
             Yes,
             #[strum(
-                to_string = "No, I don't want to enter the NEAR Social DB contract account ID"
+                to_string = "No, I don't want to enter the unc Social DB contract account ID"
             )]
             No,
         }
         let select_choose_input = Select::new(
-            "Do you want to enter the NEAR Social DB contract account ID on this network?",
+            "Do you want to enter the unc Social DB contract account ID on this network?",
             vec![ConfirmOptions::Yes, ConfirmOptions::No],
         )
         .prompt()?;
         if let ConfirmOptions::Yes = select_choose_input {
             let account_id: crate::types::account_id::AccountId =
-            CustomType::new("What is the name of the NEAR Social DB contract account ID (e.g. on mainnet it is social.near)").prompt()?;
+            CustomType::new("What is the name of the unc Social DB contract account ID (e.g. on mainnet it is social.unc)").prompt()?;
             Ok(Some(account_id))
         } else {
             Ok(None)

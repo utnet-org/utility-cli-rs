@@ -14,7 +14,7 @@ impl PrintContext {
         _previous_context: crate::GlobalContext,
         scope: &<PrintTransaction as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let signed_transaction: near_primitives::transaction::SignedTransaction =
+        let signed_transaction: unc_primitives::transaction::SignedTransaction =
             scope.signed_transaction.clone().into();
 
         eprintln!("\nSigned transaction (full):\n");

@@ -22,7 +22,7 @@ impl AddKeyArgs {
                 self.account_id.to_owned(),
                 "grant-function-call-access".to_owned(),
                 "--allowance".to_owned(),
-                format!("{} NEAR", self.allowance),
+                format!("{} unc", self.allowance),
                 "--receiver-account-id".to_owned(),
                 contract_id.to_owned(),
                 "--method-names".to_owned(),

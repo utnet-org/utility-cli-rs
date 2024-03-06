@@ -16,7 +16,7 @@ pub struct ExtensionsCommands {
 #[interactive_clap(context = crate::GlobalContext)]
 #[strum_discriminants(derive(EnumMessage, EnumIter))]
 #[non_exhaustive]
-/// What do you want to do with a near CLI?
+/// What do you want to do with a unc CLI?
 pub enum ExtensionsActions {
     #[strum_discriminants(strum(
         message = "register-rsa-keys   - Register TPU rsa keys (root account only)"
@@ -28,21 +28,21 @@ pub enum ExtensionsActions {
     ))]
     CreateChallengeRsa(self::create_challenge_rsa::CreateChallengeRsaCommand),
 
-    #[strum_discriminants(strum(message = "self-update             - Self update near CLI"))]
-    /// Self update near CLI
+    #[strum_discriminants(strum(message = "self-update             - Self update unc CLI"))]
+    /// Self update unc CLI
     SelfUpdate(self::self_update::SelfUpdateCommand),
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Rsa2048KeyPair {
-    pub challenge_key: near_crypto::PublicKey,
-    pub public_key: near_crypto::PublicKey,
+    pub challenge_key: unc_crypto::PublicKey,
+    pub public_key: unc_crypto::PublicKey,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Miner {
     pub miner_id: String,
-    pub public_key: near_crypto::PublicKey,
+    pub public_key: unc_crypto::PublicKey,
     pub power: u64,
     pub sn: String,
     pub bus_id: String,

@@ -25,9 +25,9 @@ pub enum SignWith {
     /// Sign the transaction with a key saved in keychain
     SignWithKeychain(self::sign_with_keychain::SignKeychain),
     #[strum_discriminants(strum(
-        message = "sign-with-legacy-keychain        - Sign the transaction with a key saved in legacy keychain (compatible with the old near CLI)"
+        message = "sign-with-legacy-keychain        - Sign the transaction with a key saved in legacy keychain (compatible with the old unc CLI)"
     ))]
-    /// Sign the transaction with a key saved in legacy keychain (compatible with the old near CLI)
+    /// Sign the transaction with a key saved in legacy keychain (compatible with the old unc CLI)
     SignWithLegacyKeychain(self::sign_with_legacy_keychain::SignLegacyKeychain),
     #[cfg(feature = "ledger")]
     #[strum_discriminants(strum(
@@ -116,7 +116,7 @@ impl interactive_clap::FromCli for Submit {
                     let transaction_info = loop {
                         let transaction_info_result = context.network_config.json_rpc_client()
                         .blocking_call(
-                            near_jsonrpc_client::methods::broadcast_tx_commit::RpcBroadcastTxCommitRequest{
+                            unc_jsonrpc_client::methods::broadcast_tx_commit::RpcBroadcastTxCommitRequest{
                                 signed_transaction: signed_transaction.clone()
                             }
                         );
@@ -227,8 +227,8 @@ impl interactive_clap::FromCli for Submit {
                             )
                         );
                         eprintln!(
-                            "This base64-encoded signed transaction is ready to be sent to the network. You can call RPC server directly, or use a helper command on near CLI:\n$ {} transaction send-signed-transaction\n",
-                            crate::common::get_near_exec_path()
+                            "This base64-encoded signed transaction is ready to be sent to the network. You can call RPC server directly, or use a helper command on unc CLI:\n$ {} transaction send-signed-transaction\n",
+                            crate::common::get_unc_exec_path()
                         );
                         eprintln!("{storage_message}");
                         interactive_clap::ResultFromCli::Ok(CliSubmit::Display)
@@ -243,8 +243,8 @@ impl interactive_clap::FromCli for Submit {
                             )
                         );
                         eprintln!(
-                            "This base64-encoded signed delegate action is ready to be sent to the meta-transaction relayer. There is a helper command on near CLI that can do that:\n$ {} transaction send-meta-transaction\n",
-                            crate::common::get_near_exec_path()
+                            "This base64-encoded signed delegate action is ready to be sent to the meta-transaction relayer. There is a helper command on unc CLI that can do that:\n$ {} transaction send-meta-transaction\n",
+                            crate::common::get_unc_exec_path()
                         );
                         eprintln!("{storage_message}");
                         interactive_clap::ResultFromCli::Ok(CliSubmit::Display)
@@ -258,13 +258,13 @@ impl interactive_clap::FromCli for Submit {
 
 #[derive(Debug, Deserialize)]
 pub struct AccountKeyPair {
-    pub public_key: near_crypto::PublicKey,
-    pub private_key: near_crypto::SecretKey,
+    pub public_key: unc_crypto::PublicKey,
+    pub private_key: unc_crypto::SecretKey,
 }
 
 pub type OnBeforeSendingTransactionCallback = std::sync::Arc<
     dyn Fn(
-        &near_primitives::transaction::SignedTransaction,
+        &unc_primitives::transaction::SignedTransaction,
         &crate::config::NetworkConfig,
         &mut String,
     ) -> crate::CliResult,
@@ -272,7 +272,7 @@ pub type OnBeforeSendingTransactionCallback = std::sync::Arc<
 
 pub type OnAfterSendingTransactionCallback = std::sync::Arc<
     dyn Fn(
-        &near_primitives::views::FinalExecutionOutcomeView,
+        &unc_primitives::views::FinalExecutionOutcomeView,
         &crate::config::NetworkConfig,
     ) -> crate::CliResult,
 >;
@@ -288,43 +288,43 @@ pub struct SubmitContext {
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub enum SignedTransactionOrSignedDelegateAction {
-    SignedTransaction(near_primitives::transaction::SignedTransaction),
-    SignedDelegateAction(near_primitives::delegate_action::SignedDelegateAction),
+    SignedTransaction(unc_primitives::transaction::SignedTransaction),
+    SignedDelegateAction(unc_primitives::action::delegate::SignedDelegateAction),
 }
 
-impl From<near_primitives::transaction::SignedTransaction>
+impl From<unc_primitives::transaction::SignedTransaction>
     for SignedTransactionOrSignedDelegateAction
 {
-    fn from(signed_transaction: near_primitives::transaction::SignedTransaction) -> Self {
+    fn from(signed_transaction: unc_primitives::transaction::SignedTransaction) -> Self {
         Self::SignedTransaction(signed_transaction)
     }
 }
 
-impl From<near_primitives::delegate_action::SignedDelegateAction>
+impl From<unc_primitives::action::delegate::SignedDelegateAction>
     for SignedTransactionOrSignedDelegateAction
 {
     fn from(
-        signed_delegate_action: near_primitives::delegate_action::SignedDelegateAction,
+        signed_delegate_action: unc_primitives::action::delegate::SignedDelegateAction,
     ) -> Self {
         Self::SignedDelegateAction(signed_delegate_action)
     }
 }
 
 pub fn get_signed_delegate_action(
-    unsigned_transaction: near_primitives::transaction::Transaction,
-    public_key: &near_crypto::PublicKey,
-    private_key: near_crypto::SecretKey,
+    unsigned_transaction: unc_primitives::transaction::Transaction,
+    public_key: &unc_crypto::PublicKey,
+    private_key: unc_crypto::SecretKey,
     max_block_height: u64,
-) -> near_primitives::delegate_action::SignedDelegateAction {
-    use near_primitives::signable_message::{SignableMessage, SignableMessageType};
+) -> unc_primitives::action::delegate::SignedDelegateAction {
+    use unc_primitives::signable_message::{SignableMessage, SignableMessageType};
 
     let actions = unsigned_transaction
         .actions
         .into_iter()
-        .map(near_primitives::delegate_action::NonDelegateAction::try_from)
+        .map(unc_primitives::action::delegate::NonDelegateAction::try_from)
         .collect::<Result<_, _>>()
         .expect("Internal error: can not convert the action to non delegate action (delegate action can not be delegated again).");
-    let delegate_action = near_primitives::delegate_action::DelegateAction {
+    let delegate_action = unc_primitives::action::delegate::DelegateAction {
         sender_id: unsigned_transaction.signer_id.clone(),
         receiver_id: unsigned_transaction.receiver_id,
         actions,
@@ -336,7 +336,7 @@ pub fn get_signed_delegate_action(
     // create a new signature here signing the delegate action + discriminant
     let signable = SignableMessage::new(&delegate_action, SignableMessageType::DelegateAction);
     let signer =
-        near_crypto::InMemorySigner::from_secret_key(unsigned_transaction.signer_id, private_key);
+        unc_crypto::InMemorySigner::from_secret_key(unsigned_transaction.signer_id, private_key);
     let signature = signable.sign(&signer);
 
     eprintln!("\nYour delegating action was signed successfully.");
@@ -344,7 +344,7 @@ pub fn get_signed_delegate_action(
     eprintln!("Public key: {}", public_key);
     eprintln!("Signature: {}", signature);
 
-    near_primitives::delegate_action::SignedDelegateAction {
+    unc_primitives::action::delegate::SignedDelegateAction {
         delegate_action,
         signature,
     }

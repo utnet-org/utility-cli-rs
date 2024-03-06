@@ -21,7 +21,7 @@ impl DisplayContext {
         previous_context: crate::commands::TransactionContext,
         scope: &<Display as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let unsigned_transaction = near_primitives::transaction::Transaction {
+        let unsigned_transaction = unc_primitives::transaction::Transaction {
             signer_id: previous_context.prepopulated_transaction.signer_id,
             public_key: scope.signer_public_key.clone().into(),
             nonce: scope.nonce,
@@ -40,8 +40,8 @@ impl DisplayContext {
             crate::types::transaction::TransactionAsBase64::from(unsigned_transaction)
         );
         eprintln!(
-            "This base64-encoded transaction can be signed and sent later. There is a helper command on near CLI that can do that:\n$ {} transaction sign-transaction\n",
-            crate::common::get_near_exec_path()
+            "This base64-encoded transaction can be signed and sent later. There is a helper command on unc CLI that can do that:\n$ {} transaction sign-transaction\n",
+            crate::common::get_unc_exec_path()
         );
         Ok(Self)
     }

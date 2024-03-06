@@ -15,7 +15,7 @@ pub struct ConfigCommands {
 #[interactive_clap(context = crate::GlobalContext)]
 #[strum_discriminants(derive(EnumMessage, EnumIter))]
 #[non_exhaustive]
-/// What do you want to do with a near CLI config?
+/// What do you want to do with a unc CLI config?
 pub enum ConfigActions {
     #[strum_discriminants(strum(
         message = "show-connections       - Show a list of network connections"
@@ -47,7 +47,7 @@ impl ShowConnectionsContext {
     ) -> color_eyre::eyre::Result<Self> {
         let mut path_config_toml =
             dirs::config_dir().wrap_err("Impossible to get your config dir!")?;
-        path_config_toml.push("near-cli/config.toml");
+        path_config_toml.push("unc-cli/config.toml");
         eprintln!(
             "\nConfiguration data is stored in a file {:?}",
             &path_config_toml

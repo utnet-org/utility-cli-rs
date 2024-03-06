@@ -29,10 +29,10 @@ impl GenerateKeypair {
 #[derive(Debug, Clone)]
 pub struct GenerateKeypairContext {
     global_context: crate::GlobalContext,
-    signer_account_id: near_primitives::types::AccountId,
-    permission: near_primitives::account::AccessKeyPermission,
+    signer_account_id: unc_primitives::types::AccountId,
+    permission: unc_primitives::account::AccessKeyPermission,
     key_pair_properties: crate::common::KeyPairProperties,
-    public_key: near_crypto::PublicKey,
+    public_key: unc_crypto::PublicKey,
 }
 
 impl GenerateKeypairContext {
@@ -46,7 +46,7 @@ impl GenerateKeypairContext {
             super::super::KeysType::Rsa2048 => crate::common::generate_rsa2048_keypair()?,
             super::super::KeysType::Ed25519 => crate::common::generate_ed25519_keypair()?,
         };
-        let public_key = near_crypto::PublicKey::from_str(&key_pair_properties.public_key_str)?;
+        let public_key = unc_crypto::PublicKey::from_str(&key_pair_properties.public_key_str)?;
         Ok(Self {
             global_context: previous_context.global_context,
             signer_account_id: previous_context.signer_account_id,

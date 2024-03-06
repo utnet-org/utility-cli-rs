@@ -26,7 +26,7 @@ pub struct Initialize {
 #[derive(Debug, Clone)]
 pub struct InitializeContext {
     ctx: super::RsaFileContext,
-    action: Vec<near_primitives::transaction::Action>,
+    action: Vec<unc_primitives::transaction::Action>,
 }
 
 impl InitializeContext {
@@ -50,8 +50,8 @@ impl InitializeContext {
             let args = serde_json::to_vec(&data_json).wrap_err("Internal error!").unwrap();
 
             actions.push(
-                near_primitives::transaction::Action::RegisterRsa2048Keys(
-                    Box::new(near_primitives::transaction::RegisterRsa2048KeysAction {
+                unc_primitives::transaction::Action::RegisterRsa2048Keys(
+                    Box::new(unc_primitives::transaction::RegisterRsa2048KeysAction {
                         public_key: m.public_key.clone(),
                         operation_type: 0u8,
                         args: args.clone(),

@@ -2,8 +2,8 @@
 #[interactive_clap(input_context = super::super::super::ConstructTransactionContext)]
 #[interactive_clap(output_context = TransferActionContext)]
 pub struct TransferAction {
-    /// How many NEAR Tokens do you want to transfer? (example: 10NEAR or 0.5near or 10000yoctonear)
-    amount_in_near: crate::types::near_token::NearToken,
+    /// How many unc Tokens do you want to transfer? (example: 10unc or 0.5unc or 10000yoctounc)
+    amount_in_unc: crate::types::unc_token::UncToken,
     #[interactive_clap(subcommand)]
     next_action: super::super::super::add_action_last::NextAction,
 }
@@ -16,9 +16,9 @@ impl TransferActionContext {
         previous_context: super::super::super::ConstructTransactionContext,
         scope: &<TransferAction as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let action = near_primitives::transaction::Action::Transfer(
-            near_primitives::transaction::TransferAction {
-                deposit: scope.amount_in_near.as_yoctonear(),
+        let action = unc_primitives::transaction::Action::Transfer(
+            unc_primitives::transaction::TransferAction {
+                deposit: scope.amount_in_unc.as_yoctounc(),
             },
         );
         let mut actions = previous_context.actions;

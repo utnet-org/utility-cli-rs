@@ -17,8 +17,8 @@ pub struct Contract {
 #[derive(Debug, Clone)]
 pub struct ContractContext {
     global_context: crate::GlobalContext,
-    receiver_account_id: near_primitives::types::AccountId,
-    signer_account_id: near_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
+    signer_account_id: unc_primitives::types::AccountId,
 }
 
 impl ContractContext {
@@ -58,8 +58,8 @@ pub struct ContractFile {
 #[derive(Debug, Clone)]
 pub struct ContractFileContext {
     pub global_context: crate::GlobalContext,
-    pub receiver_account_id: near_primitives::types::AccountId,
-    pub signer_account_id: near_primitives::types::AccountId,
+    pub receiver_account_id: unc_primitives::types::AccountId,
+    pub signer_account_id: unc_primitives::types::AccountId,
     pub code: Vec<u8>,
 }
 

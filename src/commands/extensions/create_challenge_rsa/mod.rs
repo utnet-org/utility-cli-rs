@@ -17,8 +17,8 @@ pub struct CreateChallengeRsaCommand {
 #[derive(Debug, Clone)]
 pub struct CreateChallengeRsaContext {
     global_context: crate::GlobalContext,
-    receiver_account_id: near_primitives::types::AccountId,
-    signer_account_id: near_primitives::types::AccountId,
+    receiver_account_id: unc_primitives::types::AccountId,
+    signer_account_id: unc_primitives::types::AccountId,
 }
 
 impl CreateChallengeRsaContext {
@@ -58,10 +58,10 @@ pub struct PemFile {
 #[derive(Debug, Clone)]
 pub struct PemFileContext {
     pub global_context: crate::GlobalContext,
-    pub receiver_account_id: near_primitives::types::AccountId,
-    pub signer_account_id: near_primitives::types::AccountId,
-    pub public_key: near_crypto::PublicKey,
-    pub challenge_key: near_crypto::PublicKey,
+    pub receiver_account_id: unc_primitives::types::AccountId,
+    pub signer_account_id: unc_primitives::types::AccountId,
+    pub public_key: unc_crypto::PublicKey,
+    pub challenge_key: unc_crypto::PublicKey,
 }
 
 impl PemFileContext {

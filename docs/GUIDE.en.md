@@ -1,18 +1,18 @@
 ## User Guide
 
-This guide is intended to give a detailed description of _near CLI_ and an
-overview of its capabilities. This guide assumes that _near CLI_ is
+This guide is intended to give a detailed description of _unc CLI_ and an
+overview of its capabilities. This guide assumes that _unc CLI_ is
 [installed](README.md#installation)
 and that readers have passing familiarity with using command line tools. This
 also assumes a Unix-like system, although most commands are probably easily
 translatable to any command line shell environment.
 
-With _near CLI_ you can create, sign and send transactions in _online_ mode, which is enabled by default.
+With _unc CLI_ you can create, sign and send transactions in _online_ mode, which is enabled by default.
 In _offline_ mode, you can create and sign a transaction. The base64 encoding transaction can be [signed](#sign-transaction---sign-previously-prepared-unsigned-transaction) or [sent](#send-signed-transaction---send-a-signed-transaction) later (even from another computer). To enter the _offline_ mode, you need to set the ```--offline``` flag in the command:
 ```txt
-near --offline tokens \
+unc --offline tokens \
     fro_volod.testnet \
-    send-near volodymyr.testnet 0.1NEAR \
+    send-unc volodymyr.testnet 0.1unc \
     network-config testnet \
     sign-later
 ```
@@ -21,18 +21,18 @@ Before proceeding to the description of specific commands, it is necessary to co
 
 1. Sign transaction
 
-    _near CLI_ offers several ways to sign the created transaction. Let's take a closer look at each.
+    _unc CLI_ offers several ways to sign the created transaction. Let's take a closer look at each.
 
     - _sign-with-keychain - Sign the transaction with a key saved in the secure keychain_
 
-        _near CLI_ stores and retrieves passwords in a secure OS storage. There _near CLI_ will independently find the access keys and sign the created transaction.
+        _unc CLI_ stores and retrieves passwords in a secure OS storage. There _unc CLI_ will independently find the access keys and sign the created transaction.
 
-    - _sign-with-legacy-keychain - Sign the transaction with a key saved in legacy keychain (compatible with the old near CLI)_
+    - _sign-with-legacy-keychain - Sign the transaction with a key saved in legacy keychain (compatible with the old unc CLI)_
 
-        _near CLI_ will independently find access keys and sign the created transaction.
+        _unc CLI_ will independently find access keys and sign the created transaction.
         Directory with access keys defined in [config](#config---manage-connections-in-a-configuration-file).
-        The access keys must be in the _public-key.json_ file located in _/Users/user/.near-credentials/network-name/user-name/_
-        For example, _/Users/frovolod/.near-credentials/testnet/volodymyr.testnet/ed25519_8h7kFK4quSUJRkUwo3LLiK83sraEm2jnQTECuZhWu8HC.json_
+        The access keys must be in the _public-key.json_ file located in _/Users/user/.unc-credentials/network-name/user-name/_
+        For example, _/Users/frovolod/.unc-credentials/testnet/volodymyr.testnet/ed25519_8h7kFK4quSUJRkUwo3LLiK83sraEm2jnQTECuZhWu8HC.json_
 
         <details><summary><i>Demonstration of the command in interactive mode</i></summary>
         <a href="https://asciinema.org/a/30jHxm9lRevRG4K1h0GWlEciV?autoplay=1&t=1&speed=2">
@@ -46,17 +46,17 @@ Before proceeding to the description of specific commands, it is necessary to co
 
     - _sign-with-plaintext-private-key - Sign the transaction with a plaintext private key_
 
-        When choosing this signature option, _near CLI_ will ask the user to enter access keys:
+        When choosing this signature option, _unc CLI_ will ask the user to enter access keys:
         - "public_key":"ed25519:Ebx7...",
         - "private_key":"ed25519:2qM8..."
 
     - _sign-with-access-key-file - Sign the transaction using the account access key file (access-key-file.json)_
 
-        When choosing this signature option, _near CLI_ will ask the user to enter the path to a file that contains information about account access keys.
+        When choosing this signature option, _unc CLI_ will ask the user to enter the path to a file that contains information about account access keys.
 
     - _sign-with-seed-phrase - Sign the transaction using the seed phrase_
 
-        When choosing this signature option, _near CLI_ will ask the user to enter the mnemonic phrase associated with the account.
+        When choosing this signature option, _unc CLI_ will ask the user to enter the mnemonic phrase associated with the account.
 
     - _sign-later - Prepare unsigned transaction (we'll use base64 encoding to simplify copy-pasting)_
 
@@ -64,9 +64,9 @@ Before proceeding to the description of specific commands, it is necessary to co
 
 2. Actions with a signed transaction
 
-   _near CLI_ support for meta transactions as specified in [NEP-366](https://near.github.io/nearcore/architecture/how/meta-tx.html#meta-transactions). To create it, you just need to specify a _network_ that supports meta transactions. You can find out about such support in [config](#show-connections---Show-a-list-of-network-connections). The *meta_transaction_relayer_url* field is responsible for the ability to support meta transactions. For example:
+   _unc CLI_ support for meta transactions as specified in [NEP-366](https://unc.github.io/unccore/architecture/how/meta-tx.html#meta-transactions). To create it, you just need to specify a _network_ that supports meta transactions. You can find out about such support in [config](#show-connections---Show-a-list-of-network-connections). The *meta_transaction_relayer_url* field is responsible for the ability to support meta transactions. For example:
    ```txt
-   meta_transaction_relayer_url = "https://near-testnet.api.pagoda.co/relay"
+   meta_transaction_relayer_url = "https://unc-testnet.api.pagoda.co/relay"
    ```
 
    A signed transaction / meta transactions can be sent for immediate execution:
@@ -75,12 +75,12 @@ Before proceeding to the description of specific commands, it is necessary to co
 
    or display in base64 format to send:
 
-   - _display - Print only the signed transaction in base64 encoding. We will use it to send it later. ([Example](#send-signed-transaction---send-a-signed-transaction): near transaction send-signed-transaction 'EQAAAHZvb...' ...)_
+   - _display - Print only the signed transaction in base64 encoding. We will use it to send it later. ([Example](#send-signed-transaction---send-a-signed-transaction): unc transaction send-signed-transaction 'EQAAAHZvb...' ...)_
 
 ### Command groups
 
 - [account     - Manage accounts](#account---Manage-accounts)
-- [tokens      - Manage token assets such as NEAR, FT, NFT](#tokens---Manage-token-assets-such-as-NEAR-FT-NFT)
+- [tokens      - Manage token assets such as unc, FT, NFT](#tokens---Manage-token-assets-such-as-unc-FT-NFT)
 - [staking     - Manage staking: view, add and withdraw stake](#staking---Manage-staking-view-add-and-withdraw-stake)
 - [contract    - Manage smart-contracts: deploy code, call functions](#contract---Manage-smart-contracts-deploy-code-call-functions)
 - [transaction - Operate transactions](#transaction---Operate-transactions)
@@ -93,7 +93,7 @@ View account details ([View properties for an account](#view-account-summary---v
 - [view-account-summary](#view-account-summary---View-properties-for-an-account)
 - [import-account](#import-account---import-existing-account-aka-sign-in)
 - [create-account](#create-account---Create-a-new-account)
-- [update-social-profile](#update-social-profile---Update-NEAR-Social-profile)
+- [update-social-profile](#update-social-profile---Update-unc-Social-profile)
 - [delete-account](#delete-account---Delete-an-account)
 - [list-keys](#list-keys---View-a-list-of-access-keys-of-an-account)
 - [add-key](#add-key---Add-an-access-key-to-an-account)
@@ -111,7 +111,7 @@ View account details ([View properties for an account](#view-account-summary---v
 To view an account summary for the last block, in the terminal command line type:
 
 ```txt
-near account \
+unc account \
     view-account-summary fro_volod.testnet \
     network-config testnet \
     now
@@ -121,16 +121,16 @@ near account \
 
 ```txt
 Account details for 'fro_volod.testnet' at block #97804915 (5G8HHWMJMHRMMaHTjeZLSvL7ruYMtH9tXq25Q6BPUivu)
-Native account balance: 182.685021399504861699999997 NEAR
-Validator stake: 0 NEAR
+Native account balance: 182.685021399504861699999997 unc
+Validator stake: 0 unc
 Storage used by the account: 288962 bytes
 Contract code SHA-256 checksum (hex): fd999145baf49ece7d09fca7d030d384c4ea8ed4df651c6e87a015c4dfa6c0ec
 Number of access keys: 14
-   1. ed25519:2QFAeUutKUDpmgKDyHXm7Wcz1uhjxk92fK6zY2dB7FCD (nonce: 97492076000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 NEAR
+   1. ed25519:2QFAeUutKUDpmgKDyHXm7Wcz1uhjxk92fK6zY2dB7FCD (nonce: 97492076000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 unc
    2. ed25519:3p1HbrTDYxY4q3V6QznW14qkuv3Bq1phFpCTsbrJpbEC (nonce: 94363284000000) is granted to full access
    3. ed25519:5UJE4PzyxECS42hBZSD1QQCLdq5j39vCtzshFPbnGdm1 (nonce: 73069087000002) is granted to full access
-   4. ed25519:6YU78BezKwQNrz5vmtkSCALtx7cPDC1JBs9DhjeSJ39X (nonce: 97490513000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 NEAR
-   5. ed25519:7YCfA1KrToJtAYGTBgAMe4LWfQEi4iwLGcH2q5SvGKzD (nonce: 94982716000000) is granted to only do [] function calls on mintspace2.testnet with an allowance of 0.25 NEAR
+   4. ed25519:6YU78BezKwQNrz5vmtkSCALtx7cPDC1JBs9DhjeSJ39X (nonce: 97490513000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 unc
+   5. ed25519:7YCfA1KrToJtAYGTBgAMe4LWfQEi4iwLGcH2q5SvGKzD (nonce: 94982716000000) is granted to only do [] function calls on mintspace2.testnet with an allowance of 0.25 unc
    6. ed25519:95w5YFsJ3iktzDwRBWUGqLF6Gv5CoJuVifBjcEEdJs8s (nonce: 72253433000003) is granted to full access
    7. ed25519:9nyDySTNAGPywxC9pG4DPdnF3eEVexDgrfzZYsoahPsV (nonce: 76057805000000) is granted to full access
    8. ed25519:AEC4szaeNzT8PQAifsnisdivq4mwswJbBM65DdkT6kdS (nonce: 72263674000000) is granted to full access
@@ -153,7 +153,7 @@ Number of access keys: 14
 
 To view an account summary for a specific block, you can specify the height of that block. To do this, at the terminal command line, type:
 ```txt
-near account \
+unc account \
     view-account-summary fro_volod.testnet \
     network-config testnet \
     at-block-height 73069245
@@ -163,8 +163,8 @@ near account \
 
 ```txt
 Account details for 'fro_volod.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
-Native account balance: 198.9924766125790117 NEAR
-Validator stake: 0 NEAR
+Native account balance: 198.9924766125790117 unc
+Validator stake: 0 unc
 Storage used by the account: 288660 bytes
 Contract code SHA-256 checksum (hex): fd999145baf49ece7d09fca7d030d384c4ea8ed4df651c6e87a015c4dfa6c0ec
 Number of access keys: 12
@@ -193,7 +193,7 @@ Number of access keys: 12
 
 To view an account summary for a specific block, you can specify the hash of that block. To do this, at the terminal command line, type:
 ```txt
-near account \
+unc account \
     view-account-summary fro_volod.testnet \
     network-config testnet \
     at-block-hash HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY
@@ -203,8 +203,8 @@ near account \
 
 ```txt
 Account details for 'fro_volod.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
-Native account balance: 198.9924766125790117 NEAR
-Validator stake: 0 NEAR
+Native account balance: 198.9924766125790117 unc
+Validator stake: 0 unc
 Storage used by the account: 288660 bytes
 Contract code SHA-256 checksum (hex): fd999145baf49ece7d09fca7d030d384c4ea8ed4df651c6e87a015c4dfa6c0ec
 Number of access keys: 12
@@ -231,31 +231,31 @@ Number of access keys: 12
 
 #### import-account - Import existing account (a.k.a. "sign in")
 
-- [using-web-wallet](#using-web-wallet---Import-existing-account-using-NEAR-Wallet-aka-sign-in)
+- [using-web-wallet](#using-web-wallet---Import-existing-account-using-unc-Wallet-aka-sign-in)
 - [using-seed-phrase](#using-seed-phrase---Import-existing-account-using-a-seed-phrase)
 - [using-private-key](#using-private-key---Import-existing-account-using-a-private-key)
 
-#### using-web-wallet - Import existing account using NEAR Wallet (a.k.a. "sign in")
+#### using-web-wallet - Import existing account using unc Wallet (a.k.a. "sign in")
 
 To authorize the user, in the terminal command line type:
 ```txt
-near account \
+unc account \
     import-account \
     using-web-wallet \
     network-config testnet
 ```
 
 You will be redirected to the browser for authorization.
-Default wallet url is https://app.mynearwallet.com/ (for testnet - https://testnet.mynearwallet.com/). But if you want to change to a different wallet url, you can use `--wallet-url` option:
+Default wallet url is https://app.myuncwallet.com/ (for testnet - https://testnet.myuncwallet.com/). But if you want to change to a different wallet url, you can use `--wallet-url` option:
 ```txt
-near account \
+unc account \
     import-account \
     using-web-wallet \
     network-config testnet\
-    --wallet-url 'https://wallet.testnet.near.org/'
+    --wallet-url 'https://wallet.testnet.unc.org/'
 ```
 
-After successful authorization in _[NEAR Wallet](https://wallet.near.org/)_, you need to return to the terminal and enter your login.
+After successful authorization in _[unc Wallet](https://wallet.unc.org/)_, you need to return to the terminal and enter your login.
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
@@ -273,7 +273,7 @@ The data for the access key is saved in macOS Keychain
 
 To authorize the user, in the terminal command line type:
 ```txt
-near account \
+unc account \
     import-account \
     using-seed-phrase 'rapid cover napkin accuse junk drill sick tooth poem patch evil fan' \
         --seed-phrase-hd-path 'm/44'\''/397'\''/0'\''' \
@@ -297,7 +297,7 @@ The data for the access key is saved in macOS Keychain
 
 To authorize the user, in the terminal command line type:
 ```txt
-near account \
+unc account \
     import-account \
     using-private-key ed25519:5YhAaEe3G4VtiBavJMvpzPPmknfsTauzVjwK1ZjPVw2MFM6zFyUv4tSiSfCbCn78mEnMifE6iX5qbhFsWEwErcC2 \
     network-config testnet
@@ -318,29 +318,29 @@ The data for the access key is saved in macOS Keychain
 
 #### export-account - Export existing account
 
-- [using-web-wallet](#using-web-wallet---Export-existing-account-using-NEAR-Wallet-aka-sign-in)
+- [using-web-wallet](#using-web-wallet---Export-existing-account-using-unc-Wallet-aka-sign-in)
 - [using-seed-phrase](#using-seed-phrase---Export-existing-account-using-a-seed-phrase)
 - [using-private-key](#using-private-key---Export-existing-account-using-a-private-key)
 
 
-#### using-web-wallet - Export existing account using NEAR Wallet
+#### using-web-wallet - Export existing account using unc Wallet
 
 To export an existing account, enter in the terminal command line:
 ```txt
-near account \
+unc account \
     export-account volodymyr.testnet \
     using-web-wallet \
     network-config testnet
 ```
 
 You will be redirected to the browser for authorization.
-Default wallet url is https://app.mynearwallet.com/ (for testnet - https://testnet.mynearwallet.com/). But if you want to change to a different wallet url, you can use `--wallet-url` option:
+Default wallet url is https://app.myuncwallet.com/ (for testnet - https://testnet.myuncwallet.com/). But if you want to change to a different wallet url, you can use `--wallet-url` option:
 ```txt
-near account \
+unc account \
     export-account volodymyr.testnet \
     using-web-wallet \
     network-config testnet\
-    --wallet-url 'https://wallet.testnet.near.org/'
+    --wallet-url 'https://wallet.testnet.unc.org/'
 ```
 <details><summary><i>Demonstration of the command in interactive mode</i></summary>
 <a href="https://asciinema.org/a/QqVhhVaBP4MP7XFDeb6arIB3S?autoplay=1&t=1&speed=2">
@@ -352,7 +352,7 @@ near account \
 
 To export an existing account, enter in the terminal command line:
 ```txt
-near account \
+unc account \
     export-account volodymyr.testnet \
     using-seed-phrase \
     network-config testnet
@@ -369,7 +369,7 @@ Here is the secret recovery seed phrase for account <volodymyr.testnet>: "featur
 
 To export an existing account, enter in the terminal command line:
 ```txt
-near account \
+unc account \
     export-account volodymyr.testnet \
     using-private-key \
     network-config testnet
@@ -403,7 +403,7 @@ Access keys to the created account can be added in several ways:
 
 In order to create an account, in the terminal command line type:
 ```txt
-near account \
+unc account \
     create-account sponsor-by-faucet-service test_fro.testnet \
     autogenerate-new-keypair \
     save-to-keychain \
@@ -414,13 +414,13 @@ near account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-The data for the access key is saved in a file /Users/frovolod/.near-credentials/testnet/test_fro.testnet/ed25519_CCwvhsp3Y3BfLbfYJQJqXJA2CaSP7CRjn1t7PyEtsjej.json
-The data for the access key is saved in a file /Users/frovolod/.near-credentials/testnet/test_fro.testnet.json
+The data for the access key is saved in a file /Users/frovolod/.unc-credentials/testnet/test_fro.testnet/ed25519_CCwvhsp3Y3BfLbfYJQJqXJA2CaSP7CRjn1t7PyEtsjej.json
+The data for the access key is saved in a file /Users/frovolod/.unc-credentials/testnet/test_fro.testnet.json
 
 New account <test_fro.testnet> created successfully.
 Transaction ID: FnsrXbnzH1jjTWpAo1M8cZhEN5p7jyqgRPa1aqnRzxp3
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/FnsrXbnzH1jjTWpAo1M8cZhEN5p7jyqgRPa1aqnRzxp3
+https://explorer.testnet.unc.org/transactions/FnsrXbnzH1jjTWpAo1M8cZhEN5p7jyqgRPa1aqnRzxp3
 ```
 </details>
 
@@ -435,7 +435,7 @@ https://explorer.testnet.near.org/transactions/FnsrXbnzH1jjTWpAo1M8cZhEN5p7jyqgR
 This command adds a previously known mnemonic phrase to the account.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     create-account sponsor-by-faucet-service test_fro1.testnet \
     use-manually-provided-seed-phrase 'start vote foot cereal link cabin fantasy universe hero drama bird fiction' \
     network-config testnet \
@@ -448,7 +448,7 @@ near account \
 New account <test_fro1.testnet> created successfully.
 Transaction ID: D1rRpZx5AcYWzC91Jdt69qF1iqai7knUAtvdvqNA2bv
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/D1rRpZx5AcYWzC91Jdt69qF1iqai7knUAtvdvqNA2bv
+https://explorer.testnet.unc.org/transactions/D1rRpZx5AcYWzC91Jdt69qF1iqai7knUAtvdvqNA2bv
 ```
 </details>
 
@@ -463,7 +463,7 @@ https://explorer.testnet.near.org/transactions/D1rRpZx5AcYWzC91Jdt69qF1iqai7knUA
 This command adds a pre-known public access key to the account.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     create-account sponsor-by-faucet-service test_fro2.testnet \
     use-manually-provided-public-key ed25519:HVPgAsZkZ7cwLZDqK313XJsDyqAvgBxrATcD7VacA8KE \
     network-config testnet \
@@ -476,7 +476,7 @@ near account \
 New account <test_fro2.testnet> created successfully.
 Transaction ID: E7rKjJiYg1BwXa6e7xMueDS8NUNjqZSN5zDRpB5sARTi
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/E7rKjJiYg1BwXa6e7xMueDS8NUNjqZSN5zDRpB5sARTi
+https://explorer.testnet.unc.org/transactions/E7rKjJiYg1BwXa6e7xMueDS8NUNjqZSN5zDRpB5sARTi
 ```
 </details>
 
@@ -491,7 +491,7 @@ https://explorer.testnet.near.org/transactions/E7rKjJiYg1BwXa6e7xMueDS8NUNjqZSN5
 This command adds access keys to an account using a ledger.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     create-account sponsor-by-faucet-service test_fro3.testnet \
     use-ledger \
     network-config testnet \
@@ -504,7 +504,7 @@ near account \
 New account <test_fro3.testnet> created successfully.
 Transaction ID: BStBXVisyR5FUj3ZfCAeQ1ohfwTnx2vTbYaRPLTQ5Uek
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/BStBXVisyR5FUj3ZfCAeQ1ohfwTnx2vTbYaRPLTQ5Uek
+https://explorer.testnet.unc.org/transactions/BStBXVisyR5FUj3ZfCAeQ1ohfwTnx2vTbYaRPLTQ5Uek
 ```
 </details>
 
@@ -527,8 +527,8 @@ Access keys to the created account can be added in several ways:
 
 In order to create a sub-account, in the terminal command line type:
 ```txt
-near account \
-    create-account fund-myself new.fro_volod.testnet '1 NEAR' \
+unc account \
+    create-account fund-myself new.fro_volod.testnet '1 unc' \
     autogenerate-new-keypair \
     save-to-keychain \
     sign-as \
@@ -544,10 +544,10 @@ Transaction sent ...
 New account <new.fro_volod.testnet> created successfully.
 Transaction ID: DRT3EpCK9iT5APyGgfcgSoLPCLCYYKtnrVgDhGLDEZFo
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/DRT3EpCK9iT5APyGgfcgSoLPCLCYYKtnrVgDhGLDEZFo
+https://explorer.testnet.unc.org/transactions/DRT3EpCK9iT5APyGgfcgSoLPCLCYYKtnrVgDhGLDEZFo
 
-The data for the access key is saved in a file /Users/frovolod/.near-credentials/testnet/new.fro_volod.testnet/ed25519_3ngtirechhepHKrzfkdgqqtwqSMtdbSLR6N1c4ivnzu6.json
-The data for the access key is saved in a file "/Users/frovolod/.near-credentials/testnet/new.fro_volod.testnet.json"
+The data for the access key is saved in a file /Users/frovolod/.unc-credentials/testnet/new.fro_volod.testnet/ed25519_3ngtirechhepHKrzfkdgqqtwqSMtdbSLR6N1c4ivnzu6.json
+The data for the access key is saved in a file "/Users/frovolod/.unc-credentials/testnet/new.fro_volod.testnet.json"
 ```
 </details>
 
@@ -559,8 +559,8 @@ The data for the access key is saved in a file "/Users/frovolod/.near-credential
 
 In order to create a "short name" account, in the terminal command line type:
 ```txt
-near account \
-    create-account fund-myself new7.testnet '0.1 NEAR' \
+unc account \
+    create-account fund-myself new7.testnet '0.1 unc' \
     autogenerate-new-keypair \
     save-to-keychain \
     sign-as fro_volod.testnet \
@@ -576,10 +576,10 @@ Transaction sent ...
 New account <new7.testnet> created successfully.
 Transaction ID: GxZRjmYxZyo6X6Mn1kfuRJhfUnxsUVCiHZAZKqrLtR27
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/GxZRjmYxZyo6X6Mn1kfuRJhfUnxsUVCiHZAZKqrLtR27
+https://explorer.testnet.unc.org/transactions/GxZRjmYxZyo6X6Mn1kfuRJhfUnxsUVCiHZAZKqrLtR27
 
-The data for the access key is saved in a file "/Users/frovolod/.near-credentials/testnet/new7.testnet/ed25519_EX1qK1S1T4WxXJFLH7qZvKxnGQtcKfEEsiA4BNxAZ6mP.json"
-The file: /Users/frovolod/.near-credentials/testnet/new7.testnet.json already exists! Therefore it was not overwritten.
+The data for the access key is saved in a file "/Users/frovolod/.unc-credentials/testnet/new7.testnet/ed25519_EX1qK1S1T4WxXJFLH7qZvKxnGQtcKfEEsiA4BNxAZ6mP.json"
+The file: /Users/frovolod/.unc-credentials/testnet/new7.testnet.json already exists! Therefore it was not overwritten.
 ```
 </details>
 
@@ -594,8 +594,8 @@ The file: /Users/frovolod/.near-credentials/testnet/new7.testnet.json already ex
 This command adds a previously known mnemonic phrase to the account.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
-    create-account fund-myself seed.volodymyr.testnet '0.1 NEAR' \
+unc account \
+    create-account fund-myself seed.volodymyr.testnet '0.1 unc' \
     use-manually-provided-seed-phrase 'start vote foot cereal link cabin fantasy universe hero drama bird fiction' \
     sign-as volodymyr.testnet \
     network-config testnet \
@@ -610,7 +610,7 @@ Transaction sent ...
 New account <seed.volodymyr.testnet> created successfully.
 Transaction ID: 31iA2SsxtrRzb3fD5KtsFTZni8yUi2iZboNQih9bZuDt
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/31iA2SsxtrRzb3fD5KtsFTZni8yUi2iZboNQih9bZuDt
+https://explorer.testnet.unc.org/transactions/31iA2SsxtrRzb3fD5KtsFTZni8yUi2iZboNQih9bZuDt
 ```
 </details>
 
@@ -625,8 +625,8 @@ https://explorer.testnet.near.org/transactions/31iA2SsxtrRzb3fD5KtsFTZni8yUi2iZb
 This command adds a pre-known public access key to the account.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
-    create-account fund-myself pk.volodymyr.testnet '0.1 NEAR' \
+unc account \
+    create-account fund-myself pk.volodymyr.testnet '0.1 unc' \
     use-manually-provided-public-key ed25519:6jm8hWUgwoEeGmpdEyk9zrCqtXM8kHhvg8M236ZaGusS \
     sign-as volodymyr.testnet \
     network-config testnet \
@@ -641,7 +641,7 @@ Transaction sent ...
 New account <pk.volodymyr.testnet> created successfully.
 Transaction ID: CAVAR7jx2ofnbjxFFL2JVNbLsGNWF2q2tqMEtHxXmRLi
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/CAVAR7jx2ofnbjxFFL2JVNbLsGNWF2q2tqMEtHxXmRLi
+https://explorer.testnet.unc.org/transactions/CAVAR7jx2ofnbjxFFL2JVNbLsGNWF2q2tqMEtHxXmRLi
 ```
 </details>
 
@@ -656,8 +656,8 @@ https://explorer.testnet.near.org/transactions/CAVAR7jx2ofnbjxFFL2JVNbLsGNWF2q2t
 This command adds access keys to an account using a ledger.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
-    create-account fund-myself ledger1.volodymyr.testnet '0.1 NEAR' \
+unc account \
+    create-account fund-myself ledger1.volodymyr.testnet '0.1 unc' \
     use-ledger \
     sign-as volodymyr.testnet \
     network-config testnet \
@@ -672,7 +672,7 @@ Transaction sent ...
 New account <ledger1.volodymyr.testnet> created successfully.
 Transaction ID: BKJp3QdaLtnXA8xwfqyk6JfrDsDxbxqADVyuNzQmKGNL
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/BKJp3QdaLtnXA8xwfqyk6JfrDsDxbxqADVyuNzQmKGNL
+https://explorer.testnet.unc.org/transactions/BKJp3QdaLtnXA8xwfqyk6JfrDsDxbxqADVyuNzQmKGNL
 ```
 </details>
 
@@ -693,17 +693,17 @@ https://explorer.testnet.near.org/transactions/BKJp3QdaLtnXA8xwfqyk6JfrDsDxbxqAD
 This command automatically generates access keys and saves them to a file named _implicit-account-id_.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     create-account \
     fund-later \
     use-auto-generation \
-    save-to-folder /Users/frovolod/.near-credentials/implicit
+    save-to-folder /Users/frovolod/.unc-credentials/implicit
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-The file "/Users/frovolod/.near-credentials/implicit/1573066d3fa7a2d56357aa5ddbc84295d94c61590390000981f5900b04e2f55f.json" was saved successfully
+The file "/Users/frovolod/.unc-credentials/implicit/1573066d3fa7a2d56357aa5ddbc84295d94c61590390000981f5900b04e2f55f.json" was saved successfully
 ```
 </details>
 
@@ -718,17 +718,17 @@ The file "/Users/frovolod/.near-credentials/implicit/1573066d3fa7a2d56357aa5ddbc
 This command generates access keys using the ledger and saves them in a file named _implicit-account-id_.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     create-account \
     fund-later \
     use-ledger \
-    save-to-folder /Users/frovolod/.near-credentials/implicit/ledger
+    save-to-folder /Users/frovolod/.unc-credentials/implicit/ledger
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-The file "/Users/frovolod/.near-credentials/implicit/ledger/739c872c3057cd5d812c49345248b9fdd318c8ad33ace6cf0468109eae972c8e.json" was saved successfully
+The file "/Users/frovolod/.unc-credentials/implicit/ledger/739c872c3057cd5d812c49345248b9fdd318c8ad33ace6cf0468109eae972c8e.json" was saved successfully
 ```
 </details>
 
@@ -743,18 +743,18 @@ The file "/Users/frovolod/.near-credentials/implicit/ledger/739c872c3057cd5d812c
 This command generates access keys using a mnemonic phrase and saves them in a file named _implicit-account-id_.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     create-account \
     fund-later \
     use-seed-phrase 'start vote foot cereal link cabin fantasy universe hero drama bird fiction' \
         --seed-phrase-hd-path 'm/44'\''/397'\''/0'\''' \
-    save-to-folder /Users/frovolod/.near-credentials/implicit
+    save-to-folder /Users/frovolod/.unc-credentials/implicit
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-The file "/Users/frovolod/.near-credentials/implicit/eca9e1a6e0fa9a6af6d046bcffa6508f90f98e646836647ecd883d1d2b1989e5.json" was saved successfully
+The file "/Users/frovolod/.unc-credentials/implicit/eca9e1a6e0fa9a6af6d046bcffa6508f90f98e646836647ecd883d1d2b1989e5.json" was saved successfully
 ```
 </details>
 
@@ -764,7 +764,7 @@ The file "/Users/frovolod/.near-credentials/implicit/eca9e1a6e0fa9a6af6d046bcffa
 </a>
 </details>
 
-#### update-social-profile - Update NEAR Social profile
+#### update-social-profile - Update unc Social profile
 
 - [json-args](#json-args---Valid-JSON-arguments-eg-token_id-42)
 - base64-args
@@ -776,9 +776,9 @@ The file "/Users/frovolod/.near-credentials/implicit/eca9e1a6e0fa9a6af6d046bcffa
 To update the contract account profile using JSON arguments, enter the following at the terminal command line:
 
 ```txt
-near account \
+unc account \
     update-social-profile fro_volod.testnet \
-    json-args '{"name":"frovolod","image":{"ipfs_cid":"bafkreifdzusz6hp3j4njdtqqxr3tlvx4agedgh7znyac4wbuiao3gtppde"},"linktree":{"github":"FroVolod","telegram":"frovolod"},"tags": {"rust":"","near":"","developer":""}}' \
+    json-args '{"name":"frovolod","image":{"ipfs_cid":"bafkreifdzusz6hp3j4njdtqqxr3tlvx4agedgh7znyac4wbuiao3gtppde"},"linktree":{"github":"FroVolod","telegram":"frovolod"},"tags": {"rust":"","unc":"","developer":""}}' \
     sign-as fro_volod.testnet \
     network-config testnet \
     sign-with-keychain \
@@ -803,7 +803,7 @@ Profile for fro_volod.testnet updated successfully
 To update the account profile on the contract using the prepared file, you must enter in the terminal command line:
 
 ```txt
-near account \
+unc account \
     update-social-profile fro_volod.testnet \
     file-args profile.txt \
     sign-as fro_volod.testnet \
@@ -830,7 +830,7 @@ Profile for fro_volod.testnet updated successfully
 To update the account profile on the contract in interactive mode, you must use the prompts of the dialog or enter in the terminal command line:
 
 ```txt
-near account \
+unc account \
     update-social-profile fro_volod.testnet \
     manually \
         --name fro_volod.testnet \
@@ -863,7 +863,7 @@ Profile for fro_volod.testnet updated successfully
 This command is designed to delete the current account. It is important to remember that all tokens of the deleted account will be transferred to the "_beneficiary_" account.
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     delete-account 2.fro_volod.testnet \
     beneficiary volodymyr.testnet \
     network-config testnet \
@@ -879,7 +879,7 @@ Successful transaction
 Account <2.fro_volod.testnet> has been successfully deleted.
 Transaction ID: EHvB47npN8Z46qhsrw5XpKmD3n3jDn4MGiD85YSqw7cy
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/EHvB47npN8Z46qhsrw5XpKmD3n3jDn4MGiD85YSqw7cy
+https://explorer.testnet.unc.org/transactions/EHvB47npN8Z46qhsrw5XpKmD3n3jDn4MGiD85YSqw7cy
 ```
 </details>
 
@@ -896,7 +896,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 
 To view the list of access keys, type the following in the terminal command line:
 ```txt
-near account \
+unc account \
     list-keys fro_volod.testnet \
     network-config testnet \
     now
@@ -906,11 +906,11 @@ near account \
 
 ```txt
 Number of access keys: 14
-   1. ed25519:2QFAeUutKUDpmgKDyHXm7Wcz1uhjxk92fK6zY2dB7FCD (nonce: 97492076000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 NEAR
+   1. ed25519:2QFAeUutKUDpmgKDyHXm7Wcz1uhjxk92fK6zY2dB7FCD (nonce: 97492076000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 unc
    2. ed25519:3p1HbrTDYxY4q3V6QznW14qkuv3Bq1phFpCTsbrJpbEC (nonce: 94363284000000) is granted to full access
    3. ed25519:5UJE4PzyxECS42hBZSD1QQCLdq5j39vCtzshFPbnGdm1 (nonce: 73069087000002) is granted to full access
-   4. ed25519:6YU78BezKwQNrz5vmtkSCALtx7cPDC1JBs9DhjeSJ39X (nonce: 97490513000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 NEAR
-   5. ed25519:7YCfA1KrToJtAYGTBgAMe4LWfQEi4iwLGcH2q5SvGKzD (nonce: 94982716000000) is granted to only do [] function calls on mintspace2.testnet with an allowance of 0.25 NEAR
+   4. ed25519:6YU78BezKwQNrz5vmtkSCALtx7cPDC1JBs9DhjeSJ39X (nonce: 97490513000000) is granted to only do [] function calls on v2.ref-farming.testnet with an allowance of 0.25 unc
+   5. ed25519:7YCfA1KrToJtAYGTBgAMe4LWfQEi4iwLGcH2q5SvGKzD (nonce: 94982716000000) is granted to only do [] function calls on mintspace2.testnet with an allowance of 0.25 unc
    6. ed25519:95w5YFsJ3iktzDwRBWUGqLF6Gv5CoJuVifBjcEEdJs8s (nonce: 72253433000003) is granted to full access
    7. ed25519:9nyDySTNAGPywxC9pG4DPdnF3eEVexDgrfzZYsoahPsV (nonce: 76057805000000) is granted to full access
    8. ed25519:AEC4szaeNzT8PQAifsnisdivq4mwswJbBM65DdkT6kdS (nonce: 72263674000000) is granted to full access
@@ -937,7 +937,7 @@ Let's execute the command to add a new pair of access keys to the account with t
   - the transaction will be signed automatically (if there is a file with access keys)
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     add-key fro_volod.testnet \
     grant-full-access \
     use-manually-provided-public-key ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3 \
@@ -954,7 +954,7 @@ Successful transaction
 Added access key = ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3 to fro_volod.testnet.
 Transaction ID: 2oVDKopcWphN3qrUoq7XjFMpRuCUjz6jSU327q8trAQ5
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/2oVDKopcWphN3qrUoq7XjFMpRuCUjz6jSU327q8trAQ5
+https://explorer.testnet.unc.org/transactions/2oVDKopcWphN3qrUoq7XjFMpRuCUjz6jSU327q8trAQ5
 ```
 </details>
 
@@ -970,10 +970,10 @@ Let's change our parameters to add access keys:
   - the transaction will be signed with key pair
 In order to execute this command, in the terminal command line type:
 ```txt
-near account \
+unc account \
     add-key fro_volod.testnet \
     grant-function-call-access \
-        --allowance '1 NEAR' \
+        --allowance '1 unc' \
         --receiver-account-id 'meta.pool.testnet' \
         --method-names 'set_a, set_b' \
     autogenerate-new-keypair \
@@ -993,7 +993,7 @@ Successful transaction
 Added access key = ed25519:27R66L6yevyHbsk4fESZDC8QUQBwCdx6vvkk1uQmG7NY to fro_volod.testnet.
 Transaction ID: DaJySrNtSUZU7KPyvfUMbh6xYi9vZeMvnj4Umo7ZzdB3
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/DaJySrNtSUZU7KPyvfUMbh6xYi9vZeMvnj4Umo7ZzdB3
+https://explorer.testnet.unc.org/transactions/DaJySrNtSUZU7KPyvfUMbh6xYi9vZeMvnj4Umo7ZzdB3
 ```
 </details>
 
@@ -1007,7 +1007,7 @@ https://explorer.testnet.near.org/transactions/DaJySrNtSUZU7KPyvfUMbh6xYi9vZeMvn
 
 In order to remove access keys, in the terminal command line type:
 ```txt
-near account \
+unc account \
     delete-key fro_volod.testnet \
     ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3 \
     network-config testnet \
@@ -1023,7 +1023,7 @@ Successful transaction
 Access key <ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3> for account <fro_volod.testnet> has been successfully deleted.
 Transaction ID: 6S7bJ76QNFypUvP7PCB1hkLM7X5GxPxP2gn4rnDHMzPz
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/6S7bJ76QNFypUvP7PCB1hkLM7X5GxPxP2gn4rnDHMzPz
+https://explorer.testnet.unc.org/transactions/6S7bJ76QNFypUvP7PCB1hkLM7X5GxPxP2gn4rnDHMzPz
 ```
 </details>
 
@@ -1044,7 +1044,7 @@ https://explorer.testnet.near.org/transactions/6S7bJ76QNFypUvP7PCB1hkLM7X5GxPxP2
 To view the account balance on the contract on the last block, you must enter in the terminal command line:
 
 ```txt
-near account \
+unc account \
     manage-storage-deposit v1.social08.testnet \
     view-balance volodymyr.testnet \
     network-config testnet \
@@ -1055,8 +1055,8 @@ near account \
 
 ```txt
 storage balance for <volodymyr.testnet>:
- available:        1.6 MB   (15.878059999854543210876557 NEAR [  15878059999854543210876557 yoctoNEAR])
- total:            1.6 MB   (16.238949999854543210876557 NEAR [  16238949999854543210876557 yoctoNEAR])
+ available:        1.6 MB   (15.878059999854543210876557 unc [  15878059999854543210876557 yoctounc])
+ total:            1.6 MB   (16.238949999854543210876557 unc [  16238949999854543210876557 yoctounc])
 ```
 </details>
 
@@ -1071,9 +1071,9 @@ storage balance for <volodymyr.testnet>:
 To add a deposit to the account balance under the contract, you must enter in the terminal command line:
 
 ```txt
-near account \
+unc account \
     manage-storage-deposit v1.social08.testnet \
-    deposit volodymyr.testnet '1 NEAR' \
+    deposit volodymyr.testnet '1 unc' \
     sign-as fro_volod.testnet \
     network-config testnet \
     sign-with-macos-keychain \
@@ -1083,7 +1083,7 @@ near account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<fro_volod.testnet> has successfully added a deposit of 1 NEAR to <volodymyr.testnet> on contract <v1.social08.testnet>.
+<fro_volod.testnet> has successfully added a deposit of 1 unc to <volodymyr.testnet> on contract <v1.social08.testnet>.
 ```
 </details>
 
@@ -1098,9 +1098,9 @@ near account \
 To withdraw funds from the account balance under the contract, you must enter in the terminal command line:
 
 ```txt
-near account \
+unc account \
     manage-storage-deposit v1.social08.testnet \
-    withdraw '0.5 NEAR' \
+    withdraw '0.5 unc' \
     sign-as volodymyr.testnet \
     network-config testnet \
     sign-with-keychain \
@@ -1110,7 +1110,7 @@ near account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully withdraw 0.5 NEAR from <v1.social08.testnet>.
+<volodymyr.testnet> has successfully withdraw 0.5 unc from <v1.social08.testnet>.
 ```
 </details>
 
@@ -1120,22 +1120,22 @@ near account \
 </a>
 </details>
 
-### tokens - Manage token assets such as NEAR, FT, NFT
-- [send-near](#send-near---The-transfer-is-carried-out-in-NEAR-tokens)
+### tokens - Manage token assets such as unc, FT, NFT
+- [send-unc](#send-unc---The-transfer-is-carried-out-in-unc-tokens)
 - [send-ft](#send-ft---The-transfer-is-carried-out-in-FT-tokens)
 - [send-nft](#send-nft---The-transfer-is-carried-out-in-NFT-tokens)
-- [view-near-balance](#view-near-balance---View-the-balance-of-Near-tokens)
+- [view-unc-balance](#view-unc-balance---View-the-balance-of-unc-tokens)
 - [view-ft-balance](#view-ft-balance---View-the-balance-of-FT-tokens)
 - [view-nft-assets](#view-nft-assets---View-the-balance-of-NFT-tokens)
 
-#### send-near - The transfer is carried out in NEAR tokens
+#### send-unc - The transfer is carried out in unc tokens
 
-This command is used to transfer tokens between accounts. Please note that the amount of tokens forwarded is indicated together with the dimensional unit (this is NEAR or yoctoNEAR).
+This command is used to transfer tokens between accounts. Please note that the amount of tokens forwarded is indicated together with the dimensional unit (this is unc or yoctounc).
 In order to execute this command, in the terminal command line type:
 ```txt
-near tokens \
+unc tokens \
     fro_volod.testnet \
-    send-near volodymyr.testnet 0.1NEAR \
+    send-unc volodymyr.testnet 0.1unc \
     network-config testnet \
     sign-with-keychain \
     send
@@ -1146,10 +1146,10 @@ near tokens \
 ```txt
 Transaction sent ...
 Successful transaction
-<fro_volod.testnet> has transferred 0.1 NEAR to <volodymyr.testnet> successfully.
+<fro_volod.testnet> has transferred 0.1 unc to <volodymyr.testnet> successfully.
 Transaction ID: 8BbB674VDxeg36egMzdHFsCUExpkLWAWeYqEfd9u9ZaD
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/8BbB674VDxeg36egMzdHFsCUExpkLWAWeYqEfd9u9ZaD
+https://explorer.testnet.unc.org/transactions/8BbB674VDxeg36egMzdHFsCUExpkLWAWeYqEfd9u9ZaD
 ```
 </details>
 
@@ -1164,11 +1164,11 @@ https://explorer.testnet.near.org/transactions/8BbB674VDxeg36egMzdHFsCUExpkLWAWe
 This command is used to transfer FT tokens between accounts. Please note that the amount of tokens forwarded is indicated together in dimensionless units.
 In order to execute this command, in the terminal command line type:
 ```txt
-near tokens \
+unc tokens \
     fro_volod.testnet \
     send-ft usdn.testnet volodymyr.testnet 10000000000000000000 \
         --prepaid-gas 100.000TeraGas \
-        --attached-deposit 1yoctoNEAR \
+        --attached-deposit 1yoctounc \
     network-config testnet \
     sign-with-keychain \
     send
@@ -1182,7 +1182,7 @@ Successful transaction
 The "ft_transfer" call to <usdn.testnet> on behalf of <fro_volod.testnet> succeeded.
 Transaction ID: 5a7YmANdpimiqUm6WC6n4dd91b6A9PafNNhad8HWKugN
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/5a7YmANdpimiqUm6WC6n4dd91b6A9PafNNhad8HWKugN
+https://explorer.testnet.unc.org/transactions/5a7YmANdpimiqUm6WC6n4dd91b6A9PafNNhad8HWKugN
 ```
 </details>
 
@@ -1197,11 +1197,11 @@ https://explorer.testnet.near.org/transactions/5a7YmANdpimiqUm6WC6n4dd91b6A9PafN
 This command is used to transfer NFT tokens between accounts.
 In order to execute this command, in the terminal command line type:
 ```txt
-near tokens \
+unc tokens \
     fro_volod.testnet \
     send-nft paras-token-v2.testnet volodymyr.testnet 1604:4 \
         --prepaid-gas 100.000TeraGas \
-        --attached-deposit 1yoctoNEAR \
+        --attached-deposit 1yoctounc \
     network-config testnet \
     sign-with-keychain \
     send
@@ -1215,7 +1215,7 @@ Successful transaction
 The "nft_transfer" call to <paras-token-v2.testnet> on behalf of <fro_volod.testnet> succeeded.
 Transaction ID: 9q2VbakZbj5ja6GAFXpFnbtbYHijEHyT7Ry34GQ6cvLB
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/9q2VbakZbj5ja6GAFXpFnbtbYHijEHyT7Ry34GQ6cvLB
+https://explorer.testnet.unc.org/transactions/9q2VbakZbj5ja6GAFXpFnbtbYHijEHyT7Ry34GQ6cvLB
 ```
 </details>
 
@@ -1225,16 +1225,16 @@ https://explorer.testnet.near.org/transactions/9q2VbakZbj5ja6GAFXpFnbtbYHijEHyT7
 </a>
 </details>
 
-#### view-near-balance - View the balance of Near tokens
+#### view-unc-balance - View the balance of unc tokens
 
 Viewing the account balance is possible at the current time (***now***) and at a certain moment in the past by specifying the block (***at-block-height*** or ***at-block-hash***).
 Examples of the use of these parameters are discussed in the ([View properties for an account](#view-account-summary---view-properties-for-an-account)).
 
-To view the amount in NEAR tokens on the account, type the following in the terminal command line:
+To view the amount in unc tokens on the account, type the following in the terminal command line:
 ```txt
-near tokens \
+unc tokens \
     fro_volod.testnet \
-    view-near-balance \
+    view-unc-balance \
     network-config testnet \
     now
 ```
@@ -1242,7 +1242,7 @@ near tokens \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-fro_volod.testnet account has 169.589001320890476999999994 NEAR available for transfer (the total balance is 172.482461320890476999999994 NEAR, but 2.89246 NEAR is locked for storage and the transfer transaction fee is ~0.001 NEAR)
+fro_volod.testnet account has 169.589001320890476999999994 unc available for transfer (the total balance is 172.482461320890476999999994 unc, but 2.89246 unc is locked for storage and the transfer transaction fee is ~0.001 unc)
 ```
 </details>
 
@@ -1259,7 +1259,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 
 To view funds in FT tokens on the account, type the following in the terminal command line:
 ```txt
-near tokens \
+unc tokens \
     fro_volod.testnet \
     view-ft-balance usdn.testnet \
     network-config testnet \
@@ -1286,7 +1286,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 
 To view funds in NFT tokens on the account, type the following in the terminal command line:
 ```txt
-near tokens \
+unc tokens \
     fro_volod.testnet \
     view-nft-assets paras-token-v2.testnet \
     network-config testnet \
@@ -1336,7 +1336,7 @@ fro_volod.testnet account has NFT tokens:
 
 To view a list of validators, enter at the terminal command line:
 ```txt
-near staking \
+unc staking \
     validator-list \
     network-config mainnet
 ```
@@ -1347,24 +1347,24 @@ near staking \
 +-----+----------------------------------------------+----------+------------+----------------------------------------+
 | #   | Validator Id                                 | Fee      | Delegators | Stake                                  |
 +-----+----------------------------------------------+----------+------------+----------------------------------------+
-| 1   | staked.poolv1.near                           |     10 % |     3207   | 44135674.18356215181482959363448 NEAR  |
-| 2   | figment.poolv1.near                          |     10 % |     1911   | 43158696.364374348313201031661037 NEAR |
-| 3   | astro-stakers.poolv1.near                    |      1 % |    11528   | 26760042.204197815051321354819805 NEAR |
-| 4   | bzam6yjpnfnxsdmjf6pw.poolv1.near             |    100 % |      772   | 23347900.996610021010359525969384 NEAR |
-| 5   | zavodil.poolv1.near                          |      1 % |     7116   | 20700903.223980192761611953425855 NEAR |
-| 6   | binancenode1.poolv1.near                     |      5 % |     1250   | 14209385.916611355199355410152982 NEAR |
-| 7   | staking_yes_protocol1.poolv1.near            |    100 % |       65   | 13590245.381034035922399111793022 NEAR |
-| 8   | pinnacle1.poolv1.near                        |    100 % |        4   | 13509874.537453205747773186007329 NEAR |
-| 9   | priory.poolv1.near                           |    100 % |       15   | 12727257.514716521676379711750814 NEAR |
-| 10  | stake1.poolv1.near                           |      3 % |      754   | 12449700.095021989100340879377004 NEAR |
-| 11  | mockingbird.poolv1.near                      |    100 % |       28   | 11501759.018634341466180769487983 NEAR |
-| 12  | dqw9k3e4422cxt92masmy.poolv1.near            |    100 % |       36   | 11122519.385245577197951932017032 NEAR |
-| 13  | flipside.pool.near                           |    100 % |        9   | 11087540.718366137730589600283212 NEAR |
-| 14  | sweat_validator.poolv1.near                  |    100 % |      112   | 10900424.272450229667472212076621 NEAR |
-| 15  | epic.poolv1.near                             |      1 % |     5363   | 10769900.629411406438519703653828 NEAR |
-| 16  | future_is_near.poolv1.near                   |      9 % |      355   | 10243082.132364573976720438585765 NEAR |
-| 17  | cosmose.poolv1.near                          |    100 % |       10   | 10064982.806109296980776431396738 NEAR |
-| 18  | aurora.pool.near                             |     99 % |     3301   | 9298278.181302142009939675438401 NEAR  |
+| 1   | staked.poolv1.unc                           |     10 % |     3207   | 44135674.18356215181482959363448 unc  |
+| 2   | figment.poolv1.unc                          |     10 % |     1911   | 43158696.364374348313201031661037 unc |
+| 3   | astro-stakers.poolv1.unc                    |      1 % |    11528   | 26760042.204197815051321354819805 unc |
+| 4   | bzam6yjpnfnxsdmjf6pw.poolv1.unc             |    100 % |      772   | 23347900.996610021010359525969384 unc |
+| 5   | zavodil.poolv1.unc                          |      1 % |     7116   | 20700903.223980192761611953425855 unc |
+| 6   | binancenode1.poolv1.unc                     |      5 % |     1250   | 14209385.916611355199355410152982 unc |
+| 7   | staking_yes_protocol1.poolv1.unc            |    100 % |       65   | 13590245.381034035922399111793022 unc |
+| 8   | pinnacle1.poolv1.unc                        |    100 % |        4   | 13509874.537453205747773186007329 unc |
+| 9   | priory.poolv1.unc                           |    100 % |       15   | 12727257.514716521676379711750814 unc |
+| 10  | stake1.poolv1.unc                           |      3 % |      754   | 12449700.095021989100340879377004 unc |
+| 11  | mockingbird.poolv1.unc                      |    100 % |       28   | 11501759.018634341466180769487983 unc |
+| 12  | dqw9k3e4422cxt92masmy.poolv1.unc            |    100 % |       36   | 11122519.385245577197951932017032 unc |
+| 13  | flipside.pool.unc                           |    100 % |        9   | 11087540.718366137730589600283212 unc |
+| 14  | sweat_validator.poolv1.unc                  |    100 % |      112   | 10900424.272450229667472212076621 unc |
+| 15  | epic.poolv1.unc                             |      1 % |     5363   | 10769900.629411406438519703653828 unc |
+| 16  | future_is_unc.poolv1.unc                   |      9 % |      355   | 10243082.132364573976720438585765 unc |
+| 17  | cosmose.poolv1.unc                          |    100 % |       10   | 10064982.806109296980776431396738 unc |
+| 18  | aurora.pool.unc                             |     99 % |     3301   | 9298278.181302142009939675438401 unc  |
 ...
 ```
 </details>
@@ -1378,19 +1378,19 @@ near staking \
 #### delegation - Stake delegation management
 
 - [view-balance](#view-balance---View-the-delegated-stake-balance-for-a-given-account)
-- [deposit-and-stake](#deposit-and-stake---Delegate-NEAR-tokens-to-a-validator's-staking-pool)
-- [stake](#stake---Delegate-a-certain-amount-of-previously-deposited-or-unstaked-NEAR-tokens-to-a-validator's-staking-pool)
-- [stake-all](#stake-all---Delegate-all-previously-deposited-or-unstaked-NEAR-tokens-to-a-validator's-staking-pool)
-- [unstake](#unstake---Unstake-a-certain-amount-of-delegated-NEAR-tokens-from-a-avalidator's-staking-pool)
-- [unstake-all](#unstake-all---Unstake-all-delegated-NEAR-tokens-from-a-avalidator's-staking-pool)
-- [withdraw](#withdraw---Withdraw-a-certain-amount-of-unstaked-NEAR-tokens-from-a-avalidator's-staking-pool)
-- [withdraw-all](#withdraw-all---Withdraw-all-unstaked-NEAR-tokens-from-a-avalidator's-staking-pool)
+- [deposit-and-stake](#deposit-and-stake---Delegate-unc-tokens-to-a-validator's-staking-pool)
+- [stake](#stake---Delegate-a-certain-amount-of-previously-deposited-or-unstaked-unc-tokens-to-a-validator's-staking-pool)
+- [stake-all](#stake-all---Delegate-all-previously-deposited-or-unstaked-unc-tokens-to-a-validator's-staking-pool)
+- [unstake](#unstake---Unstake-a-certain-amount-of-delegated-unc-tokens-from-a-avalidator's-staking-pool)
+- [unstake-all](#unstake-all---Unstake-all-delegated-unc-tokens-from-a-avalidator's-staking-pool)
+- [withdraw](#withdraw---Withdraw-a-certain-amount-of-unstaked-unc-tokens-from-a-avalidator's-staking-pool)
+- [withdraw-all](#withdraw-all---Withdraw-all-unstaked-unc-tokens-from-a-avalidator's-staking-pool)
 
 ##### view-balance - View the delegated stake balance for a given account
 
 To view the delegated stake account balance on a validator staking pool, enter at the terminal command line:
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
     view-balance aurora.pool.f863973.m0 \
     network-config testnet \
@@ -1401,9 +1401,9 @@ near staking \
 
 ```txt
 Delegated stake balance with validator <aurora.pool.f863973.m0> by <volodymyr.testnet>:
-      Staked balance:           38.021465232511349340052266 NEAR
-      Unstaked balance:          0.000000000000000000000001 NEAR
-      Total balance:            38.021465232511349340052267 NEAR
+      Staked balance:           38.021465232511349340052266 unc
+      Unstaked balance:          0.000000000000000000000001 unc
+      Total balance:            38.021465232511349340052267 unc
 ```
 </details>
 
@@ -1413,13 +1413,13 @@ Delegated stake balance with validator <aurora.pool.f863973.m0> by <volodymyr.te
 </a>
 </details>
 
-##### deposit-and-stake - Delegate NEAR tokens to a validator's staking pool
+##### deposit-and-stake - Delegate unc tokens to a validator's staking pool
 
-To delegate your NEAR tokens to a staking pool to support a validator and gain staking rewards, deposit NEAR tokens and stake with a selected staking pool, you may use the following command (note that you need to use your own account id, adjust the amount of NEAR tokens to deposit and stake, and choose the staking pool account id):
+To delegate your unc tokens to a staking pool to support a validator and gain staking rewards, deposit unc tokens and stake with a selected staking pool, you may use the following command (note that you need to use your own account id, adjust the amount of unc tokens to deposit and stake, and choose the staking pool account id):
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
-    deposit-and-stake '15 NEAR' aurora.pool.f863973.m0 \
+    deposit-and-stake '15 unc' aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1428,7 +1428,7 @@ near staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully delegated 15 NEAR to stake with <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully delegated 15 unc to stake with <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1438,13 +1438,13 @@ near staking \
 </a>
 </details>
 
-##### stake - Delegate a certain amount of previously deposited or unstaked NEAR tokens to a validator's staking pool
+##### stake - Delegate a certain amount of previously deposited or unstaked unc tokens to a validator's staking pool
 
-To delegate your NEAR tokens to a staking pool to support a validator and gain staking rewards, stake deposited NEAR tokens with a selected staking pool. You may use the following command (note that you need to use your own account id, adjust the amount of NEAR tokens to stake, choose the staking pool account id, and use the appropriate network):
+To delegate your unc tokens to a staking pool to support a validator and gain staking rewards, stake deposited unc tokens with a selected staking pool. You may use the following command (note that you need to use your own account id, adjust the amount of unc tokens to stake, choose the staking pool account id, and use the appropriate network):
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
-    stake '5 NEAR' aurora.pool.f863973.m0 \
+    stake '5 unc' aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1453,7 +1453,7 @@ near staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully delegated 5 NEAR to stake with <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully delegated 5 unc to stake with <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1463,11 +1463,11 @@ near staking \
 </a>
 </details>
 
-##### stake-all - Delegate all previously deposited or unstaked NEAR tokens to a validator's staking pool
+##### stake-all - Delegate all previously deposited or unstaked unc tokens to a validator's staking pool
 
-To delegate your NEAR tokens to a staking pool to support a validator and gain staking rewards, stake all previosly deposited or unstaked NEAR tokens with a selected staking pool. You may use the following command (note that you need to use your own account id, and choose the staking pool account id):
+To delegate your unc tokens to a staking pool to support a validator and gain staking rewards, stake all previosly deposited or unstaked unc tokens with a selected staking pool. You may use the following command (note that you need to use your own account id, and choose the staking pool account id):
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
     stake-all aurora.pool.f863973.m0 \
     network-config testnet \
@@ -1478,7 +1478,7 @@ near staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully delegated all previously unstaked NEAR tokens to stake with <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully delegated all previously unstaked unc tokens to stake with <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1488,13 +1488,13 @@ near staking \
 </a>
 </details>
 
-##### unstake - Unstake a certain amount of delegated NEAR tokens from a avalidator's staking pool
+##### unstake - Unstake a certain amount of delegated unc tokens from a avalidator's staking pool
 
-To unstake your delegated NEAR tokens from a staking pool, you can use the following command (note that you need to use your own account id, adjust the amount of NEAR tokens to unstake, and choose the staking pool account id):
+To unstake your delegated unc tokens from a staking pool, you can use the following command (note that you need to use your own account id, adjust the amount of unc tokens to unstake, and choose the staking pool account id):
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
-    unstake '7 NEAR' aurora.pool.f863973.m0 \
+    unstake '7 unc' aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1503,7 +1503,7 @@ near staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully unstaked 7 NEAR from <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully unstaked 7 unc from <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1513,11 +1513,11 @@ near staking \
 </a>
 </details>
 
-##### unstake-all - Unstake all delegated NEAR tokens from a avalidator's staking pool
+##### unstake-all - Unstake all delegated unc tokens from a avalidator's staking pool
 
-To unstake your delegated NEAR tokens from a staking pool, you can use the following command (note that you need to use your own account id, and choose the staking pool account id):
+To unstake your delegated unc tokens from a staking pool, you can use the following command (note that you need to use your own account id, and choose the staking pool account id):
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
     unstake-all aurora.pool.f863973.m0 \
     network-config testnet \
@@ -1538,13 +1538,13 @@ near staking \
 </a>
 </details>
 
-##### withdraw - Withdraw a certain amount of unstaked NEAR tokens from a avalidator's staking pool
+##### withdraw - Withdraw a certain amount of unstaked unc tokens from a avalidator's staking pool
 
-To withdraw your delegated NEAR tokens from a staking pool after you unstaked and waited for 4 epochs, you can use the following command (note that you need to use your own account id, adjust the amount of NEAR tokens to withdraw, and choose the staking pool account id):
+To withdraw your delegated unc tokens from a staking pool after you unstaked and waited for 4 epochs, you can use the following command (note that you need to use your own account id, adjust the amount of unc tokens to withdraw, and choose the staking pool account id):
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
-    withdraw '3 NEAR' aurora.pool.f863973.m0 \
+    withdraw '3 unc' aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1553,7 +1553,7 @@ near staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully withdrawn 3 NEAR from <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully withdrawn 3 unc from <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1563,11 +1563,11 @@ near staking \
 </a>
 </details>
 
-##### withdraw-all - Withdraw all unstaked NEAR tokens from a avalidator's staking pool
+##### withdraw-all - Withdraw all unstaked unc tokens from a avalidator's staking pool
 
-To withdraw all your delegated NEAR tokens from a staking pool after you unstaked them and waited for 4 epochs, you can use the following command (note that you need to use your own account id, and choose the staking pool account id):
+To withdraw all your delegated unc tokens from a staking pool after you unstaked them and waited for 4 epochs, you can use the following command (note that you need to use your own account id, and choose the staking pool account id):
 ```txt
-near staking \
+unc staking \
     delegation volodymyr.testnet \
     withdraw-all aurora.pool.f863973.m0 \
     network-config testnet \
@@ -1607,9 +1607,9 @@ Examples of the use of these parameters are discussed in the ([View properties f
 
 To run this command, type the following in the terminal command line:
 ```txt
-near contract \
+unc contract \
     call-function \
-    as-read-only zavodil.poolv1.near get_accounts \
+    as-read-only zavodil.poolv1.unc get_accounts \
     json-args '{"from_index": 0, "limit": 3}' \
     network-config mainnet \
     now
@@ -1620,19 +1620,19 @@ near contract \
 ```txt
 [
   {
-    "account_id": "zavodil.near",
+    "account_id": "zavodil.unc",
     "can_withdraw": false,
     "staked_balance": "107480661091559500516766891",
     "unstaked_balance": "1307739180247557404925470405"
   },
   {
-    "account_id": "gagdiez.near",
+    "account_id": "gagdiez.unc",
     "can_withdraw": true,
     "staked_balance": "4387193990112136827894210960",
     "unstaked_balance": "1"
   },
   {
-    "account_id": "gibby49.near",
+    "account_id": "gibby49.unc",
     "can_withdraw": true,
     "staked_balance": "1105950300133283278041226",
     "unstaked_balance": "1"
@@ -1651,12 +1651,12 @@ near contract \
 
 To run this command, type the following in the terminal command line:
 ```txt
-near contract \
+unc contract \
     call-function \
     as-transaction turbo.volodymyr.testnet rate \
     json-args '{"other_user":"volodymyr.testnet", "vote":5}' \
     prepaid-gas '3 Tgas' \
-    attached-deposit '1 NEAR' \
+    attached-deposit '1 unc' \
     sign-as fro_volod.testnet \
     network-config testnet \
     sign-with-keychain \
@@ -1671,7 +1671,7 @@ Successful transaction
 The "rate" call to <turbo.volodymyr.testnet> on behalf of <fro_volod.testnet> succeeded.
 Transaction ID: 7RuoSAdCctSEw63GKsfQJg1YXRzH3msUCo4oygzauPko
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/7RuoSAdCctSEw63GKsfQJg1YXRzH3msUCo4oygzauPko
+https://explorer.testnet.unc.org/transactions/7RuoSAdCctSEw63GKsfQJg1YXRzH3msUCo4oygzauPko
 ```
 </details>
 
@@ -1685,14 +1685,14 @@ https://explorer.testnet.near.org/transactions/7RuoSAdCctSEw63GKsfQJg1YXRzH3msUC
 
 In order to add a new contract, in the terminal command line type:
 ```txt
-near contract \
+unc contract \
     deploy \
     262.volodymyr.testnet \
-    use-file /Users/frovolod/Documents/NEAR/rust-counter/contract/target/wasm32-unknown-unknown/release/rust_counter_tutorial.wasm \
+    use-file /Users/frovolod/Documents/unc/rust-counter/contract/target/wasm32-unknown-unknown/release/rust_counter_tutorial.wasm \
     with-init-call increment \
     json-args {} \
     prepaid-gas '1 TGas' \
-    attached-deposit '0 NEAR' \
+    attached-deposit '0 unc' \
     network-config testnet \
     sign-with-keychain \
     send
@@ -1707,7 +1707,7 @@ Contract code has been successfully deployed.
 The "increment" call to <262.volodymyr.testnet> on behalf of <262.volodymyr.testnet> succeeded.
 Transaction ID: 4YGGhF88aevNGpF5uaXNGHfQprHRqkia7eTpyxegJVms
 To see the transaction in the transaction explorer, please open this url in your browser:
-https://explorer.testnet.near.org/transactions/4YGGhF88aevNGpF5uaXNGHfQprHRqkia7eTpyxegJVms
+https://explorer.testnet.unc.org/transactions/4YGGhF88aevNGpF5uaXNGHfQprHRqkia7eTpyxegJVms
 ```
 </details>
 
@@ -1725,7 +1725,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 In order to get the contract file, type the following in the terminal command line:
 
 ```txt
-near contract \
+unc contract \
     download-wasm 262.volodymyr.testnet \
     to-folder /Users/frovolod/Downloads \
     network-config testnet \
@@ -1753,7 +1753,7 @@ The keys themselves can be viewed all (***all***) or filtered using ***keys-star
 To view contract keys, enter at the terminal command line:
 
 ```txt
-near contract \
+unc contract \
     view-storage turbo.volodymyr.testnet \
     all \
     as-json \
@@ -1796,7 +1796,7 @@ Contract state (proof):
 ### transaction - Operate transactions
 
 - [view-status](#view-status---View-a-transaction-status)
-- [reconstruct-transaction](#reconstruct-transaction---Use-any-existing-transaction-from-the-chain-to-construct-NEAR-CLI-command-helpful-tool-for-re-submitting-similar-transactions)
+- [reconstruct-transaction](#reconstruct-transaction---Use-any-existing-transaction-from-the-chain-to-construct-unc-CLI-command-helpful-tool-for-re-submitting-similar-transactions)
 - [construct-transaction](#construct-transaction---Construct-a-new-transaction)
 - [sign-transaction](#sign-transaction---Sign-previously-prepared-unsigned-transaction)
 - [send-signed-transaction](#send-signed-transaction---Send-a-signed-transaction)
@@ -1806,7 +1806,7 @@ Contract state (proof):
 
 To view the status of the desired transaction, type its hash in the terminal command line:
 ```txt
-near transaction \
+unc transaction \
     view-status GDoinMecpvnqahzJz9tXLxYycznL4cAoxKTPEnJZ3ank \
     network-config testnet
 ```
@@ -1972,11 +1972,11 @@ Transaction status: FinalExecutionOutcomeWithReceiptView {
 </a>
 </details>
 
-#### reconstruct-transaction  - Use any existing transaction from the chain to construct NEAR CLI command (helpful tool for re-submitting similar transactions)
+#### reconstruct-transaction  - Use any existing transaction from the chain to construct unc CLI command (helpful tool for re-submitting similar transactions)
 
 Let's consider an example when it is necessary to repeat a previously completed transaction:
 ```txt
-near transaction \
+unc transaction \
     reconstruct-transaction GDoinMecpvnqahzJz9tXLxYycznL4cAoxKTPEnJZ3ank \
     network-config testnet
 ```
@@ -1990,14 +1990,14 @@ signer_id:    volodymyr.testnet
 receiver_id:  qweqweqwe.volodymyr.testnet
 actions:
    -- create account:      qweqweqwe.volodymyr.testnet
-   -- transfer deposit:    100 NEAR
+   -- transfer deposit:    100 unc
    -- add access key:     
                    public key:   ed25519:AgVv8qjZ7yix3pTo7BimT1zoDYUSTGcg73RBssC5JMRf
                    nonce:        0
                    permission:   FullAccess
 
 Here is your console command to run archive transaction. You can to edit it or re-run:
-near transaction construct-transaction volodymyr.testnet qweqweqwe.volodymyr.testnet add-action create-account add-action transfer '100 NEAR' add-action add-key grant-full-access use-manually-provided-public-key ed25519:AgVv8qjZ7yix3pTo7BimT1zoDYUSTGcg73RBssC5JMRf skip network-config testnet
+unc transaction construct-transaction volodymyr.testnet qweqweqwe.volodymyr.testnet add-action create-account add-action transfer '100 unc' add-action add-key grant-full-access use-manually-provided-public-key ed25519:AgVv8qjZ7yix3pTo7BimT1zoDYUSTGcg73RBssC5JMRf skip network-config testnet
 ```
 </details>
 
@@ -2075,37 +2075,37 @@ Send signed delegated transaction:
 
 To view the data of the configuration file (_config.toml_), you can use the interactive mode or type in the terminal command line:
 ```txt
-near config show-connections
+unc config show-connections
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-credentials_home_dir = "/Users/frovolod/.near-credentials"
+credentials_home_dir = "/Users/frovolod/.unc-credentials"
 [network_connection.mainnet]
 network_name = "mainnet"
-rpc_url = "https://archival-rpc.mainnet.near.org/"
-wallet_url = "https://wallet.near.org/"
-explorer_transaction_url = "https://explorer.near.org/transactions/"
-linkdrop_account_id = "near"
+rpc_url = "https://archival-rpc.mainnet.unc.org/"
+wallet_url = "https://wallet.unc.org/"
+explorer_transaction_url = "https://explorer.unc.org/transactions/"
+linkdrop_account_id = "unc"
 
 [network_connection.testnet]
 network_name = "testnet"
-rpc_url = "https://archival-rpc.testnet.near.org/"
-wallet_url = "https://wallet.testnet.near.org/"
-explorer_transaction_url = "https://explorer.testnet.near.org/transactions/"
+rpc_url = "https://archival-rpc.testnet.unc.org/"
+wallet_url = "https://wallet.testnet.unc.org/"
+explorer_transaction_url = "https://explorer.testnet.unc.org/transactions/"
 linkdrop_account_id = "testnet"
-faucet_url = "https://helper.nearprotocol.com/account"
+faucet_url = "https://helper.uncprotocol.com/account"
 
 [network_connection.pagoda-testnet]
 network_name = "testnet"
-rpc_url = "https://near-testnet.api.pagoda.co/rpc/v1/"
+rpc_url = "https://unc-testnet.api.pagoda.co/rpc/v1/"
 rpc_api_key = "c0a25b3c-39c2-4f62-a621-50e208b88e64"
-wallet_url = "https://wallet.testnet.near.org/"
-explorer_transaction_url = "https://explorer.testnet.near.org/transactions/"
+wallet_url = "https://wallet.testnet.unc.org/"
+explorer_transaction_url = "https://explorer.testnet.unc.org/transactions/"
 linkdrop_account_id = "testnet"
-faucet_url = "https://helper.nearprotocol.com/account"
-meta_transaction_relayer_url = "https://near-testnet.api.pagoda.co/relay"
+faucet_url = "https://helper.uncprotocol.com/account"
+meta_transaction_relayer_url = "https://unc-testnet.api.pagoda.co/relay"
 ```
 </details>
 
@@ -2113,23 +2113,23 @@ meta_transaction_relayer_url = "https://near-testnet.api.pagoda.co/relay"
 
 To add network details to the configuration file (_config.toml_), you can use interactive mode or type in the terminal command line:
 ```txt
-near config \
+unc config \
     add-connection \
         --network-name testnet \
         --connection-name pagoda-testnet \
-        --rpc-url https://near-testnet.api.pagoda.co/rpc/v1/ \
-        --wallet-url https://wallet.testnet.near.org/ \
-        --explorer-transaction-url https://explorer.testnet.near.org/transactions/ \
+        --rpc-url https://unc-testnet.api.pagoda.co/rpc/v1/ \
+        --wallet-url https://wallet.testnet.unc.org/ \
+        --explorer-transaction-url https://explorer.testnet.unc.org/transactions/ \
         --rpc-api-key 'c0a25b3c-39c2-4f62-a621-50e208b88e64' \
         --linkdrop-account-id testnet \
-        --faucet-url https://helper.nearprotocol.com/account \
-        --meta-transaction-relayer-url https://near-testnet.api.pagoda.co/relay
+        --faucet-url https://helper.uncprotocol.com/account \
+        --meta-transaction-relayer-url https://unc-testnet.api.pagoda.co/relay
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Configuration data is stored in a file "/Users/frovolod/Library/Application Support/near-cli/config.toml"
+Configuration data is stored in a file "/Users/frovolod/Library/Application Support/unc-cli/config.toml"
 Network connection "pagoda-testnet" was successfully added to config.toml
 ```
 </details>
@@ -2144,13 +2144,13 @@ Network connection "pagoda-testnet" was successfully added to config.toml
 
 To remove the network from the configuration file (_config.toml_), you can use interactive mode or type in the terminal command line:
 ```txt
-near config delete-connection pagoda-testnet
+unc config delete-connection pagoda-testnet
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Configuration data is stored in a file "/Users/frovolod/Library/Application Support/near-cli/config.toml"
+Configuration data is stored in a file "/Users/frovolod/Library/Application Support/unc-cli/config.toml"
 Network connection "pagoda-testnet" was successfully removed from config.toml
 ```
 </details>

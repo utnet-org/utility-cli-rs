@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
-pub struct PublicKey(pub near_crypto::PublicKey);
+pub struct PublicKey(pub unc_crypto::PublicKey);
 
 impl std::fmt::Display for PublicKey {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -8,22 +8,22 @@ impl std::fmt::Display for PublicKey {
 }
 
 impl std::str::FromStr for PublicKey {
-    type Err = near_crypto::ParseKeyError;
+    type Err = unc_crypto::ParseKeyError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let public_key = near_crypto::PublicKey::from_str(s)?;
+        let public_key = unc_crypto::PublicKey::from_str(s)?;
         Ok(Self(public_key))
     }
 }
 
-impl From<PublicKey> for near_crypto::PublicKey {
+impl From<PublicKey> for unc_crypto::PublicKey {
     fn from(item: PublicKey) -> Self {
         item.0
     }
 }
 
-impl From<near_crypto::PublicKey> for PublicKey {
-    fn from(item: near_crypto::PublicKey) -> Self {
+impl From<unc_crypto::PublicKey> for PublicKey {
+    fn from(item: unc_crypto::PublicKey) -> Self {
         Self(item)
     }
 }

@@ -14,7 +14,7 @@ impl PrintContext {
         _previous_context: crate::GlobalContext,
         scope: &<PrintTransaction as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let unsigned_transaction: near_primitives::transaction::Transaction =
+        let unsigned_transaction: unc_primitives::transaction::Transaction =
             scope.unsigned_transaction.clone().into();
 
         eprintln!("\nUnsigned transaction (full):\n");

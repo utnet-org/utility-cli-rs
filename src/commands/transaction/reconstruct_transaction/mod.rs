@@ -33,11 +33,11 @@ impl TransactionInfoContext {
                     let query_view_transaction_status = network_config
                         .json_rpc_client()
                         .blocking_call(
-                            near_jsonrpc_client::methods::tx::RpcTransactionStatusRequest {
+                            unc_jsonrpc_client::methods::tx::RpcTransactionStatusRequest {
                                 transaction_info:
-                                    near_jsonrpc_client::methods::tx::TransactionInfo::TransactionId {
-                                        hash: transaction_hash.into(),
-                                        account_id: "near".parse::<near_primitives::types::AccountId>()?,
+                                    unc_jsonrpc_client::methods::tx::TransactionInfo::TransactionId {
+                                        tx_hash: transaction_hash.into(),
+                                        sender_account_id: "unc".parse::<unc_primitives::types::AccountId>()?,
                                     },
                             },
                         )
@@ -55,8 +55,8 @@ impl TransactionInfoContext {
                             .transaction
                             .actions
                             .into_iter()
-                            .map(near_primitives::transaction::Action::try_from)
-                            .collect::<Result<Vec<near_primitives::transaction::Action>, _>>()
+                            .map(unc_primitives::transaction::Action::try_from)
+                            .collect::<Result<Vec<unc_primitives::transaction::Action>, _>>()
                             .expect("Internal error: can not convert the action_view to action."),
                     };
 
@@ -68,7 +68,7 @@ impl TransactionInfoContext {
                     eprintln!();
 
                     if prepopulated_transaction.actions.len() == 1 {
-                        if let near_primitives::transaction::Action::Delegate(
+                        if let unc_primitives::transaction::Action::Delegate(
                             signed_delegate_action,
                         ) = &prepopulated_transaction.actions[0]
                         {
@@ -120,11 +120,11 @@ impl TransactionInfoContext {
                     });
                     cmd_cli_args.extend(skip_action.to_cli_args());
 
-                    let near_cli_exec_path = crate::common::get_near_exec_path();
+                    let unc_cli_exec_path = crate::common::get_unc_exec_path();
                     eprintln!("Here is your console command to run archive transaction. You can to edit it or re-run:");
                     eprintln!(
                         "{}\n",
-                        shell_words::join(std::iter::once(near_cli_exec_path).chain(cmd_cli_args))
+                        shell_words::join(std::iter::once(unc_cli_exec_path).chain(cmd_cli_args))
                     );
                     Ok(())
                 }
@@ -145,11 +145,11 @@ impl From<TransactionInfoContext> for crate::network::NetworkContext {
 }
 
 fn action_transformation(
-    archival_action: near_primitives::transaction::Action,
+    archival_action: unc_primitives::transaction::Action,
 ) -> color_eyre::eyre::Result<
     Option<super::construct_transaction::add_action_1::add_action::CliActionSubcommand>,
 > {
-    use near_primitives::transaction::{self, Action};
+    use unc_primitives::transaction::Action;
 
     use super::construct_transaction::add_action_1::add_action;
 
@@ -161,41 +161,41 @@ fn action_transformation(
                 }
             )))
         }
-        Action::DeleteAccount(transaction::DeleteAccountAction { beneficiary_id }) => {
+        Action::DeleteAccount(delete_account_action) => {
             Ok(Some(add_action::CliActionSubcommand::DeleteAccount(
                 add_action::delete_account::CliDeleteAccountAction {
-                    beneficiary_id: Some(beneficiary_id.into()),
+                    beneficiary_id: Some(delete_account_action.beneficiary_id.into()),
                     next_action: None
                 }
             )))
         }
-        Action::AddKey(transaction::AddKeyAction { public_key, access_key }) => {
+        Action::AddKey(add_key_action) => {
             Ok(Some(add_action::CliActionSubcommand::AddKey(
                 add_action::add_key::CliAddKeyAction {
-                    permission: get_access_key_permission(public_key, access_key.permission)?
+                    permission: get_access_key_permission(add_key_action.public_key, add_key_action.access_key.permission)?
                 }
             )))
         }
-        Action::DeleteKey(transaction::DeleteKeyAction { public_key }) => {
+        Action::DeleteKey(delete_key_action) => {
             Ok(Some(add_action::CliActionSubcommand::DeleteKey(
                 add_action::delete_key::CliDeleteKeyAction {
-                    public_key: Some(public_key.into()),
+                    public_key: Some(delete_key_action.public_key.into()),
                     next_action: None
                 }
             )))
         }
-        Action::Transfer(transaction::TransferAction { deposit }) => {
+        Action::Transfer(transfer_action) => {
             Ok(Some(add_action::CliActionSubcommand::Transfer(
                 add_action::transfer::CliTransferAction {
-                    amount_in_near: Some(crate::types::near_token::NearToken::from_yoctonear(deposit)),
+                    amount_in_unc: Some(crate::types::unc_token::UncToken::from_yoctounc(transfer_action.deposit)),
                     next_action: None
                 }
             )))
         }
-        Action::DeployContract(transaction::DeployContractAction { code }) => {
+        Action::DeployContract(deploy_contract_action) => {
             std::fs::write(
                 "reconstruct-transaction-deploy-code.wasm",
-                code
+                deploy_contract_action.code
             )
             .wrap_err("Failed to write the deploy command code to file: 'reconstruct-transaction-deploy-code.wasm' in the current folder")?;
             Ok(Some(add_action::CliActionSubcommand::DeployContract(
@@ -213,18 +213,18 @@ fn action_transformation(
                 }
             )))
         }
-        Action::FunctionCall(transaction::FunctionCallAction { method_name, args, gas, deposit }) => {
+        Action::FunctionCall(function_call_action) => {
             Ok(Some(add_action::CliActionSubcommand::FunctionCall(
                 add_action::call_function::CliFunctionCallAction {
-                    function_name: Some(method_name),
+                    function_name: Some(function_call_action.method_name),
                     function_args_type: Some(crate::commands::contract::call_function::call_function_args_type::FunctionArgsType::TextArgs),
-                    function_args: Some(String::from_utf8(args)?),
+                    function_args: Some(String::from_utf8(function_call_action.args)?),
                     prepaid_gas: Some(add_action::call_function::ClapNamedArgPrepaidGasForFunctionCallAction::PrepaidGas(
                         add_action::call_function::CliPrepaidGas {
-                            gas: Some(near_gas::NearGas::from_gas(gas)),
+                            gas: Some(unc_gas::UncGas::from_gas(function_call_action.gas)),
                             attached_deposit: Some(add_action::call_function::ClapNamedArgDepositForPrepaidGas::AttachedDeposit(
                                 add_action::call_function::CliDeposit {
-                                    deposit: Some(crate::types::near_token::NearToken::from_yoctonear(deposit)),
+                                    deposit: Some(crate::types::unc_token::UncToken::from_yoctounc(function_call_action.deposit)),
                                     next_action: None
                                 }
                             ))
@@ -233,11 +233,11 @@ fn action_transformation(
                 }
             )))
         }
-        Action::Stake(transaction::StakeAction { stake, public_key }) => {
-            Ok(Some(add_action::CliActionSubcommand::Stake(
+        Action::Stake(stake_action) => {
+                Ok(Some(add_action::CliActionSubcommand::Stake(
                 add_action::stake::CliStakeAction {
-                    stake_amount: Some(crate::types::near_token::NearToken::from_yoctonear(stake)),
-                    public_key: Some(public_key.into()),
+                    stake_amount: Some(crate::types::unc_token::UncToken::from_yoctounc(stake_action.stake)),
+                    public_key: Some(stake_action.public_key.into()),
                     next_action: None
                 }
             )))
@@ -245,21 +245,21 @@ fn action_transformation(
         Action::Delegate(_) => {
             panic!("Internal error: Delegate action should have been handled before calling action_transformation.");
         }
-        Action::RegisterRsa2048Keys(_) => todo!(),
-        Action::CreateRsa2048Challenge(_) => todo!(),
+        Action::RegisterRsa2048Keys(_) => panic!("RegisterRsa2048Keys not implemetion"),
+        Action::CreateRsa2048Challenge(_) => panic!("CreateRsa2048Challenge not implemetion"),
     }
 }
 
 fn get_access_key_permission(
-    public_key: near_crypto::PublicKey,
-    access_key_permission: near_primitives::account::AccessKeyPermission,
+    public_key: unc_crypto::PublicKey,
+    access_key_permission: unc_primitives::account::AccessKeyPermission,
 ) -> color_eyre::eyre::Result<
     Option<super::construct_transaction::add_action_1::add_action::add_key::CliAccessKeyPermission>,
 > {
     use super::construct_transaction::add_action_1::add_action::add_key;
 
     match access_key_permission {
-        near_primitives::account::AccessKeyPermission::FullAccess => {
+        unc_primitives::account::AccessKeyPermission::FullAccess => {
             Ok(Some(add_key::CliAccessKeyPermission::GrantFullAccess(
                 add_key::access_key_type::CliFullAccessType {
                     access_key_mode: Some(add_key::CliAccessKeyMode::UseManuallyProvidedPublicKey(
@@ -271,8 +271,8 @@ fn get_access_key_permission(
                 },
             )))
         }
-        near_primitives::account::AccessKeyPermission::FunctionCall(
-            near_primitives::account::FunctionCallPermission {
+        unc_primitives::account::AccessKeyPermission::FunctionCall(
+            unc_primitives::account::FunctionCallPermission {
                 allowance,
                 receiver_id,
                 method_names,
@@ -280,7 +280,7 @@ fn get_access_key_permission(
         ) => Ok(Some(
             add_key::CliAccessKeyPermission::GrantFunctionCallAccess(
                 add_key::access_key_type::CliFunctionCallType {
-                    allowance: allowance.map(crate::types::near_token::NearToken::from_yoctonear),
+                    allowance: allowance.map(crate::types::unc_token::UncToken::from_yoctounc),
                     receiver_account_id: Some(receiver_id.parse()?),
                     method_names: Some(crate::types::vec_string::VecString(method_names)),
                     access_key_mode: Some(add_key::CliAccessKeyMode::UseManuallyProvidedPublicKey(

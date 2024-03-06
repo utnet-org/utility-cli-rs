@@ -16,7 +16,7 @@ pub struct Network {
 
 #[derive(Debug, Clone)]
 pub struct NetworkContext {
-    signed_transaction: near_primitives::transaction::SignedTransaction,
+    signed_transaction: unc_primitives::transaction::SignedTransaction,
     network_config: crate::config::NetworkConfig,
 }
 
@@ -74,7 +74,7 @@ impl SubmitContext {
                 .network_config
                 .json_rpc_client()
                 .blocking_call(
-                near_jsonrpc_client::methods::broadcast_tx_commit::RpcBroadcastTxCommitRequest {
+                unc_jsonrpc_client::methods::broadcast_tx_commit::RpcBroadcastTxCommitRequest {
                     signed_transaction: previous_context.signed_transaction.clone(),
                 },
             );

@@ -26,16 +26,16 @@ impl AsTextContext {
             move |network_config, block_reference| {
                 let query_view_method_response = network_config
                     .json_rpc_client()
-                    .blocking_call(near_jsonrpc_client::methods::query::RpcQueryRequest {
+                    .blocking_call(unc_jsonrpc_client::methods::query::RpcQueryRequest {
                         block_reference: block_reference.clone(),
-                        request: near_primitives::views::QueryRequest::ViewState {
+                        request: unc_primitives::views::QueryRequest::ViewState {
                             account_id: contract_account_id.clone(),
                             prefix: prefix.clone(),
                             include_proof: false,
                         },
                     })
                     .wrap_err_with(|| format!("Failed to fetch query ViewState for <{contract_account_id}> on network <{}>", network_config.network_name))?;
-                    if let near_jsonrpc_primitives::types::query::QueryResponseKind::ViewState(result) =
+                    if let unc_jsonrpc_primitives::types::query::QueryResponseKind::ViewState(result) =
                         query_view_method_response.kind
                     {
                         eprintln!("Contract state (values):");

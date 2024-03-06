@@ -19,8 +19,8 @@ pub struct PublicKeyList {
 #[derive(Debug, Clone)]
 pub struct PublicKeyListContext {
     global_context: crate::GlobalContext,
-    owner_account_id: near_primitives::types::AccountId,
-    public_keys: Vec<near_crypto::PublicKey>,
+    owner_account_id: unc_primitives::types::AccountId,
+    public_keys: Vec<unc_crypto::PublicKey>,
 }
 
 impl PublicKeyListContext {
@@ -51,9 +51,9 @@ impl From<PublicKeyListContext> for crate::commands::ActionContext {
                             .clone()
                             .into_iter()
                             .map(|public_key| {
-                                near_primitives::transaction::Action::DeleteKey(
-                                    near_primitives::transaction::DeleteKeyAction { public_key },
-                                )
+                                unc_primitives::transaction::Action::DeleteKey(Box::new(
+                                    unc_primitives::transaction::DeleteKeyAction { public_key },
+                                ))
                             })
                             .collect(),
                     })
@@ -91,7 +91,7 @@ impl PublicKeyList {
                 .json_rpc_client()
                 .blocking_call_view_access_key_list(
                     &context.owner_account_id,
-                    near_primitives::types::Finality::Final.into(),
+                    unc_primitives::types::Finality::Final.into(),
                 )
                 .wrap_err_with(|| {
                     format!(
@@ -143,15 +143,15 @@ impl PublicKeyList {
 
 #[derive(Debug, Clone)]
 struct AccessKeyInfo {
-    public_key: near_crypto::PublicKey,
-    permission: near_primitives::views::AccessKeyPermissionView,
+    public_key: unc_crypto::PublicKey,
+    permission: unc_primitives::views::AccessKeyPermissionView,
     network_name: String,
 }
 
 impl std::fmt::Display for AccessKeyInfo {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &self.permission {
-            near_primitives::views::AccessKeyPermissionView::FullAccess => {
+            unc_primitives::views::AccessKeyPermissionView::FullAccess => {
                 write!(
                     f,
                     "{} {}\t{}",
@@ -160,7 +160,7 @@ impl std::fmt::Display for AccessKeyInfo {
                     "full access".yellow()
                 )
             }
-            near_primitives::views::AccessKeyPermissionView::FunctionCall {
+            unc_primitives::views::AccessKeyPermissionView::FunctionCall {
                 allowance,
                 receiver_id,
                 method_names,
@@ -168,7 +168,7 @@ impl std::fmt::Display for AccessKeyInfo {
                 let allowance_message = match allowance {
                     Some(amount) => format!(
                         "with a remaining fee allowance of {}",
-                        near_token::NearToken::from_yoctonear(*amount)
+                        unc_token::UncToken::from_yoctounc(*amount)
                     ),
                     None => "with no limit".to_string(),
                 };

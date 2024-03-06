@@ -13,9 +13,9 @@ impl SendArgs {
         vec![
             "tokens".to_owned(),
             self.sender_account_id.to_owned(),
-            "send-near".to_owned(),
+            "send-unc".to_owned(),
             self.receiver_account_id.to_owned(),
-            format!("{} NEAR", self.amount),
+            format!("{} unc", self.amount),
             "network-config".to_owned(),
             network_config,
             "sign-with-keychain".to_owned(),

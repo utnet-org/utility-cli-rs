@@ -24,7 +24,7 @@ impl LoginFromWebWalletContext {
                         crate::common::generate_ed25519_keypair()?;
                     let mut url: url::Url = network_config.wallet_url.join("login/")?;
                     url.query_pairs_mut()
-                        .append_pair("title", "NEAR CLI")
+                        .append_pair("title", "unc CLI")
                         .append_pair("public_key", &key_pair_properties.public_key_str);
                     // Use `success_url` once capture mode is implemented
                     //.append_pair("success_url", "http://127.0.0.1:8080");

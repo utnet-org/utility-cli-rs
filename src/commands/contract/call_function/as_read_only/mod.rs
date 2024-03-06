@@ -34,7 +34,7 @@ impl CallFunctionViewContext {
         let on_after_getting_block_reference_callback: crate::network_view_at_block::OnAfterGettingBlockReferenceCallback = std::sync::Arc::new({
             let function_args = scope.function_args.clone();
             let function_args_type = scope.function_args_type.clone();
-            let account_id: near_primitives::types::AccountId = scope.contract_account_id.clone().into();
+            let account_id: unc_primitives::types::AccountId = scope.contract_account_id.clone().into();
             let function_name = scope.function_name.clone();
 
             move |network_config, block_reference| {

@@ -16,7 +16,7 @@ pub struct SignerAccountId {
 pub struct SignerAccountIdContext {
     global_context: crate::GlobalContext,
     account_properties: super::AccountProperties,
-    signer_account_id: near_primitives::types::AccountId,
+    signer_account_id: unc_primitives::types::AccountId,
     on_before_sending_transaction_callback:
         crate::transaction_signature_options::OnBeforeSendingTransactionCallback,
 }
@@ -60,23 +60,23 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                     }
                     let (actions, receiver_id) = if new_account_id.is_sub_account_of(&signer_id) {
                         (vec![
-                                near_primitives::transaction::Action::CreateAccount(
-                                    near_primitives::transaction::CreateAccountAction {},
+                                unc_primitives::transaction::Action::CreateAccount(
+                                    unc_primitives::transaction::CreateAccountAction {},
                                 ),
-                                near_primitives::transaction::Action::Transfer(
-                                    near_primitives::transaction::TransferAction {
-                                        deposit: item.account_properties.initial_balance.as_yoctonear(),
+                                unc_primitives::transaction::Action::Transfer(
+                                    unc_primitives::transaction::TransferAction {
+                                        deposit: item.account_properties.initial_balance.as_yoctounc(),
                                     },
                                 ),
-                                near_primitives::transaction::Action::AddKey(
-                                    near_primitives::transaction::AddKeyAction {
+                                unc_primitives::transaction::Action::AddKey(
+                                    Box::new(unc_primitives::transaction::AddKeyAction {
                                         public_key: item.account_properties.public_key.clone(),
-                                        access_key: near_primitives::account::AccessKey {
+                                        access_key: unc_primitives::account::AccessKey {
                                             nonce: 0,
                                             permission:
-                                                near_primitives::account::AccessKeyPermission::FullAccess,
+                                                unc_primitives::account::AccessKeyPermission::FullAccess,
                                         },
-                                    },
+                                    }),
                                 ),
                             ],
                         new_account_id.clone())
@@ -91,16 +91,18 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                                 || new_account_id.is_top_level()
                             {
                                 (
-                                    vec![near_primitives::transaction::Action::FunctionCall(
-                                        near_primitives::transaction::FunctionCallAction {
-                                            method_name: "create_account".to_string(),
-                                            args,
-                                            gas: crate::common::NearGas::from_tgas(30).as_gas(),
-                                            deposit: item
-                                                .account_properties
-                                                .initial_balance
-                                                .as_yoctonear(),
-                                        },
+                                    vec![unc_primitives::transaction::Action::FunctionCall(
+                                        Box::new(
+                                            unc_primitives::transaction::FunctionCallAction {
+                                                method_name: "create_account".to_string(),
+                                                args,
+                                                gas: crate::common::UncGas::from_tgas(30).as_gas(),
+                                                deposit: item
+                                                    .account_properties
+                                                    .initial_balance
+                                                    .as_yoctounc(),
+                                            },
+                                        ),
                                     )],
                                     linkdrop_account_id.clone(),
                                 )
@@ -113,7 +115,7 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                             }
                         } else {
                             return color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                                "\nAccount <{}> cannot be created on network <{}> because a <linkdrop_account_id> is not specified in the configuration file.\nYou can learn about working with the configuration file: https://github.com/near/unc-cli-rs/blob/master/docs/README.en.md#config. \nExample <linkdrop_account_id> in configuration file: https://github.com/near/unc-cli-rs/blob/master/docs/media/linkdrop account_id.png",
+                                "\nAccount <{}> cannot be created on network <{}> because a <linkdrop_account_id> is not specified in the configuration file.\nYou can learn about working with the configuration file: https://github.com/unc/unc-cli-rs/blob/master/docs/README.en.md#config. \nExample <linkdrop_account_id> in configuration file: https://github.com/unc/unc-cli-rs/blob/master/docs/media/linkdrop account_id.png",
                                 new_account_id,
                                 network_config.network_name
                             ));
@@ -178,16 +180,16 @@ impl SignerAccountId {
 
 fn validate_new_account_id(
     network_config: &crate::config::NetworkConfig,
-    account_id: &near_primitives::types::AccountId,
+    account_id: &unc_primitives::types::AccountId,
 ) -> crate::CliResult {
     for _ in 0..3 {
         let account_state = crate::common::get_account_state(
             network_config.clone(),
             account_id.clone(),
-            near_primitives::types::BlockReference::latest(),
+            unc_primitives::types::BlockReference::latest(),
         );
-        if let Err(near_jsonrpc_client::errors::JsonRpcError::TransportError(
-            near_jsonrpc_client::errors::RpcTransportError::SendError(_),
+        if let Err(unc_jsonrpc_client::errors::JsonRpcError::TransportError(
+            unc_jsonrpc_client::errors::RpcTransportError::SendError(_),
         )) = account_state
         {
             eprintln!("Transport error.\nPlease wait. The next try to send this query is happening right now ...");
@@ -201,9 +203,9 @@ fn validate_new_account_id(
                 network_config.network_name
             ));
                 }
-                Err(near_jsonrpc_client::errors::JsonRpcError::ServerError(
-                    near_jsonrpc_client::errors::JsonRpcServerError::HandlerError(
-                        near_jsonrpc_primitives::types::query::RpcQueryError::UnknownAccount {
+                Err(unc_jsonrpc_client::errors::JsonRpcError::ServerError(
+                    unc_jsonrpc_client::errors::JsonRpcServerError::HandlerError(
+                        unc_jsonrpc_primitives::types::query::RpcQueryError::UnknownAccount {
                             ..
                         },
                     ),
