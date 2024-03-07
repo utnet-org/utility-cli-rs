@@ -76,11 +76,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Make a function call on mainnet
     env:
-      unc_NETWORK_CONNECTION: mainnet
-      unc_CONTRACT_ACCOUNT_ID: ${{ vars.unc_CONTRACT_ACCOUNT_ID }}
-      unc_SIGNER_ACCOUNT_ID: ${{ vars.unc_SIGNER_ACCOUNT_ID }}
-      unc_SIGNER_ACCOUNT_PUBLIC_KEY: ${{ vars.unc_SIGNER_ACCOUNT_PUBLIC_KEY }}
-      unc_SIGNER_ACCOUNT_PRIVATE_KEY: ${{ secrets.unc_SIGNER_ACCOUNT_PRIVATE_KEY }}
+      UNC_NETWORK_CONNECTION: mainnet
+      UNC_CONTRACT_ACCOUNT_ID: ${{ vars.UNC_CONTRACT_ACCOUNT_ID }}
+      UNC_SIGNER_ACCOUNT_ID: ${{ vars.UNC_SIGNER_ACCOUNT_ID }}
+      UNC_SIGNER_ACCOUNT_PUBLIC_KEY: ${{ vars.UNC_SIGNER_ACCOUNT_PUBLIC_KEY }}
+      UNC_SIGNER_ACCOUNT_PRIVATE_KEY: ${{ secrets.UNC_SIGNER_ACCOUNT_PRIVATE_KEY }}
 
     steps:
     - name: Checkout repository
@@ -92,7 +92,7 @@ jobs:
 
     - name: Call some function
       run: |
-        unc contract call-function as-transaction "$unc_CONTRACT_ACCOUNT_ID" 'function_name_here' json-args '{}' prepaid-gas '100 TeraGas' attached-deposit '0 unc' sign-as "$unc_SIGNER_ACCOUNT_ID" network-config "$unc_NETWORK_CONNECTION" sign-with-plaintext-private-key --signer-public-key "$unc_SIGNER_ACCOUNT_PUBLIC_KEY" --signer-private-key "$unc_SIGNER_ACCOUNT_PRIVATE_KEY" send
+        unc contract call-function as-transaction "$UNC_CONTRACT_ACCOUNT_ID" 'function_name_here' json-args '{}' prepaid-gas '100 TeraGas' attached-deposit '0 unc' sign-as "$UNC_SIGNER_ACCOUNT_ID" network-config "$UNC_NETWORK_CONNECTION" sign-with-plaintext-private-key --signer-public-key "$UNC_SIGNER_ACCOUNT_PUBLIC_KEY" --signer-private-key "$UNC_SIGNER_ACCOUNT_PRIVATE_KEY" send
 ```
 
 You will need to configure GitHub Actions Secrets and Variables and once it is ready, this CI will only take a couple of _seconds_ to complete!
