@@ -2095,7 +2095,7 @@ rpc_url = "https://archival-rpc.testnet.unc.org/"
 wallet_url = "https://wallet.testnet.unc.org/"
 explorer_transaction_url = "https://explorer.testnet.unc.org/transactions/"
 linkdrop_account_id = "testnet"
-faucet_url = "https://helper.uncprotocol.com/account"
+faucet_url = "https://helper.unc.com/account"
 
 [network_connection.pagoda-testnet]
 network_name = "testnet"
@@ -2104,7 +2104,7 @@ rpc_api_key = "c0a25b3c-39c2-4f62-a621-50e208b88e64"
 wallet_url = "https://wallet.testnet.unc.org/"
 explorer_transaction_url = "https://explorer.testnet.unc.org/transactions/"
 linkdrop_account_id = "testnet"
-faucet_url = "https://helper.uncprotocol.com/account"
+faucet_url = "https://helper.unc.com/account"
 meta_transaction_relayer_url = "https://unc-testnet.api.pagoda.co/relay"
 ```
 </details>
@@ -2122,7 +2122,7 @@ unc config \
         --explorer-transaction-url https://explorer.testnet.unc.org/transactions/ \
         --rpc-api-key 'c0a25b3c-39c2-4f62-a621-50e208b88e64' \
         --linkdrop-account-id testnet \
-        --faucet-url https://helper.uncprotocol.com/account \
+        --faucet-url https://helper.unc.com/account \
         --meta-transaction-relayer-url https://unc-testnet.api.pagoda.co/relay
 ```
 

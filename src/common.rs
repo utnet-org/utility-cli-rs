@@ -1017,7 +1017,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
         unc_primitives::errors::ActionErrorKind::OnlyImplicitAccountCreationAllowed {
             account_id: _,
         } => {
-            color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: `CreateAccount` action is called on hex-characters account of length 64.\nSee implicit account creation NEP: https://github.com/uncprotocol/NEPs/pull/71"))
+            color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: `CreateAccount` action is called on hex-characters account of length 64.\nSee implicit account creation NEP: https://github.com/unc/NEPs/pull/71"))
         }
         unc_primitives::errors::ActionErrorKind::DeleteAccountWithLargeState { account_id } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(

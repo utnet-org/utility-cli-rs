@@ -42,7 +42,7 @@ impl Default for Config {
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
                 unc_social_db_contract_account_id: Some("v1.social08.testnet".parse().unwrap()),
-                faucet_url: Some("https://helper.uncprotocol.com/account".parse().unwrap()),
+                faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
         
@@ -59,7 +59,7 @@ impl Default for Config {
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
                 unc_social_db_contract_account_id: None,
-                faucet_url: Some("https://helper.uncprotocol.com/account".parse().unwrap()),
+                faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
         
