@@ -5700,8 +5700,7 @@ dependencies = [
 [[package]]
 name = "unc-vm-runner"
 version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7440589ad00ca19a8b0ac36caf59a437cd27087b670d80e70796e9d811e05bd1"
+source = "git+https://github.com/jong-un-crypto/unc_vm_runner-patch#ff15729f514d9f1ca666e9bd95d8f5ee001ed114"
 dependencies = [
  "anyhow",
  "base64 0.21.7",
