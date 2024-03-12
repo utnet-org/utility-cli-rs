@@ -50,7 +50,7 @@ impl Default for Config {
         network_connection.insert(
             "custom".to_string(),
             NetworkConfig {
-                network_name: "my-private-chain-id".to_string(),
+                network_name: "betanet".to_string(),
                 rpc_url: "http://43.198.88.81:3031".parse().unwrap(),
                 wallet_url: "https://testnet.myuncwallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.testnet.unc.org/transactions/"

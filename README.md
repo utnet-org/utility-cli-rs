@@ -63,7 +63,7 @@ $ cargo install --git https://github.com/unc/unc-cli-rs
 <details>
   <summary>Install on CI (GitHub Actions)</summary>
 
-It is often desirable to use `unc` CLI from CI to automate some actions, so here is an example of how you can make a function call during CI:
+It is often desirable to use `unc` cli from CI to automate some actions, so here is an example of how you can make a function call during CI:
 
 ```yml
 name: Release
@@ -86,9 +86,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install unc CLI
+    - name: Install unc cli
       run: |
-        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/unc/unc-cli-rs/releases/download/v0.7.4/unc-cli-rs-installer.sh | sh
+        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utility/utility-cli-rs/releases/download/v0.2.0/unc-cli-rs-installer.sh | sh
 
     - name: Call some function
       run: |
