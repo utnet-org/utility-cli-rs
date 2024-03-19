@@ -916,6 +916,14 @@ pub fn rpc_transaction_error(
     Ok(())
 }
 
+pub fn rpc_async_transaction_error(
+    _err: unc_jsonrpc_client::errors::JsonRpcError<
+        unc_jsonrpc_client::methods::broadcast_tx_async::RpcBroadcastTxAsyncError,
+    >,
+) -> CliResult {
+    Ok(())
+}
+
 pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) -> crate::CliResult {
     match &action_error.kind {
         unc_primitives::errors::ActionErrorKind::AccountAlreadyExists { account_id } => {
@@ -1236,6 +1244,18 @@ pub fn print_transaction_status(
     };
     eprintln!("Transaction ID: {id}\nTo see the transaction in the transaction explorer, please open this url in your browser:\n{path}{id}\n",
         id=transaction_info.transaction_outcome.id,
+        path=network_config.explorer_transaction_url
+    );
+    Ok(())
+}
+
+pub fn print_async_transaction_status(
+    tx_hash: &CryptoHash,
+    network_config: &crate::config::NetworkConfig,
+) -> crate::CliResult {
+    eprintln!("--- Logs ---------------------------");
+    eprintln!("Transaction ID: {id}\nTo see the transaction in the transaction explorer, please open this url in your browser:\n{path}{id}\n",
+        id=tx_hash,
         path=network_config.explorer_transaction_url
     );
     Ok(())

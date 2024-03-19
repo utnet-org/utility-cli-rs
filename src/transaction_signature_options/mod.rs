@@ -113,12 +113,48 @@ impl interactive_clap::FromCli for Submit {
                     };
 
                     eprintln!("Transaction sent ...");
+                    let transaction_hash = loop {
+                        let transaction_info_result = context.network_config.json_rpc_client()
+                        .blocking_call(
+                            unc_jsonrpc_client::methods::broadcast_tx_async::RpcBroadcastTxAsyncRequest{
+                                signed_transaction: signed_transaction.clone()
+                            }
+                        );
+                        match transaction_info_result {
+                            Ok(response) => {
+                                break response;
+                            }
+                            Err(err) => match crate::common::rpc_async_transaction_error(err) {
+                                Ok(_) => std::thread::sleep(std::time::Duration::from_millis(100)),
+                                Err(report) => {
+                                    return interactive_clap::ResultFromCli::Err(
+                                        optional_clap_variant,
+                                        color_eyre::Report::msg(report),
+                                    )
+                                }
+                            },
+                        };
+                    };
+                    if let Err(report) = crate::common::print_async_transaction_status(
+                        &transaction_hash,
+                        &context.network_config,
+                    ) {
+                        return interactive_clap::ResultFromCli::Err(
+                            optional_clap_variant,
+                            color_eyre::Report::msg(report),
+                        );
+                    };
+
                     let transaction_info = loop {
                         let transaction_info_result = context.network_config.json_rpc_client()
                         .blocking_call(
-                            unc_jsonrpc_client::methods::broadcast_tx_commit::RpcBroadcastTxCommitRequest{
-                                signed_transaction: signed_transaction.clone()
-                            }
+                            unc_jsonrpc_client::methods::tx::RpcTransactionStatusRequest {
+                                transaction_info:
+                                    unc_jsonrpc_client::methods::tx::TransactionInfo::TransactionId {
+                                        tx_hash: transaction_hash.into(),
+                                        sender_account_id: signed_transaction.transaction.signer_id.clone(),
+                                    },
+                            },
                         );
                         match transaction_info_result {
                             Ok(response) => {
@@ -134,16 +170,8 @@ impl interactive_clap::FromCli for Submit {
                                 }
                             },
                         };
-                    };
-                    if let Err(report) = crate::common::print_transaction_status(
-                        &transaction_info,
-                        &context.network_config,
-                    ) {
-                        return interactive_clap::ResultFromCli::Err(
-                            optional_clap_variant,
-                            color_eyre::Report::msg(report),
-                        );
-                    };
+                    };  
+
                     if let Err(report) = (context.on_after_sending_transaction_callback)(
                         &transaction_info,
                         &context.network_config,
