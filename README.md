@@ -109,7 +109,7 @@ $ unc
 
 ? What are you up to? (select one of the options with the up-down arrows on your keyboard and press Enter)
 > account     - Manage accounts
-  tokens      - Manage token assets such as unc, FT, NFT
+  tokens      - Manage token assets such as UNC, FT, NFT
   staking     - Manage staking: view, add and withdraw stake
   contract    - Manage smart-contracts: deploy code, call functions
   transaction - Operate transactions

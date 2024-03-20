@@ -1,7 +1,7 @@
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = super::TokensCommandsContext)]
-#[interactive_clap(output_context = SenduncCommandContext)]
-pub struct SenduncCommand {
+#[interactive_clap(output_context = SendUncCommandContext)]
+pub struct SendUncCommand {
     #[interactive_clap(skip_default_input_arg)]
     /// What is the receiver account ID?
     receiver_account_id: crate::types::account_id::AccountId,
@@ -13,17 +13,17 @@ pub struct SenduncCommand {
 }
 
 #[derive(Debug, Clone)]
-pub struct SenduncCommandContext {
+pub struct SendUncCommandContext {
     global_context: crate::GlobalContext,
     signer_account_id: unc_primitives::types::AccountId,
     receiver_account_id: unc_primitives::types::AccountId,
     amount_in_unc: crate::types::unc_token::UncToken,
 }
 
-impl SenduncCommandContext {
+impl SendUncCommandContext {
     pub fn from_previous_context(
         previous_context: super::TokensCommandsContext,
-        scope: &<SenduncCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        scope: &<SendUncCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         Ok(Self {
             global_context: previous_context.global_context,
@@ -34,8 +34,8 @@ impl SenduncCommandContext {
     }
 }
 
-impl From<SenduncCommandContext> for crate::commands::ActionContext {
-    fn from(item: SenduncCommandContext) -> Self {
+impl From<SendUncCommandContext> for crate::commands::ActionContext {
+    fn from(item: SendUncCommandContext) -> Self {
         let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
             std::sync::Arc::new({
                 let signer_account_id = item.signer_account_id.clone();
@@ -71,7 +71,7 @@ impl From<SenduncCommandContext> for crate::commands::ActionContext {
     }
 }
 
-impl SenduncCommand {
+impl SendUncCommand {
     pub fn input_receiver_account_id(
         context: &super::TokensCommandsContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {

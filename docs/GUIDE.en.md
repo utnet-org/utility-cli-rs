@@ -80,7 +80,7 @@ Before proceeding to the description of specific commands, it is necessary to co
 ### Command groups
 
 - [account     - Manage accounts](#account---Manage-accounts)
-- [tokens      - Manage token assets such as unc, FT, NFT](#tokens---Manage-token-assets-such-as-unc-FT-NFT)
+- [tokens      - Manage token assets such as UNC, FT, NFT](#tokens---Manage-token-assets-such-as-unc-FT-NFT)
 - [staking     - Manage staking: view, add and withdraw stake](#staking---Manage-staking-view-add-and-withdraw-stake)
 - [contract    - Manage smart-contracts: deploy code, call functions](#contract---Manage-smart-contracts-deploy-code-call-functions)
 - [transaction - Operate transactions](#transaction---Operate-transactions)
@@ -1120,7 +1120,7 @@ unc account \
 </a>
 </details>
 
-### tokens - Manage token assets such as unc, FT, NFT
+### tokens - Manage token assets such as UNC, FT, NFT
 - [send-unc](#send-unc---The-transfer-is-carried-out-in-unc-tokens)
 - [send-ft](#send-ft---The-transfer-is-carried-out-in-FT-tokens)
 - [send-nft](#send-nft---The-transfer-is-carried-out-in-NFT-tokens)
@@ -2081,7 +2081,7 @@ unc config show-connections
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-credentials_home_dir = "/Users/frovolod/.unc-credentials"
+credentials_home_dir = "/Users/es/.unc-credentials"
 [network_connection.mainnet]
 network_name = "mainnet"
 rpc_url = "https://archival-rpc.mainnet.unc.org/"

@@ -22,7 +22,7 @@ pub enum TopLevelCommand {
     /// View account summary, create subaccount, delete account, list keys, add key, delete key, import account
     Account(self::account::AccountCommands),
     #[strum_discriminants(strum(
-        message = "tokens      - Manage token assets such as unc, FT, NFT"
+        message = "tokens      - Manage token assets such as UNC, FT, NFT"
     ))]
     /// Use this for token actions: send or view balances of unc, FT, or NFT
     Tokens(self::tokens::TokensCommands),
