@@ -233,11 +233,11 @@ fn action_transformation(
                 }
             )))
         }
-        Action::Stake(stake_action) => {
+        Action::Pledge(pledge_action) => {
                 Ok(Some(add_action::CliActionSubcommand::Stake(
-                add_action::stake::CliStakeAction {
-                    stake_amount: Some(crate::types::unc_token::UncToken::from_yoctounc(stake_action.pledge)),
-                    public_key: Some(stake_action.public_key.into()),
+                add_action::stake::CliPledgeAction {
+                    pledge_amount: Some(crate::types::unc_token::UncToken::from_yoctounc(pledge_action.pledge)),
+                    public_key: Some(pledge_action.public_key.into()),
                     next_action: None
                 }
             )))

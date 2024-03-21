@@ -19,7 +19,7 @@ impl Default for Config {
             NetworkConfig {
                 network_name: "mainnet".to_string(),
                 rpc_url: "https://archival-rpc.mainnet.unc.org".parse().unwrap(),
-                wallet_url: "https://app.myuncwallet.com/".parse().unwrap(),
+                wallet_url: "https://app.wallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.unc.org/transactions/"
                     .parse()
                     .unwrap(),
@@ -35,7 +35,7 @@ impl Default for Config {
             NetworkConfig {
                 network_name: "testnet".to_string(),
                 rpc_url: "http://127.0.0.1:3030".parse().unwrap(),
-                wallet_url: "https://testnet.myuncwallet.com/".parse().unwrap(),
+                wallet_url: "https://testnet.wallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.testnet.unc.org/transactions/"
                     .parse()
                     .unwrap(),
@@ -52,7 +52,7 @@ impl Default for Config {
             NetworkConfig {
                 network_name: "betanet".to_string(),
                 rpc_url: "http://43.198.88.81:3031".parse().unwrap(),
-                wallet_url: "https://testnet.myuncwallet.com/".parse().unwrap(),
+                wallet_url: "https://testnet.wallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.testnet.unc.org/transactions/"
                     .parse()
                     .unwrap(),

@@ -671,17 +671,17 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     crate::types::unc_token::UncToken::from_yoctounc(transfer_action.deposit)
                 );
             }
-            unc_primitives::transaction::Action::Stake(stake_action) => {
+            unc_primitives::transaction::Action::Pledge(pledge_action) => {
                 eprintln!("{:>5} {:<20}", "--", "stake:");
                 eprintln!(
                     "{:>18} {:<13} {}",
-                    "", "public key:", &stake_action.public_key
+                    "", "public key:", &pledge_action.public_key
                 );
                 eprintln!(
                     "{:>18} {:<13} {}",
                     "",
                     "stake:",
-                    crate::types::unc_token::UncToken::from_yoctounc(stake_action.pledge)
+                    crate::types::unc_token::UncToken::from_yoctounc(pledge_action.pledge)
                 );
             }
             unc_primitives::transaction::Action::AddKey(add_key_action) => {
@@ -798,7 +798,7 @@ fn print_value_successful_transaction(
                     transaction_info.transaction.receiver_id,
                 );
             }
-            unc_primitives::views::ActionView::Stake {
+            unc_primitives::views::ActionView::Pledge {
                 pledge,
                 public_key: _,
             } => {
@@ -990,7 +990,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
                 account_id
             ))
         }
-        unc_primitives::errors::ActionErrorKind::TriesToStake {
+        unc_primitives::errors::ActionErrorKind::TriesToPledge {
             account_id,
             pledge,
             pledging: _,
@@ -1003,7 +1003,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
                 crate::types::unc_token::UncToken::from_yoctounc(*pledge)
             ))
         }
-        unc_primitives::errors::ActionErrorKind::InsufficientStake {
+        unc_primitives::errors::ActionErrorKind::InsufficientPledge {
             account_id: _,
             pledge,
             minimum_pledge,

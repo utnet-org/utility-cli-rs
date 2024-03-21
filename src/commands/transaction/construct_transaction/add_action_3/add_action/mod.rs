@@ -33,7 +33,7 @@ pub enum ActionSubcommand {
     FunctionCall(self::call_function::FunctionCallAction),
     #[strum_discriminants(strum(message = "stake                - Stake unc Tokens"))]
     /// Specify data to stake unc Tokens
-    Stake(self::stake::StakeAction),
+    Stake(self::stake::PledgeAction),
     #[strum_discriminants(strum(message = "create-account       - Create a new sub-account"))]
     /// Specify data to create a sub-account
     CreateAccount(self::create_account::CreateAccountAction),
