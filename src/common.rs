@@ -192,7 +192,7 @@ pub fn get_account_transfer_allowance(
     Ok(AccountTransferAllowance {
         account_id,
         account_liquid_balance: unc_token::UncToken::from_yoctounc(account_view.amount),
-        account_locked_balance: unc_token::UncToken::from_yoctounc(account_view.locked),
+        account_locked_balance: unc_token::UncToken::from_yoctounc(account_view.pledging),
         storage_stake: unc_token::UncToken::from_yoctounc(
             u128::from(account_view.storage_usage) * storage_amount_per_byte,
         ),
@@ -681,7 +681,7 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     "{:>18} {:<13} {}",
                     "",
                     "stake:",
-                    crate::types::unc_token::UncToken::from_yoctounc(stake_action.stake)
+                    crate::types::unc_token::UncToken::from_yoctounc(stake_action.pledge)
                 );
             }
             unc_primitives::transaction::Action::AddKey(add_key_action) => {
@@ -799,10 +799,10 @@ fn print_value_successful_transaction(
                 );
             }
             unc_primitives::views::ActionView::Stake {
-                stake,
+                pledge,
                 public_key: _,
             } => {
-                if stake == 0 {
+                if pledge == 0 {
                     eprintln!(
                         "Validator <{}> successfully unstaked.",
                         transaction_info.transaction.signer_id,
@@ -811,7 +811,7 @@ fn print_value_successful_transaction(
                     eprintln!(
                         "Validator <{}> has successfully staked {}.",
                         transaction_info.transaction.signer_id,
-                        crate::types::unc_token::UncToken::from_yoctounc(stake),
+                        crate::types::unc_token::UncToken::from_yoctounc(pledge),
                     );
                 }
             }
@@ -984,7 +984,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
                 crate::types::unc_token::UncToken::from_yoctounc(*amount)
             ))
         }
-        unc_primitives::errors::ActionErrorKind::TriesToUnstake { account_id } => {
+        unc_primitives::errors::ActionErrorKind::TriesToUnpledge { account_id } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
                 "Error: Account <{}> is not yet staked, but tries to unstake.",
                 account_id
@@ -992,26 +992,26 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
         }
         unc_primitives::errors::ActionErrorKind::TriesToStake {
             account_id,
-            stake,
-            locked: _,
+            pledge,
+            pledging: _,
             balance,
         } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
                 "Error: Account <{}> doesn't have enough balance ({}) to increase the stake ({}).",
                 account_id,
                 crate::types::unc_token::UncToken::from_yoctounc(*balance),
-                crate::types::unc_token::UncToken::from_yoctounc(*stake)
+                crate::types::unc_token::UncToken::from_yoctounc(*pledge)
             ))
         }
         unc_primitives::errors::ActionErrorKind::InsufficientStake {
             account_id: _,
-            stake,
-            minimum_stake,
+            pledge,
+            minimum_pledge,
         } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
                 "Error: Insufficient stake {}.\nThe minimum rate must be {}.",
-                crate::types::unc_token::UncToken::from_yoctounc(*stake),
-                crate::types::unc_token::UncToken::from_yoctounc(*minimum_stake)
+                crate::types::unc_token::UncToken::from_yoctounc(*pledge),
+                crate::types::unc_token::UncToken::from_yoctounc(*minimum_pledge)
             ))
         }
         unc_primitives::errors::ActionErrorKind::FunctionCallError(function_call_error_ser) => {
@@ -1449,7 +1449,7 @@ pub fn get_delegated_validator_list_from_mainnet(
         .wrap_err("Failed to get epoch validators information request.")?;
 
     Ok(epoch_validator_info
-        .current_frozen_proposals
+        .current_pledge_proposals
         .into_iter()
         .map(|current_proposal| current_proposal.take_account_id())
         .chain(
@@ -1585,17 +1585,17 @@ pub fn get_validators_stake(
         .wrap_err("Failed to get epoch validators information request.")?;
 
     Ok(epoch_validator_info
-        .current_frozen_proposals
+        .current_pledge_proposals
         .into_iter()
         .map(|validator_stake_view| {
-            let validator_stake = validator_stake_view.into_validator_frozen();
-            validator_stake.account_and_frozen()
+            let validator_stake = validator_stake_view.into_validator_pledge();
+            validator_stake.account_and_pledge()
         })
         .chain(epoch_validator_info.current_validators.into_iter().map(
             |current_epoch_validator_info| {
                 (
                     current_epoch_validator_info.account_id,
-                    current_epoch_validator_info.frozen,
+                    current_epoch_validator_info.pledge,
                 )
             },
         ))
@@ -1606,7 +1606,7 @@ pub fn get_validators_stake(
                 .map(|next_epoch_validator_info| {
                     (
                         next_epoch_validator_info.account_id,
-                        next_epoch_validator_info.frozen,
+                        next_epoch_validator_info.pledge,
                     )
                 }),
         )
@@ -1711,7 +1711,7 @@ pub fn display_account_info(
     ]);
     table.add_row(prettytable::row![
         Fg->"Validator stake",
-        Fy->unc_token::UncToken::from_yoctounc(account_view.locked)
+        Fy->unc_token::UncToken::from_yoctounc(account_view.pledging)
     ]);
 
     for (validator_id, stake) in delegated_stake {

@@ -18,7 +18,7 @@ impl StakeActionContext {
     ) -> color_eyre::eyre::Result<Self> {
         let action = unc_primitives::transaction::Action::Stake(Box::new(
             unc_primitives::transaction::StakeAction {
-                stake: scope.stake_amount.as_yoctounc(),
+                pledge: scope.stake_amount.as_yoctounc(),
                 public_key: scope.public_key.clone().into(),
             },
         ));

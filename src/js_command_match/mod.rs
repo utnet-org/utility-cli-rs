@@ -58,10 +58,10 @@ impl JsCmd {
     pub fn rust_command_generation(
         &self,
     ) -> color_eyre::eyre::Result<(Vec<String>, String), String> {
-        //unc_ENV=testnet default
-        let network_config = std::env::var("unc_ENV").unwrap_or_else(|_| "testnet".to_owned());
+        //UNC_ENV=testnet default
+        let network_config = std::env::var("UNC_ENV").unwrap_or_else(|_| "testnet".to_owned());
         let message = "The command you tried to run is deprecated in the new unc CLI, but we tried our best to match the old command with the new syntax, try it instead:".to_string();
-        let unc_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called unc-validator.\nPlease, follow the installation instructions here: https://github.com/unc-cli-rs/unc-validator-cli-rs/blob/master/README.md\nThen run the following command:".to_string();
+        let unc_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called unc-validator.\nPlease, follow the installation instructions here: https://github.com/zwong91/utility-validator-cli-rs/blob/main/README.md\nThen run the following command:".to_string();
         let err_message = "The command you tried to run is deprecated in the new unc CLI and there is no equivalent command in the new unc CLI.".to_string();
         match self {
             Self::CreateAccount(create_account_args) => Ok((create_account_args.to_cli_args(network_config), message)),

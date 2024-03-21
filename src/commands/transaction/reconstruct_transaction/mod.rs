@@ -236,7 +236,7 @@ fn action_transformation(
         Action::Stake(stake_action) => {
                 Ok(Some(add_action::CliActionSubcommand::Stake(
                 add_action::stake::CliStakeAction {
-                    stake_amount: Some(crate::types::unc_token::UncToken::from_yoctounc(stake_action.stake)),
+                    stake_amount: Some(crate::types::unc_token::UncToken::from_yoctounc(stake_action.pledge)),
                     public_key: Some(stake_action.public_key.into()),
                     next_action: None
                 }

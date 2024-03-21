@@ -145,6 +145,10 @@ impl interactive_clap::FromCli for Submit {
                         );
                     };
 
+                    // FIXME: 异步调用后续逻辑处理, 在Final后，后续逻辑处理
+                    eprintln!("Processing transaction.\nPlease wait at least 3min ...");
+                    //std::thread::sleep(std::time::Duration::from_millis(1000 * 60 * 3));
+
                     let transaction_info = loop {
                         let transaction_info_result = context.network_config.json_rpc_client()
                         .blocking_call(
@@ -170,7 +174,7 @@ impl interactive_clap::FromCli for Submit {
                                 }
                             },
                         };
-                    };  
+                    };
 
                     if let Err(report) = (context.on_after_sending_transaction_callback)(
                         &transaction_info,
