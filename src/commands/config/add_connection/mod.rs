@@ -57,12 +57,6 @@ impl AddNetworkConnectionContext {
                     .linkdrop_account_id
                     .clone()
                     .map(|linkdrop_account_id| linkdrop_account_id.into()),
-                unc_social_db_contract_account_id: scope
-                    .unc_social_db_contract_account_id
-                    .clone()
-                    .map(|unc_social_db_contract_account_id| {
-                        unc_social_db_contract_account_id.into()
-                    }),
                 faucet_url: scope.faucet_url.clone().map(|faucet_url| faucet_url.into()),
                 meta_transaction_relayer_url: scope
                     .meta_transaction_relayer_url
