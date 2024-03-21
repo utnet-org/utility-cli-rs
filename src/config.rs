@@ -1,6 +1,3 @@
-use color_eyre::eyre::WrapErr;
-use std::str::FromStr;
-
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Config {
     pub credentials_home_dir: std::path::PathBuf,
@@ -25,7 +22,6 @@ impl Default for Config {
                     .unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("unc".parse().unwrap()),
-                unc_social_db_contract_account_id: Some("social.unc".parse().unwrap()),
                 faucet_url: None,
                 meta_transaction_relayer_url: None,
             },
@@ -41,7 +37,6 @@ impl Default for Config {
                     .unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
-                unc_social_db_contract_account_id: Some("v1.social08.testnet".parse().unwrap()),
                 faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
@@ -58,7 +53,6 @@ impl Default for Config {
                     .unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
-                unc_social_db_contract_account_id: None,
                 faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
@@ -87,10 +81,7 @@ pub struct NetworkConfig {
     pub rpc_api_key: Option<crate::types::api_key::ApiKey>,
     pub wallet_url: url::Url,
     pub explorer_transaction_url: url::Url,
-    // https://github.com/unc/unc-cli-rs/issues/116
     pub linkdrop_account_id: Option<unc_primitives::types::AccountId>,
-    // https://docs.unc.org/social/contract
-    pub unc_social_db_contract_account_id: Option<unc_primitives::types::AccountId>,
     pub faucet_url: Option<url::Url>,
     pub meta_transaction_relayer_url: Option<url::Url>,
 }
@@ -104,22 +95,5 @@ impl NetworkConfig {
                 json_rpc_client.header(unc_jsonrpc_client::auth::ApiKey::from(rpc_api_key.clone()))
         };
         json_rpc_client
-    }
-
-    pub fn get_unc_social_account_id_from_network(
-        &self,
-    ) -> color_eyre::eyre::Result<unc_primitives::types::AccountId> {
-        if let Some(account_id) = self.unc_social_db_contract_account_id.clone() {
-            return Ok(account_id);
-        }
-        match self.network_name.as_str() {
-            "mainnet" => unc_primitives::types::AccountId::from_str("social.unc")
-                .wrap_err("Internal error"),
-            "testnet" => unc_primitives::types::AccountId::from_str("v1.social08.testnet")
-                .wrap_err("Internal error"),
-            _ => color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                "This network does not provide the \"unc-social\" contract"
-            )),
-        }
     }
 }
