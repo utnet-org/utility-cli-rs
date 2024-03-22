@@ -57,7 +57,7 @@ pub enum TokensActions {
         message = "send-unc         - The transfer is carried out in unc tokens"
     ))]
     /// The transfer is carried out in unc tokens
-    Sendunc(self::send_unc::SenduncCommand),
+    SendUnc(self::send_unc::SendUncCommand),
     #[strum_discriminants(strum(
         message = "send-ft           - The transfer is carried out in FT tokens"
     ))]

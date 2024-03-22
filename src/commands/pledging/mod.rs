@@ -5,17 +5,17 @@ mod validator_list;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(context = crate::GlobalContext)]
-pub struct Staking {
+pub struct Pledging {
     #[interactive_clap(subcommand)]
-    stake: StakingType,
+    pledge: PledgingType,
 }
 
 #[derive(Debug, EnumDiscriminants, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(context = crate::GlobalContext)]
 #[strum_discriminants(derive(EnumMessage, EnumIter))]
 #[non_exhaustive]
-/// Select the type of stake:
-pub enum StakingType {
+/// Select the type of pledge:
+pub enum PledgingType {
     #[strum_discriminants(strum(
         message = "validator-list   - View the list of validators to delegate"
     ))]
@@ -23,5 +23,5 @@ pub enum StakingType {
     ValidatorList(self::validator_list::ValidatorList),
     #[strum_discriminants(strum(message = "delegation       - Delegation management"))]
     /// Delegation management
-    Delegation(self::delegate::StakeDelegation),
+    Delegation(self::delegate::PledgeDelegation),
 }

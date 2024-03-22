@@ -69,12 +69,12 @@ impl SubmitContext {
         _scope: &<Submit as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> crate::CliResult {
         eprintln!("Transaction sent ...");
-        let transaction_info = loop {
+        let transaction_tx = loop {
             let transaction_info_result = previous_context
                 .network_config
                 .json_rpc_client()
                 .blocking_call(
-                unc_jsonrpc_client::methods::broadcast_tx_commit::RpcBroadcastTxCommitRequest {
+                unc_jsonrpc_client::methods::broadcast_tx_async::RpcBroadcastTxAsyncRequest {
                     signed_transaction: previous_context.signed_transaction.clone(),
                 },
             );
@@ -82,12 +82,12 @@ impl SubmitContext {
                 Ok(response) => {
                     break response;
                 }
-                Err(err) => match crate::common::rpc_transaction_error(err) {
+                Err(err) => match crate::common::rpc_async_transaction_error(err) {
                     Ok(_) => std::thread::sleep(std::time::Duration::from_millis(100)),
                     Err(report) => return Err(color_eyre::Report::msg(report)),
                 },
             };
         };
-        crate::common::print_transaction_status(&transaction_info, &previous_context.network_config)
+        crate::common::print_async_transaction_status(&transaction_tx, &previous_context.network_config)
     }
 }

@@ -80,8 +80,8 @@ Before proceeding to the description of specific commands, it is necessary to co
 ### Command groups
 
 - [account     - Manage accounts](#account---Manage-accounts)
-- [tokens      - Manage token assets such as unc, FT, NFT](#tokens---Manage-token-assets-such-as-unc-FT-NFT)
-- [staking     - Manage staking: view, add and withdraw stake](#staking---Manage-staking-view-add-and-withdraw-stake)
+- [tokens      - Manage token assets such as UNC, FT, NFT](#tokens---Manage-token-assets-such-as-unc-FT-NFT)
+- [pledging     - Manage pledging: view, add and withdraw pledge](#pledging---Manage-pledging-view-add-and-withdraw-pledge)
 - [contract    - Manage smart-contracts: deploy code, call functions](#contract---Manage-smart-contracts-deploy-code-call-functions)
 - [transaction - Operate transactions](#transaction---Operate-transactions)
 - [config      - Manage connections in a configuration file](#config---Manage-connections-in-a-configuration-file)
@@ -122,7 +122,7 @@ unc account \
 ```txt
 Account details for 'fro_volod.testnet' at block #97804915 (5G8HHWMJMHRMMaHTjeZLSvL7ruYMtH9tXq25Q6BPUivu)
 Native account balance: 182.685021399504861699999997 unc
-Validator stake: 0 unc
+Validator pledge: 0 unc
 Storage used by the account: 288962 bytes
 Contract code SHA-256 checksum (hex): fd999145baf49ece7d09fca7d030d384c4ea8ed4df651c6e87a015c4dfa6c0ec
 Number of access keys: 14
@@ -164,7 +164,7 @@ unc account \
 ```txt
 Account details for 'fro_volod.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
 Native account balance: 198.9924766125790117 unc
-Validator stake: 0 unc
+Validator pledge: 0 unc
 Storage used by the account: 288660 bytes
 Contract code SHA-256 checksum (hex): fd999145baf49ece7d09fca7d030d384c4ea8ed4df651c6e87a015c4dfa6c0ec
 Number of access keys: 12
@@ -204,7 +204,7 @@ unc account \
 ```txt
 Account details for 'fro_volod.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
 Native account balance: 198.9924766125790117 unc
-Validator stake: 0 unc
+Validator pledge: 0 unc
 Storage used by the account: 288660 bytes
 Contract code SHA-256 checksum (hex): fd999145baf49ece7d09fca7d030d384c4ea8ed4df651c6e87a015c4dfa6c0ec
 Number of access keys: 12
@@ -1120,7 +1120,7 @@ unc account \
 </a>
 </details>
 
-### tokens - Manage token assets such as unc, FT, NFT
+### tokens - Manage token assets such as UNC, FT, NFT
 - [send-unc](#send-unc---The-transfer-is-carried-out-in-unc-tokens)
 - [send-ft](#send-ft---The-transfer-is-carried-out-in-FT-tokens)
 - [send-nft](#send-nft---The-transfer-is-carried-out-in-NFT-tokens)
@@ -1327,7 +1327,7 @@ fro_volod.testnet account has NFT tokens:
 </a>
 </details>
 
-### staking - Manage staking: view, deposit, and withdraw delegated stake
+### pledging - Manage pledging: view, deposit, and withdraw delegated pledge
 
 - [validator-list](#validator-list---View-the-list-of-validators-to-delegate)
 - [delegation](#delegation---Delegation-management)
@@ -1336,7 +1336,7 @@ fro_volod.testnet account has NFT tokens:
 
 To view a list of validators, enter at the terminal command line:
 ```txt
-unc staking \
+unc pledging \
     validator-list \
     network-config mainnet
 ```
@@ -1345,18 +1345,18 @@ unc staking \
 
 ```txt
 +-----+----------------------------------------------+----------+------------+----------------------------------------+
-| #   | Validator Id                                 | Fee      | Delegators | Stake                                  |
+| #   | Validator Id                                 | Fee      | Delegators | Pledge                                  |
 +-----+----------------------------------------------+----------+------------+----------------------------------------+
-| 1   | staked.poolv1.unc                           |     10 % |     3207   | 44135674.18356215181482959363448 unc  |
+| 1   | pledged.poolv1.unc                           |     10 % |     3207   | 44135674.18356215181482959363448 unc  |
 | 2   | figment.poolv1.unc                          |     10 % |     1911   | 43158696.364374348313201031661037 unc |
-| 3   | astro-stakers.poolv1.unc                    |      1 % |    11528   | 26760042.204197815051321354819805 unc |
+| 3   | astro-pledgers.poolv1.unc                    |      1 % |    11528   | 26760042.204197815051321354819805 unc |
 | 4   | bzam6yjpnfnxsdmjf6pw.poolv1.unc             |    100 % |      772   | 23347900.996610021010359525969384 unc |
 | 5   | zavodil.poolv1.unc                          |      1 % |     7116   | 20700903.223980192761611953425855 unc |
 | 6   | binancenode1.poolv1.unc                     |      5 % |     1250   | 14209385.916611355199355410152982 unc |
-| 7   | staking_yes_protocol1.poolv1.unc            |    100 % |       65   | 13590245.381034035922399111793022 unc |
+| 7   | pledging_yes_protocol1.poolv1.unc            |    100 % |       65   | 13590245.381034035922399111793022 unc |
 | 8   | pinnacle1.poolv1.unc                        |    100 % |        4   | 13509874.537453205747773186007329 unc |
 | 9   | priory.poolv1.unc                           |    100 % |       15   | 12727257.514716521676379711750814 unc |
-| 10  | stake1.poolv1.unc                           |      3 % |      754   | 12449700.095021989100340879377004 unc |
+| 10  | pledge1.poolv1.unc                           |      3 % |      754   | 12449700.095021989100340879377004 unc |
 | 11  | mockingbird.poolv1.unc                      |    100 % |       28   | 11501759.018634341466180769487983 unc |
 | 12  | dqw9k3e4422cxt92masmy.poolv1.unc            |    100 % |       36   | 11122519.385245577197951932017032 unc |
 | 13  | flipside.pool.unc                           |    100 % |        9   | 11087540.718366137730589600283212 unc |
@@ -1375,22 +1375,22 @@ unc staking \
 </a>
 </details>
 
-#### delegation - Stake delegation management
+#### delegation - Pledge delegation management
 
-- [view-balance](#view-balance---View-the-delegated-stake-balance-for-a-given-account)
-- [deposit-and-stake](#deposit-and-stake---Delegate-unc-tokens-to-a-validator's-staking-pool)
-- [stake](#stake---Delegate-a-certain-amount-of-previously-deposited-or-unstaked-unc-tokens-to-a-validator's-staking-pool)
-- [stake-all](#stake-all---Delegate-all-previously-deposited-or-unstaked-unc-tokens-to-a-validator's-staking-pool)
-- [unstake](#unstake---Unstake-a-certain-amount-of-delegated-unc-tokens-from-a-avalidator's-staking-pool)
-- [unstake-all](#unstake-all---Unstake-all-delegated-unc-tokens-from-a-avalidator's-staking-pool)
-- [withdraw](#withdraw---Withdraw-a-certain-amount-of-unstaked-unc-tokens-from-a-avalidator's-staking-pool)
-- [withdraw-all](#withdraw-all---Withdraw-all-unstaked-unc-tokens-from-a-avalidator's-staking-pool)
+- [view-balance](#view-balance---View-the-delegated-pledge-balance-for-a-given-account)
+- [deposit-and-pledge](#deposit-and-pledge---Delegate-unc-tokens-to-a-validator's-pledging-pool)
+- [pledge](#pledge---Delegate-a-certain-amount-of-previously-deposited-or-unpledged-unc-tokens-to-a-validator's-pledging-pool)
+- [pledge-all](#pledge-all---Delegate-all-previously-deposited-or-unpledged-unc-tokens-to-a-validator's-pledging-pool)
+- [unpledge](#unpledge---Unpledge-a-certain-amount-of-delegated-unc-tokens-from-a-avalidator's-pledging-pool)
+- [unpledge-all](#unpledge-all---Unpledge-all-delegated-unc-tokens-from-a-avalidator's-pledging-pool)
+- [withdraw](#withdraw---Withdraw-a-certain-amount-of-unpledged-unc-tokens-from-a-avalidator's-pledging-pool)
+- [withdraw-all](#withdraw-all---Withdraw-all-unpledged-unc-tokens-from-a-avalidator's-pledging-pool)
 
-##### view-balance - View the delegated stake balance for a given account
+##### view-balance - View the delegated pledge balance for a given account
 
-To view the delegated stake account balance on a validator staking pool, enter at the terminal command line:
+To view the delegated pledge account balance on a validator pledging pool, enter at the terminal command line:
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
     view-balance aurora.pool.f863973.m0 \
     network-config testnet \
@@ -1400,9 +1400,9 @@ unc staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Delegated stake balance with validator <aurora.pool.f863973.m0> by <volodymyr.testnet>:
-      Staked balance:           38.021465232511349340052266 unc
-      Unstaked balance:          0.000000000000000000000001 unc
+Delegated pledge balance with validator <aurora.pool.f863973.m0> by <volodymyr.testnet>:
+      Pledged balance:           38.021465232511349340052266 unc
+      Unpledged balance:          0.000000000000000000000001 unc
       Total balance:            38.021465232511349340052267 unc
 ```
 </details>
@@ -1413,13 +1413,13 @@ Delegated stake balance with validator <aurora.pool.f863973.m0> by <volodymyr.te
 </a>
 </details>
 
-##### deposit-and-stake - Delegate unc tokens to a validator's staking pool
+##### deposit-and-pledge - Delegate unc tokens to a validator's pledging pool
 
-To delegate your unc tokens to a staking pool to support a validator and gain staking rewards, deposit unc tokens and stake with a selected staking pool, you may use the following command (note that you need to use your own account id, adjust the amount of unc tokens to deposit and stake, and choose the staking pool account id):
+To delegate your unc tokens to a pledging pool to support a validator and gain pledging rewards, deposit unc tokens and pledge with a selected pledging pool, you may use the following command (note that you need to use your own account id, adjust the amount of unc tokens to deposit and pledge, and choose the pledging pool account id):
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
-    deposit-and-stake '15 unc' aurora.pool.f863973.m0 \
+    deposit-and-pledge '15 unc' aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1428,7 +1428,7 @@ unc staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully delegated 15 unc to stake with <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully delegated 15 unc to pledge with <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1438,13 +1438,13 @@ unc staking \
 </a>
 </details>
 
-##### stake - Delegate a certain amount of previously deposited or unstaked unc tokens to a validator's staking pool
+##### pledge - Delegate a certain amount of previously deposited or unpledged unc tokens to a validator's pledging pool
 
-To delegate your unc tokens to a staking pool to support a validator and gain staking rewards, stake deposited unc tokens with a selected staking pool. You may use the following command (note that you need to use your own account id, adjust the amount of unc tokens to stake, choose the staking pool account id, and use the appropriate network):
+To delegate your unc tokens to a pledging pool to support a validator and gain pledging rewards, pledge deposited unc tokens with a selected pledging pool. You may use the following command (note that you need to use your own account id, adjust the amount of unc tokens to pledge, choose the pledging pool account id, and use the appropriate network):
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
-    stake '5 unc' aurora.pool.f863973.m0 \
+    pledge '5 unc' aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1453,7 +1453,7 @@ unc staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully delegated 5 unc to stake with <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully delegated 5 unc to pledge with <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1463,13 +1463,13 @@ unc staking \
 </a>
 </details>
 
-##### stake-all - Delegate all previously deposited or unstaked unc tokens to a validator's staking pool
+##### pledge-all - Delegate all previously deposited or unpledged unc tokens to a validator's pledging pool
 
-To delegate your unc tokens to a staking pool to support a validator and gain staking rewards, stake all previosly deposited or unstaked unc tokens with a selected staking pool. You may use the following command (note that you need to use your own account id, and choose the staking pool account id):
+To delegate your unc tokens to a pledging pool to support a validator and gain pledging rewards, pledge all previosly deposited or unpledged unc tokens with a selected pledging pool. You may use the following command (note that you need to use your own account id, and choose the pledging pool account id):
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
-    stake-all aurora.pool.f863973.m0 \
+    pledge-all aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1478,7 +1478,7 @@ unc staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully delegated all previously unstaked unc tokens to stake with <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully delegated all previously unpledged unc tokens to pledge with <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1488,13 +1488,13 @@ unc staking \
 </a>
 </details>
 
-##### unstake - Unstake a certain amount of delegated unc tokens from a avalidator's staking pool
+##### unpledge - Unpledge a certain amount of delegated unc tokens from a avalidator's pledging pool
 
-To unstake your delegated unc tokens from a staking pool, you can use the following command (note that you need to use your own account id, adjust the amount of unc tokens to unstake, and choose the staking pool account id):
+To unpledge your delegated unc tokens from a pledging pool, you can use the following command (note that you need to use your own account id, adjust the amount of unc tokens to unpledge, and choose the pledging pool account id):
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
-    unstake '7 unc' aurora.pool.f863973.m0 \
+    unpledge '7 unc' aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1503,7 +1503,7 @@ unc staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully unstaked 7 unc from <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully unpledged 7 unc from <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1513,13 +1513,13 @@ unc staking \
 </a>
 </details>
 
-##### unstake-all - Unstake all delegated unc tokens from a avalidator's staking pool
+##### unpledge-all - Unpledge all delegated unc tokens from a avalidator's pledging pool
 
-To unstake your delegated unc tokens from a staking pool, you can use the following command (note that you need to use your own account id, and choose the staking pool account id):
+To unpledge your delegated unc tokens from a pledging pool, you can use the following command (note that you need to use your own account id, and choose the pledging pool account id):
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
-    unstake-all aurora.pool.f863973.m0 \
+    unpledge-all aurora.pool.f863973.m0 \
     network-config testnet \
     sign-with-legacy-keychain \
     send
@@ -1528,7 +1528,7 @@ unc staking \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<volodymyr.testnet> has successfully unstaked the entire amount from <aurora.pool.f863973.m0>.
+<volodymyr.testnet> has successfully unpledged the entire amount from <aurora.pool.f863973.m0>.
 ```
 </details>
 
@@ -1538,11 +1538,11 @@ unc staking \
 </a>
 </details>
 
-##### withdraw - Withdraw a certain amount of unstaked unc tokens from a avalidator's staking pool
+##### withdraw - Withdraw a certain amount of unpledged unc tokens from a avalidator's pledging pool
 
-To withdraw your delegated unc tokens from a staking pool after you unstaked and waited for 4 epochs, you can use the following command (note that you need to use your own account id, adjust the amount of unc tokens to withdraw, and choose the staking pool account id):
+To withdraw your delegated unc tokens from a pledging pool after you unpledged and waited for 4 epochs, you can use the following command (note that you need to use your own account id, adjust the amount of unc tokens to withdraw, and choose the pledging pool account id):
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
     withdraw '3 unc' aurora.pool.f863973.m0 \
     network-config testnet \
@@ -1563,11 +1563,11 @@ unc staking \
 </a>
 </details>
 
-##### withdraw-all - Withdraw all unstaked unc tokens from a avalidator's staking pool
+##### withdraw-all - Withdraw all unpledged unc tokens from a avalidator's pledging pool
 
-To withdraw all your delegated unc tokens from a staking pool after you unstaked them and waited for 4 epochs, you can use the following command (note that you need to use your own account id, and choose the staking pool account id):
+To withdraw all your delegated unc tokens from a pledging pool after you unpledged them and waited for 4 epochs, you can use the following command (note that you need to use your own account id, and choose the pledging pool account id):
 ```txt
-unc staking \
+unc pledging \
     delegation volodymyr.testnet \
     withdraw-all aurora.pool.f863973.m0 \
     network-config testnet \
@@ -1622,20 +1622,20 @@ unc contract \
   {
     "account_id": "zavodil.unc",
     "can_withdraw": false,
-    "staked_balance": "107480661091559500516766891",
-    "unstaked_balance": "1307739180247557404925470405"
+    "pledged_balance": "107480661091559500516766891",
+    "unpledged_balance": "1307739180247557404925470405"
   },
   {
     "account_id": "gagdiez.unc",
     "can_withdraw": true,
-    "staked_balance": "4387193990112136827894210960",
-    "unstaked_balance": "1"
+    "pledged_balance": "4387193990112136827894210960",
+    "unpledged_balance": "1"
   },
   {
     "account_id": "gibby49.unc",
     "can_withdraw": true,
-    "staked_balance": "1105950300133283278041226",
-    "unstaked_balance": "1"
+    "pledged_balance": "1105950300133283278041226",
+    "unpledged_balance": "1"
   }
 ]
 ```
@@ -2081,7 +2081,7 @@ unc config show-connections
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-credentials_home_dir = "/Users/frovolod/.unc-credentials"
+credentials_home_dir = "/Users/es/.unc-credentials"
 [network_connection.mainnet]
 network_name = "mainnet"
 rpc_url = "https://archival-rpc.mainnet.unc.org/"

@@ -6,7 +6,7 @@ pub mod create_account;
 pub mod delete_account;
 pub mod delete_key;
 pub mod deploy_contract;
-pub mod stake;
+pub mod pledge;
 pub mod transfer;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
@@ -31,9 +31,9 @@ pub enum ActionSubcommand {
     ))]
     /// Specify data to call the function
     FunctionCall(self::call_function::FunctionCallAction),
-    #[strum_discriminants(strum(message = "stake                - Stake unc Tokens"))]
-    /// Specify data to stake unc Tokens
-    Stake(self::stake::StakeAction),
+    #[strum_discriminants(strum(message = "pledge                - Pledge unc Tokens"))]
+    /// Specify data to pledge unc Tokens
+    Pledge(self::pledge::PledgeAction),
     #[strum_discriminants(strum(message = "create-account       - Create a new sub-account"))]
     /// Specify data to create a sub-account
     CreateAccount(self::create_account::CreateAccountAction),

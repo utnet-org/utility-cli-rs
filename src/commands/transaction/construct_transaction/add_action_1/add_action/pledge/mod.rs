@@ -1,24 +1,24 @@
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = super::super::super::ConstructTransactionContext)]
-#[interactive_clap(output_context = StakeActionContext)]
-pub struct StakeAction {
-    stake_amount: crate::types::unc_token::UncToken,
+#[interactive_clap(output_context = PledgeActionContext)]
+pub struct PledgeAction {
+    pledge_amount: crate::types::unc_token::UncToken,
     public_key: crate::types::public_key::PublicKey,
     #[interactive_clap(subcommand)]
     next_action: super::super::super::add_action_2::NextAction,
 }
 
 #[derive(Debug, Clone)]
-pub struct StakeActionContext(super::super::super::ConstructTransactionContext);
+pub struct PledgeActionContext(super::super::super::ConstructTransactionContext);
 
-impl StakeActionContext {
+impl PledgeActionContext {
     pub fn from_previous_context(
         previous_context: super::super::super::ConstructTransactionContext,
-        scope: &<StakeAction as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        scope: &<PledgeAction as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-        let action = unc_primitives::transaction::Action::Stake(Box::new(
-            unc_primitives::transaction::StakeAction {
-                stake: scope.stake_amount.as_yoctounc(),
+        let action = unc_primitives::transaction::Action::Pledge(Box::new(
+            unc_primitives::transaction::PledgeAction {
+                pledge: scope.pledge_amount.as_yoctounc(),
                 public_key: scope.public_key.clone().into(),
             },
         ));
@@ -33,8 +33,8 @@ impl StakeActionContext {
     }
 }
 
-impl From<StakeActionContext> for super::super::super::ConstructTransactionContext {
-    fn from(item: StakeActionContext) -> Self {
+impl From<PledgeActionContext> for super::super::super::ConstructTransactionContext {
+    fn from(item: PledgeActionContext) -> Self {
         item.0
     }
 }

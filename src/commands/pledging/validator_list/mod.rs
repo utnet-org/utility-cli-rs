@@ -35,7 +35,7 @@ impl From<ValidatorListContext> for crate::network::NetworkContext {
 
 fn display_validators_info(network_config: &crate::config::NetworkConfig) -> crate::CliResult {
     let mut table = Table::new();
-    table.set_titles(prettytable::row![Fg=>"#", "Validator Id", "Fee", "Delegators", "Stake"]);
+    table.set_titles(prettytable::row![Fg=>"#", "Validator Id", "Fee", "Delegators", "Pledge"]);
 
     for (index, validator) in crate::common::get_validator_list(network_config)?
         .into_iter()
@@ -56,12 +56,12 @@ fn display_validators_info(network_config: &crate::config::NetworkConfig) -> cra
             validator.validator_id,
             fee,
             delegators,
-            unc_token::UncToken::from_yoctounc(validator.stake),
+            unc_token::UncToken::from_yoctounc(validator.pledge),
         ]);
     }
     table.set_format(*prettytable::format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
     table.printstd();
-    let validators_url: url::Url = network_config.wallet_url.join("staking/validators")?;
+    let validators_url: url::Url = network_config.wallet_url.join("pledging/validators")?;
     eprintln!(
         "This is not a complete list of validators. To see the full list of validators visit Explorer:\n{}\n",
         &validators_url.as_str()

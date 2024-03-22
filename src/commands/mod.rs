@@ -4,7 +4,7 @@ use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 pub mod account;
 mod config;
 pub mod contract;
-mod staking;
+mod pledging;
 mod tokens;
 pub mod transaction;
 
@@ -22,15 +22,15 @@ pub enum TopLevelCommand {
     /// View account summary, create subaccount, delete account, list keys, add key, delete key, import account
     Account(self::account::AccountCommands),
     #[strum_discriminants(strum(
-        message = "tokens      - Manage token assets such as unc, FT, NFT"
+        message = "tokens      - Manage token assets such as UNC, FT, NFT"
     ))]
     /// Use this for token actions: send or view balances of unc, FT, or NFT
     Tokens(self::tokens::TokensCommands),
     #[strum_discriminants(strum(
-        message = "staking     - Manage staking: view, add and withdraw stake"
+        message = "pledging     - Manage pledging: view, add and withdraw pledge"
     ))]
-    /// Use this for manage staking: view, add and withdraw stake
-    Staking(self::staking::Staking),
+    /// Use this for manage pledging: view, add and withdraw pledge
+    Pledging(self::pledging::Pledging),
     #[strum_discriminants(strum(
         message = "contract    - Manage smart-contracts: deploy code, call functions"
     ))]

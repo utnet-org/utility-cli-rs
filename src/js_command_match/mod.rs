@@ -17,7 +17,7 @@ mod proposals;
 mod repl;
 mod send;
 mod set_api_key;
-mod stake;
+mod pledge;
 mod state;
 mod tx_status;
 mod validators;
@@ -39,7 +39,7 @@ pub enum JsCmd {
     ViewState(self::view_state::ViewStateArgs),
     Send(self::send::SendArgs),
     Clean(self::clean::CleanArgs),
-    Stake(self::stake::StakeArgs),
+    Pledge(self::pledge::PledgeArgs),
     Login(self::login::LoginArgs),
     Repl(self::repl::ReplArgs),
     GenerateKey(self::generate_key::GenerateKeyArgs),
@@ -58,10 +58,10 @@ impl JsCmd {
     pub fn rust_command_generation(
         &self,
     ) -> color_eyre::eyre::Result<(Vec<String>, String), String> {
-        //unc_ENV=testnet default
-        let network_config = std::env::var("unc_ENV").unwrap_or_else(|_| "testnet".to_owned());
+        //UNC_ENV=testnet default
+        let network_config = std::env::var("UNC_ENV").unwrap_or_else(|_| "testnet".to_owned());
         let message = "The command you tried to run is deprecated in the new unc CLI, but we tried our best to match the old command with the new syntax, try it instead:".to_string();
-        let unc_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called unc-validator.\nPlease, follow the installation instructions here: https://github.com/unc-cli-rs/unc-validator-cli-rs/blob/master/README.md\nThen run the following command:".to_string();
+        let unc_validator_extension_message = "The command you tried to run has been moved into its own CLI extension called unc-validator.\nPlease, follow the installation instructions here: https://github.com/zwong91/utility-validator-cli-rs/blob/main/README.md\nThen run the following command:".to_string();
         let err_message = "The command you tried to run is deprecated in the new unc CLI and there is no equivalent command in the new unc CLI.".to_string();
         match self {
             Self::CreateAccount(create_account_args) => Ok((create_account_args.to_cli_args(network_config), message)),
@@ -79,7 +79,7 @@ impl JsCmd {
             Self::ViewState(view_state_args) => Ok((view_state_args.to_cli_args(network_config), message)),
             Self::Send(send_args) => Ok((send_args.to_cli_args(network_config), message)),
             Self::Clean(_) => Err(format!("{err_message}\n\n`clean` command is not implemented, yet. It will be implemented in a dev extension. Meanwhile, keep using the old CLI.")),
-            Self::Stake(stake_args) => Ok((stake_args.to_cli_args(network_config), unc_validator_extension_message)),
+            Self::Pledge(pledge_args) => Ok((pledge_args.to_cli_args(network_config), unc_validator_extension_message)),
             Self::Login(login_args) => Ok((login_args.to_cli_args(network_config), message)),
             Self::Repl(_) => Err(format!("{err_message}\n\n`repl` command is not implemented. Use shell scripting for the new CLI.")),
             Self::GenerateKey(generate_key_args) => {

@@ -1,11 +1,11 @@
 [
     {
-        "miner_id": "miner1",
-        "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrC1GaNNevD4ttZjyeQ6gj5qs3YuQjb5jBFfbomo4KTWxtVTD21CguNkbcFjFj6ZitueajFWfew2u1f7F42dX8Jq2vmPK19x8GqXyQb3FgjvwkGyUrQgybbJv4RXhhXUYVUWtaom3cHMB6uPk6d8JNaXyDT58izmqmM3EqNm6ErYDUH2f7W4rq5XdZgxRz1Q936LcytoKAQhsQ6F3CKU2ZG1Cp8sEZ9Jv6jQn2yCsY2VQcdYVSV89n7tkLrNqq75L6gFN16yMwjREx1RihTXRPGdrC4zdvaq1rWcf6SuJRzAJJngmjGDVsJEabmY5RqjPNLDxBawmN5UXyWFPyabxLbKBtzomCNDzgvvKKn",
-        "power": 100,
-        "sn": "serial number here c1",
-        "bus_id": "bus info c1",
-        "p2key": "p2keys1 c1"
+    "miner_id": "miner1",
+    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrC1GaNNevD4ttZjyeQ6gj5qs3YuQjb5jBFfbomo4KTWxtVTD21CguNkbcFjFj6ZitueajFWfew2u1f7F42dX8Jq2vmPK19x8GqXyQb3FgjvwkGyUrQgybbJv4RXhhXUYVUWtaom3cHMB6uPk6d8JNaXyDT58izmqmM3EqNm6ErYDUH2f7W4rq5XdZgxRz1Q936LcytoKAQhsQ6F3CKU2ZG1Cp8sEZ9Jv6jQn2yCsY2VQcdYVSV89n7tkLrNqq75L6gFN16yMwjREx1RihTXRPGdrC4zdvaq1rWcf6SuJRzAJJngmjGDVsJEabmY5RqjPNLDxBawmN5UXyWFPyabxLbKBtzomCNDzgvvKKn",
+    "power": 100,
+    "sn": "serial number here c1",
+    "bus_id": "bus info c1",
+    "p2key": "p2keys1 c1"
     },
     {
     "miner_id": "miner2",

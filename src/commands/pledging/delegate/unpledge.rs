@@ -1,8 +1,8 @@
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::StakeDelegationContext)]
-#[interactive_clap(output_context = StakeContext)]
-pub struct Stake {
-    /// Enter the amount to stake from the inner account of the predecessor (example: 10unc or 0.5unc or 10000yoctounc):
+#[interactive_clap(input_context = super::PledgeDelegationContext)]
+#[interactive_clap(output_context = UnpledgeContext)]
+pub struct Unpledge {
+    /// Enter the amount to unpledge from the inner account of the predecessor (example: 10unc or 0.5unc or 10000yoctounc):
     amount: crate::types::unc_token::UncToken,
     #[interactive_clap(skip_default_input_arg)]
     /// What is validator account ID?
@@ -13,12 +13,12 @@ pub struct Stake {
 }
 
 #[derive(Clone)]
-pub struct StakeContext(crate::commands::ActionContext);
+pub struct UnpledgeContext(crate::commands::ActionContext);
 
-impl StakeContext {
+impl UnpledgeContext {
     pub fn from_previous_context(
-        previous_context: super::StakeDelegationContext,
-        scope: &<Stake as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        previous_context: super::PledgeDelegationContext,
+        scope: &<Unpledge as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
             std::sync::Arc::new({
@@ -33,7 +33,7 @@ impl StakeContext {
                         receiver_id: validator_account_id.clone(),
                         actions: vec![unc_primitives::transaction::Action::FunctionCall(
                             Box::new(unc_primitives::transaction::FunctionCallAction {
-                                method_name: "stake".to_string(),
+                                method_name: "unpledge".to_string(),
                                 args: serde_json::to_vec(&serde_json::json!({
                                     "amount": amount,
                                 }))?,
@@ -52,7 +52,7 @@ impl StakeContext {
 
             move |outcome_view, _network_config| {
                 if let unc_primitives::views::FinalExecutionStatus::SuccessValue(_) = outcome_view.status {
-                    eprintln!("<{signer_id}> has successfully delegated  {amount} to stake with <{validator_id}>.")
+                    eprintln!("<{signer_id}> has successfully unpledged {amount} from <{validator_id}>.")
                 }
                 Ok(())
             }
@@ -76,16 +76,16 @@ impl StakeContext {
     }
 }
 
-impl From<StakeContext> for crate::commands::ActionContext {
-    fn from(item: StakeContext) -> Self {
+impl From<UnpledgeContext> for crate::commands::ActionContext {
+    fn from(item: UnpledgeContext) -> Self {
         item.0
     }
 }
 
-impl Stake {
+impl Unpledge {
     pub fn input_validator_account_id(
-        context: &super::StakeDelegationContext,
+        context: &super::PledgeDelegationContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
-        crate::common::input_staking_pool_validator_account_id(&context.global_context.config)
+        crate::common::input_pledging_pool_validator_account_id(&context.global_context.config)
     }
 }
