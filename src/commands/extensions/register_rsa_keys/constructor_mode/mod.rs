@@ -44,7 +44,7 @@ impl InitializeContext {
                 "bus_id": "{}",
                 "p2key": "{}"
             }}
-            "#, m.power, m.sn, m.bus_id, m.p2key);
+            "#, m.power * ONE_TERA, m.sn, m.bus_id, m.p2key);
 
             let data_json: serde_json::Value = serde_json::from_str(&data).unwrap();
             let args = serde_json::to_vec(&data_json).wrap_err("Internal error!").unwrap();

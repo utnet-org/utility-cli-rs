@@ -146,45 +146,44 @@ impl interactive_clap::FromCli for Submit {
                     };
 
                     // FIXME: 异步调用后续逻辑处理, 在Final后，后续逻辑处理
-                    eprintln!("Processing transaction.\nPlease wait at least 3min ...");
-                    //std::thread::sleep(std::time::Duration::from_millis(1000 * 60 * 3));
+                    eprintln!("Processing transaction...\nPlease wait for 6 blocks to confirm, use command: unc transaction view-status <tx_hash>");
 
-                    let transaction_info = loop {
-                        let transaction_info_result = context.network_config.json_rpc_client()
-                        .blocking_call(
-                            unc_jsonrpc_client::methods::tx::RpcTransactionStatusRequest {
-                                transaction_info:
-                                    unc_jsonrpc_client::methods::tx::TransactionInfo::TransactionId {
-                                        tx_hash: transaction_hash.into(),
-                                        sender_account_id: signed_transaction.transaction.signer_id.clone(),
-                                    },
-                            },
-                        );
-                        match transaction_info_result {
-                            Ok(response) => {
-                                break response;
-                            }
-                            Err(err) => match crate::common::rpc_transaction_error(err) {
-                                Ok(_) => std::thread::sleep(std::time::Duration::from_millis(100)),
-                                Err(report) => {
-                                    return interactive_clap::ResultFromCli::Err(
-                                        optional_clap_variant,
-                                        color_eyre::Report::msg(report),
-                                    )
-                                }
-                            },
-                        };
-                    };
+                    // let transaction_info = loop {
+                    //     let transaction_info_result = context.network_config.json_rpc_client()
+                    //     .blocking_call(
+                    //         unc_jsonrpc_client::methods::tx::RpcTransactionStatusRequest {
+                    //             transaction_info:
+                    //                 unc_jsonrpc_client::methods::tx::TransactionInfo::TransactionId {
+                    //                     tx_hash: transaction_hash.into(),
+                    //                     sender_account_id: signed_transaction.transaction.signer_id.clone(),
+                    //                 },
+                    //         },
+                    //     );
+                    //     match transaction_info_result {
+                    //         Ok(response) => {
+                    //             break response;
+                    //         }
+                    //         Err(err) => match crate::common::rpc_transaction_error(err) {
+                    //             Ok(_) => std::thread::sleep(std::time::Duration::from_millis(100)),
+                    //             Err(report) => {
+                    //                 return interactive_clap::ResultFromCli::Err(
+                    //                     optional_clap_variant,
+                    //                     color_eyre::Report::msg(report),
+                    //                 )
+                    //             }
+                    //         },
+                    //     };
+                    // };
 
-                    if let Err(report) = (context.on_after_sending_transaction_callback)(
-                        &transaction_info,
-                        &context.network_config,
-                    ) {
-                        return interactive_clap::ResultFromCli::Err(
-                            optional_clap_variant,
-                            color_eyre::Report::msg(report),
-                        );
-                    };
+                    // if let Err(report) = (context.on_after_sending_transaction_callback)(
+                    //     &transaction_info,
+                    //     &context.network_config,
+                    // ) {
+                    //     return interactive_clap::ResultFromCli::Err(
+                    //         optional_clap_variant,
+                    //         color_eyre::Report::msg(report),
+                    //     );
+                    // };
                     eprintln!("{storage_message}");
                     interactive_clap::ResultFromCli::Ok(CliSubmit::Send)
                 }
