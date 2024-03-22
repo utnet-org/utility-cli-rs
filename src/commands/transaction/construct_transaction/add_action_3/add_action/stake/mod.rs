@@ -2,7 +2,7 @@
 #[interactive_clap(input_context = super::super::super::ConstructTransactionContext)]
 #[interactive_clap(output_context = PledgeActionContext)]
 pub struct PledgeAction {
-    stake_amount: crate::types::unc_token::UncToken,
+    pledge_amount: crate::types::unc_token::UncToken,
     public_key: crate::types::public_key::PublicKey,
     #[interactive_clap(subcommand)]
     next_action: super::super::super::add_action_last::NextAction,
@@ -18,7 +18,7 @@ impl PledgeActionContext {
     ) -> color_eyre::eyre::Result<Self> {
         let action = unc_primitives::transaction::Action::Pledge(Box::new(
             unc_primitives::transaction::PledgeAction {
-                pledge: scope.stake_amount.as_yoctounc(),
+                pledge: scope.pledge_amount.as_yoctounc(),
                 public_key: scope.public_key.clone().into(),
             },
         ));

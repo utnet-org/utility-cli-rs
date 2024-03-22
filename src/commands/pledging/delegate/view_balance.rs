@@ -3,7 +3,7 @@ use color_eyre::eyre::WrapErr;
 use crate::common::{CallResultExt, JsonRpcClientExt};
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::StakeDelegationContext)]
+#[interactive_clap(input_context = super::PledgeDelegationContext)]
 #[interactive_clap(output_context = ViewBalanceContext)]
 pub struct ViewBalance {
     #[interactive_clap(skip_default_input_arg)]
@@ -19,7 +19,7 @@ pub struct ViewBalanceContext(crate::network_view_at_block::ArgsForViewContext);
 
 impl ViewBalanceContext {
     pub fn from_previous_context(
-        previous_context: super::StakeDelegationContext,
+        previous_context: super::PledgeDelegationContext,
         scope: &<ViewBalance as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let account_id = previous_context.account_id.clone();
@@ -30,18 +30,18 @@ impl ViewBalanceContext {
         let on_after_getting_block_reference_callback: crate::network_view_at_block::OnAfterGettingBlockReferenceCallback = std::sync::Arc::new({
 
             move |network_config, block_reference| {
-                let user_staked_balance: u128 = get_user_staked_balance(network_config, block_reference, &validator_account_id, &account_id)?;
-                let user_unstaked_balance: u128 = get_user_unstaked_balance(network_config, block_reference, &validator_account_id, &account_id)?;
+                let user_pledged_balance: u128 = get_user_pledged_balance(network_config, block_reference, &validator_account_id, &account_id)?;
+                let user_unpledged_balance: u128 = get_user_unpledged_balance(network_config, block_reference, &validator_account_id, &account_id)?;
                 let user_total_balance: u128 = get_user_total_balance(network_config, block_reference, &validator_account_id, &account_id)?;
-                let withdrawal_availability_message = match is_account_unstaked_balance_available_for_withdrawal(network_config, &validator_account_id, &account_id)? {
-                    true if user_unstaked_balance > 0  => "(available for withdrawal)",
-                    false if user_unstaked_balance > 0 => "(not available for withdrawal in the current epoch)",
+                let withdrawal_availability_message = match is_account_unpledged_balance_available_for_withdrawal(network_config, &validator_account_id, &account_id)? {
+                    true if user_unpledged_balance > 0  => "(available for withdrawal)",
+                    false if user_unpledged_balance > 0 => "(not available for withdrawal in the current epoch)",
                     _ => ""
                 };
 
-                eprintln!("Delegated stake balance with validator <{validator_account_id}> by <{account_id}>:");
-                eprintln!("      Staked balance:     {:>38}", unc_token::UncToken::from_yoctounc(user_staked_balance).to_string());
-                eprintln!("      Unstaked balance:   {:>38} {withdrawal_availability_message}", unc_token::UncToken::from_yoctounc(user_unstaked_balance).to_string());
+                eprintln!("Delegated pledge balance with validator <{validator_account_id}> by <{account_id}>:");
+                eprintln!("      Pledged balance:     {:>38}", unc_token::UncToken::from_yoctounc(user_pledged_balance).to_string());
+                eprintln!("      Unpledged balance:   {:>38} {withdrawal_availability_message}", unc_token::UncToken::from_yoctounc(user_unpledged_balance).to_string());
                 eprintln!("      Total balance:      {:>38}", unc_token::UncToken::from_yoctounc(user_total_balance).to_string());
 
                 Ok(())
@@ -63,13 +63,13 @@ impl From<ViewBalanceContext> for crate::network_view_at_block::ArgsForViewConte
 
 impl ViewBalance {
     pub fn input_validator_account_id(
-        context: &super::StakeDelegationContext,
+        context: &super::PledgeDelegationContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
-        crate::common::input_staking_pool_validator_account_id(&context.global_context.config)
+        crate::common::input_pledging_pool_validator_account_id(&context.global_context.config)
     }
 }
 
-pub fn get_user_staked_balance(
+pub fn get_user_pledged_balance(
     network_config: &crate::config::NetworkConfig,
     block_reference: &unc_primitives::types::BlockReference,
     validator_account_id: &unc_primitives::types::AccountId,
@@ -79,14 +79,14 @@ pub fn get_user_staked_balance(
         .json_rpc_client()
         .blocking_call_view_function(
             validator_account_id,
-            "get_account_staked_balance",
+            "get_account_pledged_balance",
             serde_json::to_vec(&serde_json::json!({
                 "account_id": account_id,
             }))?,
             block_reference.clone(),
         )
         .wrap_err_with(||{
-            format!("Failed to fetch query for view method: 'get_account_staked_balance' (contract <{}> on network <{}>)",
+            format!("Failed to fetch query for view method: 'get_account_pledged_balance' (contract <{}> on network <{}>)",
                 validator_account_id,
                 network_config.network_name
             )
@@ -96,7 +96,7 @@ pub fn get_user_staked_balance(
         .parse::<u128>()?)
 }
 
-pub fn get_user_unstaked_balance(
+pub fn get_user_unpledged_balance(
     network_config: &crate::config::NetworkConfig,
     block_reference: &unc_primitives::types::BlockReference,
     validator_account_id: &unc_primitives::types::AccountId,
@@ -106,14 +106,14 @@ pub fn get_user_unstaked_balance(
         .json_rpc_client()
         .blocking_call_view_function(
             validator_account_id,
-            "get_account_unstaked_balance",
+            "get_account_unpledged_balance",
             serde_json::to_vec(&serde_json::json!({
                 "account_id": account_id,
             }))?,
             block_reference.clone(),
         )
         .wrap_err_with(||{
-            format!("Failed to fetch query for view method: 'get_account_unstaked_balance' (contract <{}> on network <{}>)",
+            format!("Failed to fetch query for view method: 'get_account_unpledged_balance' (contract <{}> on network <{}>)",
                 validator_account_id,
                 network_config.network_name
             )
@@ -150,7 +150,7 @@ pub fn get_user_total_balance(
         .parse::<u128>()?)
 }
 
-pub fn is_account_unstaked_balance_available_for_withdrawal(
+pub fn is_account_unpledged_balance_available_for_withdrawal(
     network_config: &crate::config::NetworkConfig,
     validator_account_id: &unc_primitives::types::AccountId,
     account_id: &unc_primitives::types::AccountId,
@@ -159,7 +159,7 @@ pub fn is_account_unstaked_balance_available_for_withdrawal(
         .json_rpc_client()
         .blocking_call_view_function(
             validator_account_id,
-            "is_account_unstaked_balance_available",
+            "is_account_unpledged_balance_available",
             serde_json::to_vec(&serde_json::json!({
                 "account_id": account_id.to_string(),
             }))?,
@@ -168,7 +168,7 @@ pub fn is_account_unstaked_balance_available_for_withdrawal(
             ),
         )
         .wrap_err_with(||{
-            format!("Failed to fetch query for view method: 'is_account_unstaked_balance_available' (contract <{}> on network <{}>)",
+            format!("Failed to fetch query for view method: 'is_account_unpledged_balance_available' (contract <{}> on network <{}>)",
                 validator_account_id,
                 network_config.network_name
             )

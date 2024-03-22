@@ -110,7 +110,7 @@ $ unc
 ? What are you up to? (select one of the options with the up-down arrows on your keyboard and press Enter)
 > account     - Manage accounts
   tokens      - Manage token assets such as UNC, FT, NFT
-  staking     - Manage staking: view, add and withdraw stake
+  pledging     - Manage pledging: view, add and withdraw pledge
   contract    - Manage smart-contracts: deploy code, call functions
   transaction - Operate transactions
   config      - Manage connections in a configuration file (config.toml)

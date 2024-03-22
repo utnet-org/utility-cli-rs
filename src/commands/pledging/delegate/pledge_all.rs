@@ -1,9 +1,7 @@
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::StakeDelegationContext)]
-#[interactive_clap(output_context = DepositAndStakeContext)]
-pub struct DepositAndStake {
-    /// Enter the attached amount to be deposited and then staked into the predecessor's internal account (example: 10unc or 0.5unc or 10000yoctounc):
-    amount: crate::types::unc_token::UncToken,
+#[interactive_clap(input_context = super::PledgeDelegationContext)]
+#[interactive_clap(output_context = PledgeAllContext)]
+pub struct PledgeAll {
     #[interactive_clap(skip_default_input_arg)]
     /// What is validator account ID?
     validator_account_id: crate::types::account_id::AccountId,
@@ -13,19 +11,18 @@ pub struct DepositAndStake {
 }
 
 #[derive(Clone)]
-pub struct DepositAndStakeContext(crate::commands::ActionContext);
+pub struct PledgeAllContext(crate::commands::ActionContext);
 
-impl DepositAndStakeContext {
+impl PledgeAllContext {
     pub fn from_previous_context(
-        previous_context: super::StakeDelegationContext,
-        scope: &<DepositAndStake as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        previous_context: super::PledgeDelegationContext,
+        scope: &<PledgeAll as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
             std::sync::Arc::new({
                 let signer_id = previous_context.account_id.clone();
                 let validator_account_id: unc_primitives::types::AccountId =
                     scope.validator_account_id.clone().into();
-                let amount = scope.amount;
 
                 move |_network_config| {
                     Ok(crate::commands::PrepopulatedTransaction {
@@ -33,10 +30,10 @@ impl DepositAndStakeContext {
                         receiver_id: validator_account_id.clone(),
                         actions: vec![unc_primitives::transaction::Action::FunctionCall(
                             Box::new(unc_primitives::transaction::FunctionCallAction {
-                                method_name: "deposit_and_stake".to_string(),
+                                method_name: "pledge_all".to_string(),
                                 args: serde_json::to_vec(&serde_json::json!({}))?,
                                 gas: crate::common::UncGas::from_tgas(50).as_gas(),
-                                deposit: amount.as_yoctounc(),
+                                deposit: 0,
                             }),
                         )],
                     })
@@ -46,11 +43,10 @@ impl DepositAndStakeContext {
         let on_after_sending_transaction_callback: crate::transaction_signature_options::OnAfterSendingTransactionCallback = std::sync::Arc::new({
             let signer_id = previous_context.account_id.clone();
             let validator_id = scope.validator_account_id.clone();
-            let amount = scope.amount;
 
             move |outcome_view, _network_config| {
                 if let unc_primitives::views::FinalExecutionStatus::SuccessValue(_) = outcome_view.status {
-                    eprintln!("<{signer_id}> has successfully delegated {amount} to stake with <{validator_id}>.")
+                    eprintln!("<{signer_id}> has successfully delegated to pledge with <{validator_id}>.")
                 }
                 Ok(())
             }
@@ -74,16 +70,16 @@ impl DepositAndStakeContext {
     }
 }
 
-impl From<DepositAndStakeContext> for crate::commands::ActionContext {
-    fn from(item: DepositAndStakeContext) -> Self {
+impl From<PledgeAllContext> for crate::commands::ActionContext {
+    fn from(item: PledgeAllContext) -> Self {
         item.0
     }
 }
 
-impl DepositAndStake {
+impl PledgeAll {
     pub fn input_validator_account_id(
-        context: &super::StakeDelegationContext,
+        context: &super::PledgeDelegationContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
-        crate::common::input_staking_pool_validator_account_id(&context.global_context.config)
+        crate::common::input_pledging_pool_validator_account_id(&context.global_context.config)
     }
 }

@@ -124,7 +124,7 @@ pub struct AccountTransferAllowance {
     account_id: unc_primitives::types::AccountId,
     account_liquid_balance: unc_token::UncToken,
     account_locked_balance: unc_token::UncToken,
-    storage_stake: unc_token::UncToken,
+    storage_pledge: unc_token::UncToken,
     pessimistic_transaction_fee: unc_token::UncToken,
 }
 
@@ -135,21 +135,21 @@ impl std::fmt::Display for AccountTransferAllowance {
             self.account_id,
             self.transfer_allowance(),
             self.account_liquid_balance,
-            self.liquid_storage_stake(),
+            self.liquid_storage_pledge(),
             self.pessimistic_transaction_fee
         )
     }
 }
 
 impl AccountTransferAllowance {
-    pub fn liquid_storage_stake(&self) -> unc_token::UncToken {
-        self.storage_stake
+    pub fn liquid_storage_pledge(&self) -> unc_token::UncToken {
+        self.storage_pledge
             .saturating_sub(self.account_locked_balance)
     }
 
     pub fn transfer_allowance(&self) -> unc_token::UncToken {
         self.account_liquid_balance
-            .saturating_sub(self.liquid_storage_stake())
+            .saturating_sub(self.liquid_storage_pledge())
             .saturating_sub(self.pessimistic_transaction_fee)
     }
 }
@@ -174,7 +174,7 @@ pub fn get_account_transfer_allowance(
             account_id,
             account_liquid_balance: unc_token::UncToken::from_unc(0),
             account_locked_balance: unc_token::UncToken::from_unc(0),
-            storage_stake: unc_token::UncToken::from_unc(0),
+            storage_pledge: unc_token::UncToken::from_unc(0),
             pessimistic_transaction_fee: unc_token::UncToken::from_unc(0),
         });
     };
@@ -193,7 +193,7 @@ pub fn get_account_transfer_allowance(
         account_id,
         account_liquid_balance: unc_token::UncToken::from_yoctounc(account_view.amount),
         account_locked_balance: unc_token::UncToken::from_yoctounc(account_view.pledging),
-        storage_stake: unc_token::UncToken::from_yoctounc(
+        storage_pledge: unc_token::UncToken::from_yoctounc(
             u128::from(account_view.storage_usage) * storage_amount_per_byte,
         ),
         // pessimistic_transaction_fee = 10^21 - this value is set temporarily
@@ -672,7 +672,7 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                 );
             }
             unc_primitives::transaction::Action::Pledge(pledge_action) => {
-                eprintln!("{:>5} {:<20}", "--", "stake:");
+                eprintln!("{:>5} {:<20}", "--", "pledge:");
                 eprintln!(
                     "{:>18} {:<13} {}",
                     "", "public key:", &pledge_action.public_key
@@ -680,7 +680,7 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                 eprintln!(
                     "{:>18} {:<13} {}",
                     "",
-                    "stake:",
+                    "pledge:",
                     crate::types::unc_token::UncToken::from_yoctounc(pledge_action.pledge)
                 );
             }
@@ -804,12 +804,12 @@ fn print_value_successful_transaction(
             } => {
                 if pledge == 0 {
                     eprintln!(
-                        "Validator <{}> successfully unstaked.",
+                        "Validator <{}> successfully unpledged.",
                         transaction_info.transaction.signer_id,
                     );
                 } else {
                     eprintln!(
-                        "Validator <{}> has successfully staked {}.",
+                        "Validator <{}> has successfully pledged {}.",
                         transaction_info.transaction.signer_id,
                         crate::types::unc_token::UncToken::from_yoctounc(pledge),
                     );
@@ -974,7 +974,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
         }
         unc_primitives::errors::ActionErrorKind::DeleteAccountStaking { account_id } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                "Error: Account <{}> is staking and can not be deleted",
+                "Error: Account <{}> is pledging and can not be deleted",
                 account_id
             ))
         }
@@ -986,7 +986,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
         }
         unc_primitives::errors::ActionErrorKind::TriesToUnpledge { account_id } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                "Error: Account <{}> is not yet staked, but tries to unstake.",
+                "Error: Account <{}> is not yet pledged, but tries to unpledge.",
                 account_id
             ))
         }
@@ -997,7 +997,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
             balance,
         } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                "Error: Account <{}> doesn't have enough balance ({}) to increase the stake ({}).",
+                "Error: Account <{}> doesn't have enough balance ({}) to increase the pledge ({}).",
                 account_id,
                 crate::types::unc_token::UncToken::from_yoctounc(*balance),
                 crate::types::unc_token::UncToken::from_yoctounc(*pledge)
@@ -1009,7 +1009,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
             minimum_pledge,
         } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                "Error: Insufficient stake {}.\nThe minimum rate must be {}.",
+                "Error: Insufficient pledge {}.\nThe minimum rate must be {}.",
                 crate::types::unc_token::UncToken::from_yoctounc(*pledge),
                 crate::types::unc_token::UncToken::from_yoctounc(*minimum_pledge)
             ))
@@ -1173,7 +1173,7 @@ pub fn handler_invalid_tx_error(
                     color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: The length ({}) of the arguments exceeded the limit ({}) in a Function Call action.", length, limit))
                 },
                 unc_primitives::errors::ActionsValidationError::UnsuitableStakingKey {public_key} => {
-                    color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: An attempt to stake with a public key <{}> that is not convertible to ristretto.", public_key))
+                    color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: An attempt to pledge with a public key <{}> that is not convertible to ristretto.", public_key))
                 },
                 unc_primitives::errors::ActionsValidationError::FunctionCallZeroAttachedGas => {
                     color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: The attached amount of gas in a FunctionCall action has to be a positive number."))
@@ -1487,7 +1487,7 @@ pub fn get_used_delegated_validator_list(
     Ok(used_delegated_validator_list)
 }
 
-pub fn input_staking_pool_validator_account_id(
+pub fn input_pledging_pool_validator_account_id(
     config: &crate::config::Config,
 ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
     let used_delegated_validator_list = get_used_delegated_validator_list(config)?
@@ -1533,7 +1533,7 @@ pub struct StakingPoolInfo {
     pub validator_id: unc_primitives::types::AccountId,
     pub fee: Option<RewardFeeFraction>,
     pub delegators: Option<u64>,
-    pub stake: unc_primitives::types::Balance,
+    pub pledge: unc_primitives::types::Balance,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Deserialize)]
@@ -1547,7 +1547,7 @@ pub fn get_validator_list(
 ) -> color_eyre::eyre::Result<Vec<StakingPoolInfo>> {
     let json_rpc_client = network_config.json_rpc_client();
 
-    let validators_stake = get_validators_stake(&json_rpc_client)?;
+    let validators_pledge = get_validators_pledge(&json_rpc_client)?;
 
     let runtime = tokio::runtime::Builder::new_multi_thread()
         .enable_all()
@@ -1555,23 +1555,23 @@ pub fn get_validator_list(
     let concurrency = 10;
 
     let mut validator_list = runtime.block_on(
-        futures::stream::iter(validators_stake.iter())
-            .map(|(validator_account_id, stake)| async {
-                get_staking_pool_info(
+        futures::stream::iter(validators_pledge.iter())
+            .map(|(validator_account_id, pledge)| async {
+                get_pledging_pool_info(
                     &json_rpc_client.clone(),
                     validator_account_id.clone(),
-                    *stake,
+                    *pledge,
                 )
                 .await
             })
             .buffer_unordered(concurrency)
             .try_collect::<Vec<_>>(),
     )?;
-    validator_list.sort_by(|a, b| b.stake.cmp(&a.stake));
+    validator_list.sort_by(|a, b| b.pledge.cmp(&a.pledge));
     Ok(validator_list)
 }
 
-pub fn get_validators_stake(
+pub fn get_validators_pledge(
     json_rpc_client: &unc_jsonrpc_client::JsonRpcClient,
 ) -> color_eyre::eyre::Result<
     std::collections::HashMap<unc_primitives::types::AccountId, unc_primitives::types::Balance>,
@@ -1587,9 +1587,9 @@ pub fn get_validators_stake(
     Ok(epoch_validator_info
         .current_pledge_proposals
         .into_iter()
-        .map(|validator_stake_view| {
-            let validator_stake = validator_stake_view.into_validator_pledge();
-            validator_stake.account_and_pledge()
+        .map(|validator_pledge_view| {
+            let validator_pledge = validator_pledge_view.into_validator_pledge();
+            validator_pledge.account_and_pledge()
         })
         .chain(epoch_validator_info.current_validators.into_iter().map(
             |current_epoch_validator_info| {
@@ -1613,10 +1613,10 @@ pub fn get_validators_stake(
         .collect())
 }
 
-async fn get_staking_pool_info(
+async fn get_pledging_pool_info(
     json_rpc_client: &unc_jsonrpc_client::JsonRpcClient,
     validator_account_id: unc_primitives::types::AccountId,
-    stake: u128,
+    pledge: u128,
 ) -> color_eyre::Result<StakingPoolInfo> {
     let fee = match json_rpc_client
         .call(unc_jsonrpc_client::methods::query::RpcQueryRequest {
@@ -1680,7 +1680,7 @@ async fn get_staking_pool_info(
         validator_id: validator_account_id.clone(),
         fee,
         delegators,
-        stake,
+        pledge,
     })
 }
 
@@ -1688,7 +1688,7 @@ pub fn display_account_info(
     viewed_at_block_hash: &CryptoHash,
     viewed_at_block_height: &unc_primitives::types::BlockHeight,
     account_id: &unc_primitives::types::AccountId,
-    delegated_stake: &std::collections::BTreeMap<
+    delegated_pledge: &std::collections::BTreeMap<
         unc_primitives::types::AccountId,
         unc_token::UncToken,
     >,
@@ -1710,14 +1710,14 @@ pub fn display_account_info(
         Fy->unc_token::UncToken::from_yoctounc(account_view.amount)
     ]);
     table.add_row(prettytable::row![
-        Fg->"Validator stake",
+        Fg->"Validator pledge",
         Fy->unc_token::UncToken::from_yoctounc(account_view.pledging)
     ]);
 
-    for (validator_id, stake) in delegated_stake {
+    for (validator_id, pledge) in delegated_pledge {
         table.add_row(prettytable::row![
-            Fg->format!("Delegated stake with <{validator_id}>"),
-            Fy->stake
+            Fg->format!("Delegated pledge with <{validator_id}>"),
+            Fy->pledge
         ]);
     }
 

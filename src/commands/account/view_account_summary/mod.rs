@@ -54,17 +54,17 @@ impl ViewAccountSummaryContext {
                     })?
                     .access_key_list_view()?;
 
-                let validators_stake = crate::common::get_validators_stake(&json_rpc_client)?;
+                let validators_pledge = crate::common::get_validators_pledge(&json_rpc_client)?;
 
                 let runtime = tokio::runtime::Builder::new_multi_thread()
                     .enable_all()
                     .build()?;
                 let concurrency = 10;
-                let delegated_stake: std::collections::BTreeMap<unc_primitives::types::AccountId, unc_token::UncToken> = runtime
+                let delegated_pledge: std::collections::BTreeMap<unc_primitives::types::AccountId, unc_token::UncToken> = runtime
                     .block_on(
-                        futures::stream::iter(validators_stake.into_keys())
+                        futures::stream::iter(validators_pledge.into_keys())
                         .map(|validator_account_id| async {
-                            let balance = get_delegated_staked_balance(&json_rpc_client, block_reference, &validator_account_id, &account_id).await?;
+                            let balance = get_delegated_pledged_balance(&json_rpc_client, block_reference, &validator_account_id, &account_id).await?;
                             Ok::<_, color_eyre::eyre::Report>((
                                 validator_account_id,
                                 balance,
@@ -85,7 +85,7 @@ impl ViewAccountSummaryContext {
                     &rpc_query_response.block_hash,
                     &rpc_query_response.block_height,
                     &account_id,
-                    &delegated_stake,
+                    &delegated_pledge,
                     &account_view,
                     &access_key_list.keys
                 );
@@ -118,18 +118,18 @@ impl ViewAccountSummary {
     }
 }
 
-async fn get_delegated_staked_balance(
+async fn get_delegated_pledged_balance(
     json_rpc_client: &unc_jsonrpc_client::JsonRpcClient,
     block_reference: &unc_primitives::types::BlockReference,
-    staking_pool_account_id: &unc_primitives::types::AccountId,
+    pledging_pool_account_id: &unc_primitives::types::AccountId,
     account_id: &unc_primitives::types::AccountId,
 ) -> color_eyre::eyre::Result<unc_token::UncToken> {
-    let account_staked_balance_response = json_rpc_client
+    let account_pledged_balance_response = json_rpc_client
         .call(unc_jsonrpc_client::methods::query::RpcQueryRequest {
             block_reference: block_reference.clone(),
             request: unc_primitives::views::QueryRequest::CallFunction {
-                account_id: staking_pool_account_id.clone(),
-                method_name: "get_account_staked_balance".to_string(),
+                account_id: pledging_pool_account_id.clone(),
+                method_name: "get_account_pledged_balance".to_string(),
                 args: unc_primitives::types::FunctionArgs::from(serde_json::to_vec(
                     &serde_json::json!({
                         "account_id": account_id,
@@ -138,7 +138,7 @@ async fn get_delegated_staked_balance(
             },
         })
         .await;
-    match account_staked_balance_response {
+    match account_pledged_balance_response {
         Ok(response) => Ok(unc_token::UncToken::from_yoctounc(
             response
                 .call_result()?

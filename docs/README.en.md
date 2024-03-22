@@ -36,7 +36,7 @@ Transaction ID: G4t6Sgz2FjnNpruYjPP1ZJAKfRmBffVaqmj8Nup2TaAg
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/G4t6Sgz2FjnNpruYjPP1ZJAKfRmBffVaqmj8Nup2TaAg
 ```
-Typing this or another command manually, you can make a mistake or forget the sequence of the command.  
+Typing this or another command manually, you can make a mipledge or forget the sequence of the command.  
 It is not a problem. `--help` will tell you how to build a command properly.  
 However, using _unc CLI_, you can press _Enter_ anywhere in the command line and the interactive mode of the program will continue to compose the command from the place where you finished entering the necessary parameters.
 

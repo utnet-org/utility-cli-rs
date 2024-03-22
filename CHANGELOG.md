@@ -53,12 +53,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - add `--offline` for `sign-with-ledger` option ([#260](https://github.com/unc/unc-cli-rs/pull/260))
-- Updated legacy command compatibility for unc-cli (JS) for dev-deploy, validators, and staking commands ([#256](https://github.com/unc/unc-cli-rs/pull/256))
+- Updated legacy command compatibility for unc-cli (JS) for dev-deploy, validators, and pledging commands ([#256](https://github.com/unc/unc-cli-rs/pull/256))
 
 ## [0.7.0](https://github.com/unc/unc-cli-rs/compare/v0.6.2...v0.7.0) - 2023-10-31
 
 ### Added
-- New command: staking - delegation ([#227](https://github.com/unc/unc-cli-rs/pull/227))
+- New command: pledging - delegation ([#227](https://github.com/unc/unc-cli-rs/pull/227))
 
 ### Other
 - Refactored unc tokens usages to use a strictly typed unc-token crate ([#253](https://github.com/unc/unc-cli-rs/pull/253))

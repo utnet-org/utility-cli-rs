@@ -1,8 +1,8 @@
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::StakeDelegationContext)]
-#[interactive_clap(output_context = UnstakeContext)]
-pub struct Unstake {
-    /// Enter the amount to unstake from the inner account of the predecessor (example: 10unc or 0.5unc or 10000yoctounc):
+#[interactive_clap(input_context = super::PledgeDelegationContext)]
+#[interactive_clap(output_context = DepositAndPledgeContext)]
+pub struct DepositAndPledge {
+    /// Enter the attached amount to be deposited and then pledged into the predecessor's internal account (example: 10unc or 0.5unc or 10000yoctounc):
     amount: crate::types::unc_token::UncToken,
     #[interactive_clap(skip_default_input_arg)]
     /// What is validator account ID?
@@ -13,12 +13,12 @@ pub struct Unstake {
 }
 
 #[derive(Clone)]
-pub struct UnstakeContext(crate::commands::ActionContext);
+pub struct DepositAndPledgeContext(crate::commands::ActionContext);
 
-impl UnstakeContext {
+impl DepositAndPledgeContext {
     pub fn from_previous_context(
-        previous_context: super::StakeDelegationContext,
-        scope: &<Unstake as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
+        previous_context: super::PledgeDelegationContext,
+        scope: &<DepositAndPledge as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
             std::sync::Arc::new({
@@ -33,12 +33,10 @@ impl UnstakeContext {
                         receiver_id: validator_account_id.clone(),
                         actions: vec![unc_primitives::transaction::Action::FunctionCall(
                             Box::new(unc_primitives::transaction::FunctionCallAction {
-                                method_name: "unstake".to_string(),
-                                args: serde_json::to_vec(&serde_json::json!({
-                                    "amount": amount,
-                                }))?,
+                                method_name: "deposit_and_pledge".to_string(),
+                                args: serde_json::to_vec(&serde_json::json!({}))?,
                                 gas: crate::common::UncGas::from_tgas(50).as_gas(),
-                                deposit: 0,
+                                deposit: amount.as_yoctounc(),
                             }),
                         )],
                     })
@@ -52,7 +50,7 @@ impl UnstakeContext {
 
             move |outcome_view, _network_config| {
                 if let unc_primitives::views::FinalExecutionStatus::SuccessValue(_) = outcome_view.status {
-                    eprintln!("<{signer_id}> has successfully unstaked {amount} from <{validator_id}>.")
+                    eprintln!("<{signer_id}> has successfully delegated {amount} to pledge with <{validator_id}>.")
                 }
                 Ok(())
             }
@@ -76,16 +74,16 @@ impl UnstakeContext {
     }
 }
 
-impl From<UnstakeContext> for crate::commands::ActionContext {
-    fn from(item: UnstakeContext) -> Self {
+impl From<DepositAndPledgeContext> for crate::commands::ActionContext {
+    fn from(item: DepositAndPledgeContext) -> Self {
         item.0
     }
 }
 
-impl Unstake {
+impl DepositAndPledge {
     pub fn input_validator_account_id(
-        context: &super::StakeDelegationContext,
+        context: &super::PledgeDelegationContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
-        crate::common::input_staking_pool_validator_account_id(&context.global_context.config)
+        crate::common::input_pledging_pool_validator_account_id(&context.global_context.config)
     }
 }

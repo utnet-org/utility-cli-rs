@@ -190,17 +190,17 @@ Extensions design is a work in progress. They are here mostly to show that we ha
 - ...
 ```
 
-### `staking-for-delegators` extension
+### `pledging-for-delegators` extension
 ```txt
-- make-new-stake-proposal
-- stake
-- unstake
+- make-new-pledge-proposal
+- pledge
+- unpledge
 - ...
 ```
 
 ### `validators` extension
 ```txt
-- stake
+- pledge
 - validators
 - proposals
 - ...

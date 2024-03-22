@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, clap::Parser)]
-/// This is a legacy `stake` command. Once you run it with the specified arguments, new syntax command will be suggested.
+/// This is a legacy `pledge` command. Once you run it with the specified arguments, new syntax command will be suggested.
 pub struct StateArgs {
     account_id: String,
     #[clap(allow_hyphen_values = true, num_args = 0..)]

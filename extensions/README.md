@@ -19,7 +19,7 @@ As mentioned above, any binary can become an extension, but we are encouraging d
 
 Core `unc CLI` does not have validator specific functionality, but we can add it as a simple bash script:
 
-`unc-cli-staking-pool-info`
+`unc-cli-pledging-pool-info`
 
 ```bash
 #!/bin/sh
@@ -30,7 +30,7 @@ unc execute view-method network mainnet contract "name.unc" call "get_fields_by_
 Make sure that this script is in your `$PATH` and has proper permissions to be executed. Then call it like this:
 
 ```bash
-$ unc staking-pool-info aurora.unc
+$ unc pledging-pool-info aurora.unc
 {
   "country": "Gibraltar",
   "country_code": "gi",
