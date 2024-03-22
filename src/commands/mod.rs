@@ -30,7 +30,7 @@ pub enum TopLevelCommand {
         message = "pledging     - Manage pledging: view, add and withdraw pledge"
     ))]
     /// Use this for manage pledging: view, add and withdraw pledge
-    Staking(self::pledging::Staking),
+    Pledging(self::pledging::Pledging),
     #[strum_discriminants(strum(
         message = "contract    - Manage smart-contracts: deploy code, call functions"
     ))]

@@ -1529,7 +1529,7 @@ pub fn input_pledging_pool_validator_account_id(
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct StakingPoolInfo {
+pub struct PledgingPoolInfo {
     pub validator_id: unc_primitives::types::AccountId,
     pub fee: Option<RewardFeeFraction>,
     pub delegators: Option<u64>,
@@ -1544,7 +1544,7 @@ pub struct RewardFeeFraction {
 
 pub fn get_validator_list(
     network_config: &crate::config::NetworkConfig,
-) -> color_eyre::eyre::Result<Vec<StakingPoolInfo>> {
+) -> color_eyre::eyre::Result<Vec<PledgingPoolInfo>> {
     let json_rpc_client = network_config.json_rpc_client();
 
     let validators_pledge = get_validators_pledge(&json_rpc_client)?;
@@ -1617,7 +1617,7 @@ async fn get_pledging_pool_info(
     json_rpc_client: &unc_jsonrpc_client::JsonRpcClient,
     validator_account_id: unc_primitives::types::AccountId,
     pledge: u128,
-) -> color_eyre::Result<StakingPoolInfo> {
+) -> color_eyre::Result<PledgingPoolInfo> {
     let fee = match json_rpc_client
         .call(unc_jsonrpc_client::methods::query::RpcQueryRequest {
             block_reference: unc_primitives::types::Finality::Final.into(),
@@ -1676,7 +1676,7 @@ async fn get_pledging_pool_info(
         Err(err) => return Err(err.into()),
     };
 
-    Ok(StakingPoolInfo {
+    Ok(PledgingPoolInfo {
         validator_id: validator_account_id.clone(),
         fee,
         delegators,
