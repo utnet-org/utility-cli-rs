@@ -1,18 +1,42 @@
 [
     {
-    "miner_id": "miner1",
-    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrC1GaNNevD4ttZjyeQ6gj5qs3YuQjb5jBFfbomo4KTWxtVTD21CguNkbcFjFj6ZitueajFWfew2u1f7F42dX8Jq2vmPK19x8GqXyQb3FgjvwkGyUrQgybbJv4RXhhXUYVUWtaom3cHMB6uPk6d8JNaXyDT58izmqmM3EqNm6ErYDUH2f7W4rq5XdZgxRz1Q936LcytoKAQhsQ6F3CKU2ZG1Cp8sEZ9Jv6jQn2yCsY2VQcdYVSV89n7tkLrNqq75L6gFN16yMwjREx1RihTXRPGdrC4zdvaq1rWcf6SuJRzAJJngmjGDVsJEabmY5RqjPNLDxBawmN5UXyWFPyabxLbKBtzomCNDzgvvKKn",
+    "miner_id": "miner0",
+    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrAzK4ZdyEHxs7qVnPrrF3R6w3zNJoHz828bNNJq9f6FPqyq9hsRP47qNXu1mcxeqWmRr8TKTBMLQNzNcjZVm6qX2BiSdXetAZsjPBMC6TyC2smee4s5Mqc4uh5rc5v7Z6nHWGxttHbhHGUCyWtgNGgPevFB2odsTdaXgcgWKtR3zLD6qrbaw631yNEJhverkLMrQJz436L21JWkgXpcTDRYPNWnk7DbztgA6RcgLmve3EG125eW2c2Bj7DkkWAVeWHZnXboDM8kYhAEbfRqUuKwn9K1m9adMqfig4xmM5wxGGABu5dD1gmthQRytLF1y3o2kpTtgrsNyBVTkqV7eMR9qJhUxwiU1rXdQKJ",
     "power": 100,
+    "sn": "serial number here c0",
+    "bus_id": "bus info c0",
+    "p2key": "p2keys1 c0"
+    },
+    {
+    "miner_id": "miner1",
+    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrCGrtsUG9dcY8iaDtbnNTuA8PiVhpLgeiznHF3SUjAdYk4bSnwTShu5oNY5o3z1LYcgjiZhAoVi4Wh1MmZUqPSecUAMRAdUkXtjk9c2g33xxvVWA7Bc9d4E2hJjzxPoyBWSvYAebNQahxNk3Pio942Gy9kaX79j2evzNLuNvNPpc8ajwBcSbaufWMe3FYfbX8tVsdUA9AhYem36a2U3SNZQtxVF4pGBp9pz327w9debh4hf8jzSHoffh4oxGrC4peAEeJFjdR6rnSPFdzvF1o6gWF1EFqdz1ksWCaYyAgapk2WNPU9i9JK66XqW9xyaikrojcX7oZLnMCKi51k1mr7AefJzjh4iUoJ5SHn",
+    "power": 200,
     "sn": "serial number here c1",
     "bus_id": "bus info c1",
     "p2key": "p2keys1 c1"
     },
     {
     "miner_id": "miner2",
-    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrAnZHzmPvR1RYYY2bCV2peXbHoNeyq1CfR167o2vrLQVxdHkghr62zWwa98mrK8rG7SvfFVF7Vx6PWVZXE1hPgAwbbYp6EPjSYcqsYoJuDQWbtAuJiYzBmJaBfDfpyUNSujPDZ76xnw4zEQYnWwFdmhpuSPmnQT13z9154ErZSGMnDFirQLcJ7p4HTsM87yJWpwwBYsRtfigfW4Uy8Vu5MFAQDoyxQXfzv9pF8VJYhvjcAd3DRhjAkSRQp2i5DXFaomshbZ5qLop6xG3fUyfFVY2JnPVXwSmgPcTpebSQbeezrVQqJKUTDgFqVhvM13cSg2JL15SC6Gof4XB9tZULgiqmWcXgdCPJUeuRi",
-    "power": 200,
+    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrBcvkfoM33uFehzP1wtSX7XwvCGhTPQdjjitsZ9zjbLVqLEnuZVYjZmArhJLFJrukpXxo7yVQBn3BH8bZVR5NBWmnRwvSGThyVgKssvQ2m6uLC9PDM4b7VcyJZGoZrrgTU75e851CcxconxvQZ7CZjbpcZ2N3rv7nzWceUKZUfgqoDyEmwsxM44LeB6Z3Rhfe2gHyZSm2JZj2HeyvyEa23dvehUPvZ8ZpUnsR8mRJThBUWSfPjiX5yX97584h6FEh4W3YAu9AFsmvLQULsYAtmTe6SxWSa8GdBizE5tUW5SfU73cF6Gu1FG8uaNeXCXiR8cEsMPjhmJuwuMYdHsAQbVWzWgsXMgyVFtwep",
+    "power": 300,
     "sn": "serial number here c2",
     "bus_id": "bus info c2",
     "p2key": "p2keys1 c2"
+    },
+    {
+    "miner_id": "miner3",
+    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrAfeFgMZYmFfdvoV8GZUCtEbFdczBGLK6pQc9T3fU6Qy666Gv6TVHn1AZc3fur5yAFh6UVkXwnCb8UbFtZkKiLxHtKRamDmVCxd6EDqntAZuq5yV98kokWp8cDNVoEXa5LSebJEqNuRmzFvkXi7sCaTrnrJCB6o48h7vCRhem3gXJUzF2vBggPy6d27ghvfcf8CgkgZmo4tEJyVVXygLXvDk9PKvqfMaEeZLpWq9UXzda5r7gFNfb175UHNsyxgGPo1oy8KXDFpsipBFUTBGTuVxSCggnF5vFyVjwybz6ixpDiurRBH9WFBfwfBGGRjV3odMF9F2xJU444o4SW3r8SRPqD8v2yN1VuzmtU",
+    "power": 400,
+    "sn": "serial number here c3",
+    "bus_id": "bus info c3",
+    "p2key": "p2keys1 c3"
+    },
+    {
+    "miner_id": "miner4",
+    "public_key": "rsa2048:2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrBQQZG3oJpgFPc2YTvyqWCcseNui3d4dwgHFyyGxau8HrgeEsMgcSk5ut8kL4VxgfnPXn2mtzesWDmoKMUDvM1dABpHLL9esUQDVVXKnXvC843UyQnNU2ztY3x39edSHzF1cgWyAGMRepUCvXjJG6MgMMF6HiaXtUFgNhevC6xAKk4puGxKjH1J6zqmyDNWAZDARLtNK6YDW14F4e4zAiwrmCXyfGfbtYFLbQHp7Lpk2AsjXLwSx5guyo4ETqNBwmSZpxB2sSax3hpdmh9EDXeYS6VMdarKqLBXZyW4VsAXY131bkpasEicX8YMMrXuSqUrash4ymkNmxWVRtPCaU3JUDPeLAoLnpapREg",
+    "power": 500,
+    "sn": "serial number here c4",
+    "bus_id": "bus info c4",
+    "p2key": "p2keys1 c4"
     }
 ]
