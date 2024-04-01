@@ -168,7 +168,7 @@ impl std::fmt::Display for AccessKeyInfo {
                 let allowance_message = match allowance {
                     Some(amount) => format!(
                         "with a remaining fee allowance of {}",
-                        unc_token::UncToken::from_yoctounc(*amount)
+                        unc_token::UncToken::from_attounc(*amount)
                     ),
                     None => "with no limit".to_string(),
                 };

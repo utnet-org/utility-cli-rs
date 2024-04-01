@@ -2,7 +2,7 @@
 #[interactive_clap(input_context = super::PledgeDelegationContext)]
 #[interactive_clap(output_context = UnpledgeContext)]
 pub struct Unpledge {
-    /// Enter the amount to unpledge from the inner account of the predecessor (example: 10unc or 0.5unc or 10000yoctounc):
+    /// Enter the amount to unpledge from the inner account of the predecessor (example: 10unc or 0.5unc or 10000attounc):
     amount: crate::types::unc_token::UncToken,
     #[interactive_clap(skip_default_input_arg)]
     /// What is validator account ID?

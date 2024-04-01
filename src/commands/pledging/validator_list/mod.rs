@@ -56,7 +56,7 @@ fn display_validators_info(network_config: &crate::config::NetworkConfig) -> cra
             validator.validator_id,
             fee,
             delegators,
-            unc_token::UncToken::from_yoctounc(validator.pledge),
+            unc_token::UncToken::from_attounc(validator.pledge),
         ]);
     }
     table.set_format(*prettytable::format::consts::FORMAT_NO_LINESEP_WITH_TITLE);

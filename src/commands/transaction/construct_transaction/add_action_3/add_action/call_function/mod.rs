@@ -151,7 +151,7 @@ impl DepositContext {
                 method_name: previous_context.function_name,
                 args: previous_context.function_args,
                 gas: previous_context.gas.as_gas(),
-                deposit: scope.deposit.clone().as_yoctounc(),
+                deposit: scope.deposit.clone().as_attounc(),
             },
         ));
         let mut actions = previous_context.actions;
@@ -178,7 +178,7 @@ impl Deposit {
         eprintln!();
         match unc_token::UncToken::from_str(
             &Text::new(
-                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000yoctounc):",
+                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000attounc):",
             )
             .with_initial_value("0 unc")
             .prompt()?,

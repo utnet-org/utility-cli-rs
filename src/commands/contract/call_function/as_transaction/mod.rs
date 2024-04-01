@@ -171,7 +171,7 @@ impl Deposit {
         eprintln!();
         match crate::types::unc_token::UncToken::from_str(
             &Text::new(
-                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000yoctounc):",
+                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000attounc):",
             )
             .with_initial_value("0 unc")
             .prompt()?,
@@ -238,7 +238,7 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                                 method_name: item.function_name.clone(),
                                 args: item.function_args.clone(),
                                 gas: item.gas.as_gas(),
-                                deposit: item.deposit.as_yoctounc(),
+                                deposit: item.deposit.as_attounc(),
                             }),
                         )],
                     })

@@ -77,7 +77,7 @@ impl From<SendNftCommandContext> for crate::commands::ActionContext {
                                     "token_id": token_id
                                 }))?,
                                 gas: item.gas.as_gas(),
-                                deposit: item.deposit.as_yoctounc(),
+                                deposit: item.deposit.as_attounc(),
                             }),
                         )],
                     })
@@ -167,9 +167,9 @@ impl SendNftCommand {
         eprintln!();
         match crate::types::unc_token::UncToken::from_str(
             &Text::new(
-                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000yoctounc):",
+                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000attounc):",
             )
-            .with_initial_value("1 yoctounc")
+            .with_initial_value("1 attounc")
             .prompt()?,
         ) {
             Ok(deposit) => Ok(Some(deposit)),

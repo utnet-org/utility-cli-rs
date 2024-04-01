@@ -2,7 +2,7 @@
 #[interactive_clap(input_context = super::super::super::ConstructTransactionContext)]
 #[interactive_clap(output_context = TransferActionContext)]
 pub struct TransferAction {
-    /// How many unc Tokens do you want to transfer? (example: 10unc or 0.5unc or 10000yoctounc)
+    /// How many unc Tokens do you want to transfer? (example: 10unc or 0.5unc or 10000attounc)
     pub amount_in_unc: crate::types::unc_token::UncToken,
     #[interactive_clap(subcommand)]
     pub next_action: super::super::super::add_action_2::NextAction,
@@ -18,7 +18,7 @@ impl TransferActionContext {
     ) -> color_eyre::eyre::Result<Self> {
         let action = unc_primitives::transaction::Action::Transfer(
             unc_primitives::transaction::TransferAction {
-                deposit: scope.amount_in_unc.as_yoctounc(),
+                deposit: scope.amount_in_unc.as_attounc(),
             },
         );
         let mut actions = previous_context.actions;

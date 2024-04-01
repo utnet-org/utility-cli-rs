@@ -139,7 +139,7 @@ async fn get_delegated_pledged_balance(
         })
         .await;
     match account_pledged_balance_response {
-        Ok(response) => Ok(unc_token::UncToken::from_yoctounc(
+        Ok(response) => Ok(unc_token::UncToken::from_attounc(
             response
                 .call_result()?
                 .parse_result_from_json::<String>()
@@ -153,7 +153,7 @@ async fn get_delegated_pledged_balance(
                     ..
                 },
             ),
-        )) => Ok(unc_token::UncToken::from_yoctounc(0)),
+        )) => Ok(unc_token::UncToken::from_attounc(0)),
         Err(err) => Err(err.into()),
     }
 }

@@ -135,7 +135,7 @@ impl NewAccount {
         _context: &crate::GlobalContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
-        match crate::types::unc_token::UncToken::from_str(&Text::new("Enter the amount of the unc tokens you want to fund the new account with (example: 10unc or 0.5unc or 10000yoctounc):")
+        match crate::types::unc_token::UncToken::from_str(&Text::new("Enter the amount of the unc tokens you want to fund the new account with (example: 10unc or 0.5unc or 10000attounc):")
             .with_initial_value("0.1 unc")
             .prompt()?
             ) {

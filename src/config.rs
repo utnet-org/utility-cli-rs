@@ -15,7 +15,7 @@ impl Default for Config {
             "mainnet".to_string(),
             NetworkConfig {
                 network_name: "mainnet".to_string(),
-                rpc_url: "https://16.78.8.159:3030".parse().unwrap(),
+                rpc_url: "http://16.78.8.159:3030".parse().unwrap(),
                 wallet_url: "https://app.wallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.unc.org/transactions/"
                     .parse()

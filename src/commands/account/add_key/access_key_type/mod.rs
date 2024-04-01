@@ -95,7 +95,7 @@ impl From<FunctionCallTypeContext> for AccessTypeContext {
             signer_account_id: item.signer_account_id,
             permission: unc_primitives::account::AccessKeyPermission::FunctionCall(
                 unc_primitives::account::FunctionCallPermission {
-                    allowance: item.allowance.map(|allowance| allowance.as_yoctounc()),
+                    allowance: item.allowance.map(|allowance| allowance.as_attounc()),
                     receiver_id: item.receiver_account_id.to_string(),
                     method_names: item.method_names.into(),
                 },
@@ -160,7 +160,7 @@ impl FunctionCallType {
         .prompt()?;
         if let ConfirmOptions::Yes = select_choose_input {
             let allowance_unc_balance: crate::types::unc_token::UncToken =
-                    CustomType::new("Enter an allowance which is a balance limit to use by this access key to pay for function call gas and transaction fees (example: 10unc or 0.5unc or 10000yoctounc):")
+                    CustomType::new("Enter an allowance which is a balance limit to use by this access key to pay for function call gas and transaction fees (example: 10unc or 0.5unc or 10000attounc):")
                     .prompt()?;
             Ok(Some(allowance_unc_balance))
         } else {

@@ -198,7 +198,7 @@ impl DepositContext {
                             "amount": amount_ft.amount().to_string()
                         }))?,
                         gas: previous_context.gas.as_gas(),
-                        deposit: deposit.as_yoctounc(),
+                        deposit: deposit.as_attounc(),
                     }),
                 );
 
@@ -229,7 +229,7 @@ impl DepositContext {
                                     args,
                                     gas: previous_context.gas.as_gas(),
                                     deposit: unc_token::UncToken::from_milliunc(100)
-                                        .as_yoctounc(),
+                                        .as_attounc(),
                                 },
                             ));
                         return Ok(crate::commands::PrepopulatedTransaction {
@@ -295,9 +295,9 @@ impl Deposit {
         eprintln!();
         match crate::types::unc_token::UncToken::from_str(
             &Text::new(
-                "Enter deposit for a function call (example: 10 unc or 0.5 unc or 10000 yoctounc):",
+                "Enter deposit for a function call (example: 10 unc or 0.5 unc or 10000 attounc):",
             )
-            .with_initial_value("1 yoctounc")
+            .with_initial_value("1 attounc")
             .prompt()?,
         ) {
             Ok(deposit) => Ok(Some(deposit)),

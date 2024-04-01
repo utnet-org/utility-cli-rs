@@ -18,7 +18,7 @@ impl PledgeActionContext {
     ) -> color_eyre::eyre::Result<Self> {
         let action = unc_primitives::transaction::Action::Pledge(Box::new(
             unc_primitives::transaction::PledgeAction {
-                pledge: scope.pledge_amount.as_yoctounc(),
+                pledge: scope.pledge_amount.as_attounc(),
                 public_key: scope.public_key.clone().into(),
             },
         ));

@@ -65,7 +65,7 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                                 ),
                                 unc_primitives::transaction::Action::Transfer(
                                     unc_primitives::transaction::TransferAction {
-                                        deposit: item.account_properties.initial_balance.as_yoctounc(),
+                                        deposit: item.account_properties.initial_balance.as_attounc(),
                                     },
                                 ),
                                 unc_primitives::transaction::Action::AddKey(
@@ -100,7 +100,7 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                                                 deposit: item
                                                     .account_properties
                                                     .initial_balance
-                                                    .as_yoctounc(),
+                                                    .as_attounc(),
                                             },
                                         ),
                                     )],

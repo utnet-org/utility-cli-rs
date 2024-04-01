@@ -1055,8 +1055,8 @@ unc account \
 
 ```txt
 storage balance for <volodymyr.testnet>:
- available:        1.6 MB   (15.878059999854543210876557 unc [  15878059999854543210876557 yoctounc])
- total:            1.6 MB   (16.238949999854543210876557 unc [  16238949999854543210876557 yoctounc])
+ available:        1.6 MB   (15.878059999854543210876557 unc [  15878059999854543210876557 attounc])
+ total:            1.6 MB   (16.238949999854543210876557 unc [  16238949999854543210876557 attounc])
 ```
 </details>
 
@@ -1130,7 +1130,7 @@ unc account \
 
 #### send-unc - The transfer is carried out in unc tokens
 
-This command is used to transfer tokens between accounts. Please note that the amount of tokens forwarded is indicated together with the dimensional unit (this is unc or yoctounc).
+This command is used to transfer tokens between accounts. Please note that the amount of tokens forwarded is indicated together with the dimensional unit (this is unc or attounc).
 In order to execute this command, in the terminal command line type:
 ```txt
 unc tokens \
@@ -1168,7 +1168,7 @@ unc tokens \
     fro_volod.testnet \
     send-ft usdn.testnet volodymyr.testnet 10000000000000000000 \
         --prepaid-gas 100.000TeraGas \
-        --attached-deposit 1yoctounc \
+        --attached-deposit 1attounc \
     network-config testnet \
     sign-with-keychain \
     send
@@ -1201,7 +1201,7 @@ unc tokens \
     fro_volod.testnet \
     send-nft paras-token-v2.testnet volodymyr.testnet 1604:4 \
         --prepaid-gas 100.000TeraGas \
-        --attached-deposit 1yoctounc \
+        --attached-deposit 1attounc \
     network-config testnet \
     sign-with-keychain \
     send

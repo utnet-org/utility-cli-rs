@@ -17,30 +17,30 @@ pub struct UncToken(pub unc_token::UncToken);
 
 impl std::fmt::Display for UncToken {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if self.as_yoctounc() == 0 {
+        if self.as_attounc() == 0 {
             write!(f, "0 unc")
-        } else if self.as_yoctounc() <= 1_000 {
-            write!(f, "{} yoctounc", self.as_yoctounc())
-        } else if self.as_yoctounc() % ONE_UNC == 0 {
-            write!(f, "{} unc", self.as_yoctounc() / ONE_UNC,)
+        } else if self.as_attounc() <= 1_000 {
+            write!(f, "{} attounc", self.as_attounc())
+        } else if self.as_attounc() % ONE_UNC == 0 {
+            write!(f, "{} unc", self.as_attounc() / ONE_UNC,)
         } else {
             write!(
                 f,
                 "{}.{} unc",
-                self.as_yoctounc() / ONE_UNC,
-                format!("{:0>24}", (self.as_yoctounc() % ONE_UNC)).trim_end_matches('0')
+                self.as_attounc() / ONE_UNC,
+                format!("{:0>24}", (self.as_attounc() % ONE_UNC)).trim_end_matches('0')
             )
         }
     }
 }
 
 impl UncToken {
-    pub fn as_yoctounc(&self) -> u128 {
-        self.0.as_yoctounc()
+    pub fn as_attounc(&self) -> u128 {
+        self.0.as_attounc()
     }
 
-    pub fn from_yoctounc(inner: u128) -> Self {
-        Self(unc_token::UncToken::from_yoctounc(inner))
+    pub fn from_attounc(inner: u128) -> Self {
+        Self(unc_token::UncToken::from_attounc(inner))
     }
 }
 
@@ -68,9 +68,9 @@ mod tests {
         )
     }
     #[test]
-    fn unc_token_to_string_0_yoctounc() {
+    fn unc_token_to_string_0_attounc() {
         assert_eq!(
-            UncToken(unc_token::UncToken::from_yoctounc(0)).to_string(),
+            UncToken(unc_token::UncToken::from_attounc(0)).to_string(),
             "0 unc".to_string()
         )
     }
@@ -78,7 +78,7 @@ mod tests {
     #[test]
     fn unc_token_to_string_0dot02_unc() {
         assert_eq!(
-            UncToken(unc_token::UncToken::from_yoctounc(
+            UncToken(unc_token::UncToken::from_attounc(
                 20_000_000_000_000_000_000_000
             ))
             .to_string(),
@@ -99,7 +99,7 @@ mod tests {
     #[test]
     fn unc_token_to_string_10_unc() {
         assert_eq!(
-            UncToken(unc_token::UncToken::from_yoctounc(
+            UncToken(unc_token::UncToken::from_attounc(
                 10_000_000_000_000_000_000_000_000
             ))
             .to_string(),
@@ -109,7 +109,7 @@ mod tests {
     #[test]
     fn unc_token_to_string_10dot02_000_01unc() {
         assert_eq!(
-            UncToken(unc_token::UncToken::from_yoctounc(
+            UncToken(unc_token::UncToken::from_attounc(
                 10_020_000_000_000_000_000_000_001
             ))
             .to_string(),
@@ -117,17 +117,17 @@ mod tests {
         )
     }
     #[test]
-    fn unc_token_to_string_1_yocto_unc() {
+    fn unc_token_to_string_1_atto_unc() {
         assert_eq!(
-            UncToken(unc_token::UncToken::from_yoctounc(1)).to_string(),
-            "1 yoctounc".to_string()
+            UncToken(unc_token::UncToken::from_attounc(1)).to_string(),
+            "1 attounc".to_string()
         )
     }
     #[test]
-    fn unc_token_to_string_100_yocto_unc() {
+    fn unc_token_to_string_100_atto_unc() {
         assert_eq!(
-            UncToken(unc_token::UncToken::from_yoctounc(100)).to_string(),
-            "100 yoctounc".to_string()
+            UncToken(unc_token::UncToken::from_attounc(100)).to_string(),
+            "100 attounc".to_string()
         )
     }
 }

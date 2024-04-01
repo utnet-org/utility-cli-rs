@@ -168,7 +168,7 @@ impl DepositContext {
                                     method_name: previous_context.function_name.clone(),
                                     args: previous_context.function_args.clone(),
                                     gas: previous_context.gas.as_gas(),
-                                    deposit: deposit.as_yoctounc(),
+                                    deposit: deposit.as_attounc(),
                                 },
                             )),
                         ],
@@ -209,7 +209,7 @@ impl Deposit {
         eprintln!();
         match crate::types::unc_token::UncToken::from_str(
             &Text::new(
-                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000yoctounc):",
+                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000attounc):",
             )
             .with_initial_value("0 unc")
             .prompt()?,

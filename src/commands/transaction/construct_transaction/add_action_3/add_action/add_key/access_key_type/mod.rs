@@ -70,7 +70,7 @@ impl FunctionCallTypeContext {
     ) -> color_eyre::eyre::Result<Self> {
         let access_key_permission = unc_primitives::account::AccessKeyPermission::FunctionCall(
             unc_primitives::account::FunctionCallPermission {
-                allowance: scope.allowance.map(|allowance| allowance.as_yoctounc()),
+                allowance: scope.allowance.map(|allowance| allowance.as_attounc()),
                 receiver_id: scope.receiver_account_id.to_string(),
                 method_names: scope.method_names.clone().into(),
             },
@@ -147,7 +147,7 @@ impl FunctionCallType {
         .prompt()?;
         if let ConfirmOptions::Yes = select_choose_input {
             let allowance_unc_balance: crate::types::unc_token::UncToken =
-                    CustomType::new("Enter an allowance which is a balance limit to use by this access key to pay for function call gas and transaction fees (example: 10unc or 0.5unc or 10000yoctounc):")
+                    CustomType::new("Enter an allowance which is a balance limit to use by this access key to pay for function call gas and transaction fees (example: 10unc or 0.5unc or 10000attounc):")
                         .prompt()?;
             Ok(Some(allowance_unc_balance))
         } else {

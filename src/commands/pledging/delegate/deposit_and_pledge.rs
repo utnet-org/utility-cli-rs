@@ -2,7 +2,7 @@
 #[interactive_clap(input_context = super::PledgeDelegationContext)]
 #[interactive_clap(output_context = DepositAndPledgeContext)]
 pub struct DepositAndPledge {
-    /// Enter the attached amount to be deposited and then pledged into the predecessor's internal account (example: 10unc or 0.5unc or 10000yoctounc):
+    /// Enter the attached amount to be deposited and then pledged into the predecessor's internal account (example: 10unc or 0.5unc or 10000attounc):
     amount: crate::types::unc_token::UncToken,
     #[interactive_clap(skip_default_input_arg)]
     /// What is validator account ID?
@@ -36,7 +36,7 @@ impl DepositAndPledgeContext {
                                 method_name: "deposit_and_pledge".to_string(),
                                 args: serde_json::to_vec(&serde_json::json!({}))?,
                                 gas: crate::common::UncGas::from_tgas(50).as_gas(),
-                                deposit: amount.as_yoctounc(),
+                                deposit: amount.as_attounc(),
                             }),
                         )],
                     })

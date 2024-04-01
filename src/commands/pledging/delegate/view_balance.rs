@@ -40,9 +40,9 @@ impl ViewBalanceContext {
                 };
 
                 eprintln!("Delegated pledge balance with validator <{validator_account_id}> by <{account_id}>:");
-                eprintln!("      Pledged balance:     {:>38}", unc_token::UncToken::from_yoctounc(user_pledged_balance).to_string());
-                eprintln!("      Unpledged balance:   {:>38} {withdrawal_availability_message}", unc_token::UncToken::from_yoctounc(user_unpledged_balance).to_string());
-                eprintln!("      Total balance:      {:>38}", unc_token::UncToken::from_yoctounc(user_total_balance).to_string());
+                eprintln!("      Pledged balance:     {:>38}", unc_token::UncToken::from_attounc(user_pledged_balance).to_string());
+                eprintln!("      Unpledged balance:   {:>38} {withdrawal_availability_message}", unc_token::UncToken::from_attounc(user_unpledged_balance).to_string());
+                eprintln!("      Total balance:      {:>38}", unc_token::UncToken::from_attounc(user_total_balance).to_string());
 
                 Ok(())
             }

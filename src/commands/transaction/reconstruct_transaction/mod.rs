@@ -187,7 +187,7 @@ fn action_transformation(
         Action::Transfer(transfer_action) => {
             Ok(Some(add_action::CliActionSubcommand::Transfer(
                 add_action::transfer::CliTransferAction {
-                    amount_in_unc: Some(crate::types::unc_token::UncToken::from_yoctounc(transfer_action.deposit)),
+                    amount_in_unc: Some(crate::types::unc_token::UncToken::from_attounc(transfer_action.deposit)),
                     next_action: None
                 }
             )))
@@ -224,7 +224,7 @@ fn action_transformation(
                             gas: Some(unc_gas::UncGas::from_gas(function_call_action.gas)),
                             attached_deposit: Some(add_action::call_function::ClapNamedArgDepositForPrepaidGas::AttachedDeposit(
                                 add_action::call_function::CliDeposit {
-                                    deposit: Some(crate::types::unc_token::UncToken::from_yoctounc(function_call_action.deposit)),
+                                    deposit: Some(crate::types::unc_token::UncToken::from_attounc(function_call_action.deposit)),
                                     next_action: None
                                 }
                             ))
@@ -236,7 +236,7 @@ fn action_transformation(
         Action::Pledge(pledge_action) => {
                 Ok(Some(add_action::CliActionSubcommand::Pledge(
                 add_action::pledge::CliPledgeAction {
-                    pledge_amount: Some(crate::types::unc_token::UncToken::from_yoctounc(pledge_action.pledge)),
+                    pledge_amount: Some(crate::types::unc_token::UncToken::from_attounc(pledge_action.pledge)),
                     public_key: Some(pledge_action.public_key.into()),
                     next_action: None
                 }
@@ -280,7 +280,7 @@ fn get_access_key_permission(
         ) => Ok(Some(
             add_key::CliAccessKeyPermission::GrantFunctionCallAccess(
                 add_key::access_key_type::CliFunctionCallType {
-                    allowance: allowance.map(crate::types::unc_token::UncToken::from_yoctounc),
+                    allowance: allowance.map(crate::types::unc_token::UncToken::from_attounc),
                     receiver_account_id: Some(receiver_id.parse()?),
                     method_names: Some(crate::types::vec_string::VecString(method_names)),
                     access_key_mode: Some(add_key::CliAccessKeyMode::UseManuallyProvidedPublicKey(

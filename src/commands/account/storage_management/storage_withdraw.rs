@@ -2,7 +2,7 @@
 #[interactive_clap(input_context = super::ContractContext)]
 #[interactive_clap(output_context = WithdrawArgsContext)]
 pub struct WithdrawArgs {
-    /// Enter the amount to withdraw from the storage (example: 10unc or 0.5unc or 10000yoctounc):
+    /// Enter the amount to withdraw from the storage (example: 10unc or 0.5unc or 10000attounc):
     amount: crate::types::unc_token::UncToken,
     #[interactive_clap(named_arg)]
     /// What is the signer account ID?
@@ -64,10 +64,10 @@ impl SignerAccountIdContext {
                             Box::new(unc_primitives::transaction::FunctionCallAction {
                                 method_name: "storage_withdraw".to_string(),
                                 args: serde_json::to_vec(&serde_json::json!({
-                                    "amount": amount.clone().as_yoctounc().to_string()
+                                    "amount": amount.clone().as_attounc().to_string()
                                 }))?,
                                 gas: crate::common::UncGas::from_tgas(50).as_gas(),
-                                deposit: unc_token::UncToken::from_yoctounc(1).as_yoctounc(),
+                                deposit: unc_token::UncToken::from_attounc(1).as_attounc(),
                             }),
                         )],
                     })

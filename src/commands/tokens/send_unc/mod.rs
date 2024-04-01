@@ -5,7 +5,7 @@ pub struct SendUncCommand {
     #[interactive_clap(skip_default_input_arg)]
     /// What is the receiver account ID?
     receiver_account_id: crate::types::account_id::AccountId,
-    /// How many unc Tokens do you want to transfer? (example: 10unc or 0.5unc or 10000yoctounc)
+    /// How many unc Tokens do you want to transfer? (example: 10unc or 0.5unc or 10000attounc)
     amount_in_unc: crate::types::unc_token::UncToken,
     #[interactive_clap(named_arg)]
     /// Select network
@@ -47,7 +47,7 @@ impl From<SendUncCommandContext> for crate::commands::ActionContext {
                         receiver_id: receiver_account_id.clone(),
                         actions: vec![unc_primitives::transaction::Action::Transfer(
                             unc_primitives::transaction::TransferAction {
-                                deposit: item.amount_in_unc.as_yoctounc(),
+                                deposit: item.amount_in_unc.as_attounc(),
                             },
                         )],
                     })

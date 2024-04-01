@@ -7,7 +7,7 @@ pub struct DepositArgs {
     #[interactive_clap(skip_default_input_arg)]
     /// Which account ID do you want to add a deposit to?
     receiver_account_id: crate::types::account_id::AccountId,
-    /// Enter the amount to deposit into the storage (example: 10unc or 0.5unc or 10000yoctounc):
+    /// Enter the amount to deposit into the storage (example: 10unc or 0.5unc or 10000attounc):
     deposit: crate::types::unc_token::UncToken,
     #[interactive_clap(named_arg)]
     /// What is the signer account ID?
@@ -124,7 +124,7 @@ impl SignerAccountIdContext {
                                     "account_id": &receiver_account_id
                                 }))?,
                                 gas: crate::common::UncGas::from_tgas(50).as_gas(),
-                                deposit: deposit.as_yoctounc(),
+                                deposit: deposit.as_attounc(),
                             }),
                         )],
                     })

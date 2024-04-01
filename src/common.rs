@@ -108,8 +108,8 @@ impl TransferAmount {
         Self { amount }
     }
 
-    pub fn as_yoctounc(&self) -> u128 {
-        self.amount.as_yoctounc()
+    pub fn as_attounc(&self) -> u128 {
+        self.amount.as_attounc()
     }
 }
 
@@ -191,9 +191,9 @@ pub fn get_account_transfer_allowance(
 
     Ok(AccountTransferAllowance {
         account_id,
-        account_liquid_balance: unc_token::UncToken::from_yoctounc(account_view.amount),
-        account_locked_balance: unc_token::UncToken::from_yoctounc(account_view.pledging),
-        storage_pledge: unc_token::UncToken::from_yoctounc(
+        account_liquid_balance: unc_token::UncToken::from_attounc(account_view.amount),
+        account_locked_balance: unc_token::UncToken::from_attounc(account_view.pledging),
+        storage_pledge: unc_token::UncToken::from_attounc(
             u128::from(account_view.storage_usage) * storage_amount_per_byte,
         ),
         // pessimistic_transaction_fee = 10^21 - this value is set temporarily
@@ -658,7 +658,7 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     "{:>18} {:<13} {}",
                     "",
                     "deposit:",
-                    crate::types::unc_token::UncToken::from_yoctounc(
+                    crate::types::unc_token::UncToken::from_attounc(
                         function_call_action.deposit
                     )
                 );
@@ -668,7 +668,7 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     "{:>5} {:<20} {}",
                     "--",
                     "transfer deposit:",
-                    crate::types::unc_token::UncToken::from_yoctounc(transfer_action.deposit)
+                    crate::types::unc_token::UncToken::from_attounc(transfer_action.deposit)
                 );
             }
             unc_primitives::transaction::Action::Pledge(pledge_action) => {
@@ -681,7 +681,7 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     "{:>18} {:<13} {}",
                     "",
                     "pledge:",
-                    crate::types::unc_token::UncToken::from_yoctounc(pledge_action.pledge)
+                    crate::types::unc_token::UncToken::from_attounc(pledge_action.pledge)
                 );
             }
             unc_primitives::transaction::Action::AddKey(add_key_action) => {
@@ -794,7 +794,7 @@ fn print_value_successful_transaction(
                 eprintln!(
                     "<{}> has transferred {} to <{}> successfully.",
                     transaction_info.transaction.signer_id,
-                    crate::types::unc_token::UncToken::from_yoctounc(deposit),
+                    crate::types::unc_token::UncToken::from_attounc(deposit),
                     transaction_info.transaction.receiver_id,
                 );
             }
@@ -811,7 +811,7 @@ fn print_value_successful_transaction(
                     eprintln!(
                         "Validator <{}> has successfully pledged {}.",
                         transaction_info.transaction.signer_id,
-                        crate::types::unc_token::UncToken::from_yoctounc(pledge),
+                        crate::types::unc_token::UncToken::from_attounc(pledge),
                     );
                 }
             }
@@ -981,7 +981,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
         unc_primitives::errors::ActionErrorKind::LackBalanceForState { account_id, amount } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: Receipt action can't be completed, because the remaining balance will not be enough to cover storage.\nAn account which needs balance: <{}>\nBalance required to complete the action: <{}>",
                 account_id,
-                crate::types::unc_token::UncToken::from_yoctounc(*amount)
+                crate::types::unc_token::UncToken::from_attounc(*amount)
             ))
         }
         unc_primitives::errors::ActionErrorKind::TriesToUnpledge { account_id } => {
@@ -999,8 +999,8 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
                 "Error: Account <{}> doesn't have enough balance ({}) to increase the pledge ({}).",
                 account_id,
-                crate::types::unc_token::UncToken::from_yoctounc(*balance),
-                crate::types::unc_token::UncToken::from_yoctounc(*pledge)
+                crate::types::unc_token::UncToken::from_attounc(*balance),
+                crate::types::unc_token::UncToken::from_attounc(*pledge)
             ))
         }
         unc_primitives::errors::ActionErrorKind::InsufficientPledge {
@@ -1010,8 +1010,8 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
         } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
                 "Error: Insufficient pledge {}.\nThe minimum rate must be {}.",
-                crate::types::unc_token::UncToken::from_yoctounc(*pledge),
-                crate::types::unc_token::UncToken::from_yoctounc(*minimum_pledge)
+                crate::types::unc_token::UncToken::from_attounc(*pledge),
+                crate::types::unc_token::UncToken::from_attounc(*minimum_pledge)
             ))
         }
         unc_primitives::errors::ActionErrorKind::FunctionCallError(function_call_error_ser) => {
@@ -1088,8 +1088,8 @@ pub fn handler_invalid_tx_error(
                     color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: Access Key <{}> for account <{}> does not have enough allowance ({}) to cover transaction cost ({}).",
                         public_key,
                         account_id,
-                        crate::types::unc_token::UncToken::from_yoctounc(*allowance),
-                        crate::types::unc_token::UncToken::from_yoctounc(*cost)
+                        crate::types::unc_token::UncToken::from_attounc(*allowance),
+                        crate::types::unc_token::UncToken::from_attounc(*cost)
                     ))
                 },
                 unc_primitives::errors::InvalidAccessKeyError::DepositWithFunctionCall => {
@@ -1118,14 +1118,14 @@ pub fn handler_invalid_tx_error(
         unc_primitives::errors::InvalidTxError::NotEnoughBalance {signer_id, balance, cost} => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: Account <{}> does not have enough balance ({}) to cover TX cost ({}).",
                 signer_id,
-                crate::types::unc_token::UncToken::from_yoctounc(*balance),
-                crate::types::unc_token::UncToken::from_yoctounc(*cost)
+                crate::types::unc_token::UncToken::from_attounc(*balance),
+                crate::types::unc_token::UncToken::from_attounc(*cost)
             ))
         },
         unc_primitives::errors::InvalidTxError::LackBalanceForState {signer_id, amount} => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: Signer account <{}> doesn't have enough balance ({}) after transaction.",
                 signer_id,
-                crate::types::unc_token::UncToken::from_yoctounc(*amount)
+                crate::types::unc_token::UncToken::from_attounc(*amount)
             ))
         },
         unc_primitives::errors::InvalidTxError::CostOverflow => {
@@ -1707,11 +1707,11 @@ pub fn display_account_info(
 
     table.add_row(prettytable::row![
         Fg->"Native account balance",
-        Fy->unc_token::UncToken::from_yoctounc(account_view.amount)
+        Fy->unc_token::UncToken::from_attounc(account_view.amount)
     ]);
     table.add_row(prettytable::row![
         Fg->"Validator pledge",
-        Fy->unc_token::UncToken::from_yoctounc(account_view.pledging)
+        Fy->unc_token::UncToken::from_attounc(account_view.pledging)
     ]);
 
     for (validator_id, pledge) in delegated_pledge {
@@ -1804,7 +1804,7 @@ pub fn display_access_key_list(access_keys: &[unc_primitives::views::AccessKeyIn
                 let allowance_message = match allowance {
                     Some(amount) => format!(
                         "with an allowance of {}",
-                        unc_token::UncToken::from_yoctounc(*amount)
+                        unc_token::UncToken::from_attounc(*amount)
                     ),
                     None => "with no limit".to_string(),
                 };
