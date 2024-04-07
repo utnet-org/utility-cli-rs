@@ -455,6 +455,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9d297deb1925b89f2ccc13d7635fa0714f12c87adce1c75356b39ca9b7178567"
 
 [[package]]
+name = "base64"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9475866fec1451be56a3c2400fd081ff546538961565ccb5b7142cbd22bc7a51"
+
+[[package]]
 name = "base64ct"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4083,7 +4089,7 @@ dependencies = [
  "once_cell",
  "percent-encoding",
  "pin-project-lite",
- "rustls-pemfile",
+ "rustls-pemfile 1.0.4",
  "serde",
  "serde_json",
  "serde_urlencoded",
@@ -4096,16 +4102,16 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
- "winreg",
+ "winreg 0.50.0",
 ]
 
 [[package]]
 name = "reqwest"
-version = "0.12.0"
+version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "58b48d98d932f4ee75e541614d32a7f44c889b72bd9c2e04d95edd135989df88"
+checksum = "3e6cc1e89e689536eb5aeede61520e874df5a4707df811cd5da4aa5fbb2aae19"
 dependencies = [
- "base64 0.21.7",
+ "base64 0.22.0",
  "bytes",
  "encoding_rs",
  "futures-channel",
@@ -4126,7 +4132,7 @@ dependencies = [
  "once_cell",
  "percent-encoding",
  "pin-project-lite",
- "rustls-pemfile",
+ "rustls-pemfile 2.1.2",
  "serde",
  "serde_json",
  "serde_urlencoded",
@@ -4139,7 +4145,7 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
- "winreg",
+ "winreg 0.52.0",
 ]
 
 [[package]]
@@ -4306,6 +4312,22 @@ checksum = "1c74cae0a4cf6ccbbf5f359f08efdf8ee7e1dc532573bf0db71968cb56b1448c"
 dependencies = [
  "base64 0.21.7",
 ]
+
+[[package]]
+name = "rustls-pemfile"
+version = "2.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "29993a25686778eb88d4189742cd713c9bce943bc54251a33509dc63cbacf73d"
+dependencies = [
+ "base64 0.22.0",
+ "rustls-pki-types",
+]
+
+[[package]]
+name = "rustls-pki-types"
+version = "1.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ecd36cc4259e3e4514335c4a138c6b43171a8d61d8f5c9348f9fc7529416f247"
 
 [[package]]
 name = "rustversion"
@@ -5558,9 +5580,9 @@ dependencies = [
 
 [[package]]
 name = "unc-chain-configs"
-version = "0.6.1"
+version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5a560c12057f249d636123d9172a9eecd45214ddf4e5f9a8bc0ae37b268234c1"
+checksum = "7077478ffecfa5800394d2bde90700f9bc7ec7b4009a1a151e1d27ef941a598a"
 dependencies = [
  "anyhow",
  "bytesize",
@@ -5573,15 +5595,15 @@ dependencies = [
  "sha2 0.10.8",
  "smart-default 0.6.0",
  "tracing",
- "unc-config-utils",
- "unc-crypto",
- "unc-parameters",
- "unc-primitives",
+ "unc-config-utils 0.7.1",
+ "unc-crypto 0.7.1",
+ "unc-parameters 0.7.1",
+ "unc-primitives 0.7.1",
 ]
 
 [[package]]
 name = "unc-cli-rs"
-version = "0.6.0"
+version = "0.7.0"
 dependencies = [
  "bip39",
  "bs58 0.5.1",
@@ -5604,7 +5626,7 @@ dependencies = [
  "openssl",
  "prettytable",
  "rand 0.8.5",
- "reqwest 0.12.0",
+ "reqwest 0.12.3",
  "rsa 0.9.6",
  "self_update",
  "semver 1.0.22",
@@ -5621,15 +5643,15 @@ dependencies = [
  "tokio",
  "toml 0.8.12",
  "unc-abi",
- "unc-crypto",
+ "unc-crypto 0.7.1",
  "unc-gas",
  "unc-jsonrpc-client",
  "unc-jsonrpc-primitives",
  "unc-ledger",
- "unc-primitives",
+ "unc-primitives 0.7.1",
  "unc-token",
  "url",
- "wasmparser 0.201.0",
+ "wasmparser 0.202.0",
  "zstd",
 ]
 
@@ -5638,6 +5660,18 @@ name = "unc-config-utils"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cac5bed9b6c0bf4bcc031e5c5ca3700e0f2754dc4d9267c0984514b5eed1a69d"
+dependencies = [
+ "anyhow",
+ "json_comments",
+ "thiserror",
+ "tracing",
+]
+
+[[package]]
+name = "unc-config-utils"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3a54df2ea4fe912ed63be5c45eff859136cd4a5bcbfd31c25b7869f4211b40df"
 dependencies = [
  "anyhow",
  "json_comments",
@@ -5670,8 +5704,37 @@ dependencies = [
  "subtle",
  "thiserror",
  "unc-account-id",
- "unc-config-utils",
- "unc-stdx",
+ "unc-config-utils 0.6.1",
+ "unc-stdx 0.6.1",
+]
+
+[[package]]
+name = "unc-crypto"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bea60d0421ad3a1143daae0ff50372bcf33ab148506427932bc3ac2c93701e27"
+dependencies = [
+ "blake2",
+ "borsh 1.3.1",
+ "bs58 0.4.0",
+ "c2-chacha",
+ "curve25519-dalek 4.1.2",
+ "derive_more",
+ "ed25519-dalek 2.1.1",
+ "hex",
+ "once_cell",
+ "primitive-types",
+ "rand 0.7.3",
+ "rsa 0.9.6",
+ "rsa-export",
+ "secp256k1",
+ "serde",
+ "serde_json",
+ "subtle",
+ "thiserror",
+ "unc-account-id",
+ "unc-config-utils 0.7.1",
+ "unc-stdx 0.7.1",
 ]
 
 [[package]]
@@ -5680,7 +5743,16 @@ version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b254818904ac605b9009935d295cae1d57f8adea9a2ede7c9bd8cbaf5368c707"
 dependencies = [
- "unc-primitives-core",
+ "unc-primitives-core 0.6.1",
+]
+
+[[package]]
+name = "unc-fmt"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "40f4867a51e2e806c51e6a02412593294252d904df6a08cee140c1cc3ec68e81"
+dependencies = [
+ "unc-primitives-core 0.7.1",
 ]
 
 [[package]]
@@ -5696,37 +5768,37 @@ dependencies = [
 
 [[package]]
 name = "unc-jsonrpc-client"
-version = "0.6.1"
+version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ea86af1ac2cd911804b0537be5e3d5ed0bc136f48467f0fdda1d8ca04bf99213"
+checksum = "f93c2f2beadb72152bc44f406509bd57afe211e4f68ce6fa1dc647adea412aa2"
 dependencies = [
  "borsh 1.3.1",
  "lazy_static",
  "log",
- "reqwest 0.11.27",
+ "reqwest 0.12.3",
  "serde",
  "serde_json",
  "thiserror",
  "unc-chain-configs",
- "unc-crypto",
+ "unc-crypto 0.7.1",
  "unc-jsonrpc-primitives",
- "unc-primitives",
+ "unc-primitives 0.7.1",
 ]
 
 [[package]]
 name = "unc-jsonrpc-primitives"
-version = "0.6.1"
+version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "287e4726dc212d56e76d0e7cda5cc37ac58715e8822c8056393d7d35f2b79489"
+checksum = "ac43eb7c7781d7f84c27695f0a934999129cb479885e0854a8083ac362435c1f"
 dependencies = [
  "arbitrary",
  "serde",
  "serde_json",
  "thiserror",
  "unc-chain-configs",
- "unc-crypto",
- "unc-primitives",
- "unc-rpc-error-macro",
+ "unc-crypto 0.7.1",
+ "unc-primitives 0.7.1",
+ "unc-rpc-error-macro 0.7.1",
 ]
 
 [[package]]
@@ -5742,8 +5814,8 @@ dependencies = [
  "ledger-transport-hid",
  "log",
  "slip10",
- "unc-primitives",
- "unc-primitives-core",
+ "unc-primitives 0.6.1",
+ "unc-primitives-core 0.6.1",
 ]
 
 [[package]]
@@ -5769,9 +5841,37 @@ dependencies = [
  "tracing-appender",
  "tracing-opentelemetry",
  "tracing-subscriber",
- "unc-crypto",
- "unc-fmt",
- "unc-primitives-core",
+ "unc-crypto 0.6.1",
+ "unc-fmt 0.6.1",
+ "unc-primitives-core 0.6.1",
+]
+
+[[package]]
+name = "unc-o11y"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bb9479942b286319f66958287cfdc07daad363a00df6551b2f3d82ff420f54a2"
+dependencies = [
+ "actix",
+ "base64 0.21.7",
+ "clap",
+ "once_cell",
+ "opentelemetry",
+ "opentelemetry-otlp",
+ "opentelemetry-semantic-conventions",
+ "prometheus",
+ "serde",
+ "serde_json",
+ "strum",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "tracing-appender",
+ "tracing-opentelemetry",
+ "tracing-subscriber",
+ "unc-crypto 0.7.1",
+ "unc-fmt 0.7.1",
+ "unc-primitives-core 0.7.1",
 ]
 
 [[package]]
@@ -5790,7 +5890,26 @@ dependencies = [
  "strum",
  "thiserror",
  "unc-account-id",
- "unc-primitives-core",
+ "unc-primitives-core 0.6.1",
+]
+
+[[package]]
+name = "unc-parameters"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a15e33eb98816e44fde64850484e884ca15e6b16a7b6af73a2b88e6e7c13f2f0"
+dependencies = [
+ "assert_matches",
+ "borsh 1.3.1",
+ "enum-map",
+ "num-rational 0.3.2",
+ "serde",
+ "serde_repr",
+ "serde_yaml",
+ "strum",
+ "thiserror",
+ "unc-account-id",
+ "unc-primitives-core 0.7.1",
 ]
 
 [[package]]
@@ -5825,14 +5944,56 @@ dependencies = [
  "thiserror",
  "time",
  "tracing",
- "unc-crypto",
- "unc-fmt",
- "unc-o11y",
- "unc-parameters",
- "unc-primitives-core",
- "unc-rpc-error-macro",
- "unc-stdx",
- "unc-vm-runner",
+ "unc-crypto 0.6.1",
+ "unc-fmt 0.6.1",
+ "unc-o11y 0.6.1",
+ "unc-parameters 0.6.1",
+ "unc-primitives-core 0.6.1",
+ "unc-rpc-error-macro 0.6.1",
+ "unc-stdx 0.6.1",
+ "unc-vm-runner 0.6.1",
+]
+
+[[package]]
+name = "unc-primitives"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "623f84d1d2b696c8361da102cd8a3fc1d6d45bb652d52bbbf678d00adacabd76"
+dependencies = [
+ "arbitrary",
+ "base64 0.21.7",
+ "borsh 1.3.1",
+ "bytesize",
+ "cfg-if 1.0.0",
+ "chrono",
+ "derive_more",
+ "easy-ext 0.2.9",
+ "enum-map",
+ "hex",
+ "num-rational 0.3.2",
+ "once_cell",
+ "primitive-types",
+ "rand 0.8.5",
+ "rand_chacha 0.3.1",
+ "reed-solomon-erasure",
+ "serde",
+ "serde_json",
+ "serde_with",
+ "serde_yaml",
+ "sha3",
+ "smart-default 0.6.0",
+ "strum",
+ "thiserror",
+ "time",
+ "tracing",
+ "unc-crypto 0.7.1",
+ "unc-fmt 0.7.1",
+ "unc-o11y 0.7.1",
+ "unc-parameters 0.7.1",
+ "unc-primitives-core 0.7.1",
+ "unc-rpc-error-macro 0.7.1",
+ "unc-stdx 0.7.1",
+ "unc-vm-runner 0.7.1",
 ]
 
 [[package]]
@@ -5840,6 +6001,28 @@ name = "unc-primitives-core"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a82b0972829142ed23ebe456f5622fd2b19abdb651ba09a1505b6e648c116a2"
+dependencies = [
+ "arbitrary",
+ "base64 0.21.7",
+ "borsh 1.3.1",
+ "bs58 0.4.0",
+ "derive_more",
+ "enum-map",
+ "num-rational 0.3.2",
+ "serde",
+ "serde_repr",
+ "serde_with",
+ "sha2 0.10.8",
+ "strum",
+ "thiserror",
+ "unc-account-id",
+]
+
+[[package]]
+name = "unc-primitives-core"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "191af8d0649b6492ed8683cdbb2c532eccfa8233bd1f15ea9c1da632afd1648a"
 dependencies = [
  "arbitrary",
  "base64 0.21.7",
@@ -5869,6 +6052,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "unc-rpc-error-core"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d3381d9428542752f4ae8e2e30ed5a327dbd7993eed9341b07082391752135eb"
+dependencies = [
+ "quote",
+ "serde",
+ "syn 2.0.53",
+]
+
+[[package]]
 name = "unc-rpc-error-macro"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5877,7 +6071,19 @@ dependencies = [
  "fs2",
  "serde",
  "syn 2.0.53",
- "unc-rpc-error-core",
+ "unc-rpc-error-core 0.6.1",
+]
+
+[[package]]
+name = "unc-rpc-error-macro"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b7d9c03f6bb7160cb5d9849ba68c5aa6d22ccb9c9e62f6062804a68f01e85e7"
+dependencies = [
+ "fs2",
+ "serde",
+ "syn 2.0.53",
+ "unc-rpc-error-core 0.7.1",
 ]
 
 [[package]]
@@ -5885,6 +6091,12 @@ name = "unc-stdx"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ca9bdcd0688efc9e8dfa0aa7acef86f86e97a365eb386c00e9db6d5361010cf"
+
+[[package]]
+name = "unc-stdx"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ce66a74fa5b8783b170214729c7779337aae1c4dcb290a4748aa0c8d8103fa0d"
 
 [[package]]
 name = "unc-token"
@@ -5910,8 +6122,26 @@ dependencies = [
  "target-lexicon 0.12.14",
  "thiserror",
  "tracing",
- "unc-vm-types",
- "unc-vm-vm",
+ "unc-vm-types 0.6.1",
+ "unc-vm-vm 0.6.1",
+ "wasmparser 0.99.0",
+]
+
+[[package]]
+name = "unc-vm-compiler"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e76f9d0a91b2f0bf70f85a8bdb07a028b87c34ffd2054b3101568cc411dfe7ea"
+dependencies = [
+ "enumset",
+ "finite-wasm",
+ "rkyv",
+ "smallvec",
+ "target-lexicon 0.12.14",
+ "thiserror",
+ "tracing",
+ "unc-vm-types 0.7.1",
+ "unc-vm-vm 0.7.1",
  "wasmparser 0.99.0",
 ]
 
@@ -5932,9 +6162,31 @@ dependencies = [
  "smallvec",
  "strum",
  "tracing",
- "unc-vm-compiler",
- "unc-vm-types",
- "unc-vm-vm",
+ "unc-vm-compiler 0.6.1",
+ "unc-vm-types 0.6.1",
+ "unc-vm-vm 0.6.1",
+]
+
+[[package]]
+name = "unc-vm-compiler-singlepass"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "62892b8d05c44b5fe2a82381795e3b4b7ddefef472faf8aecdf00c30fc879838"
+dependencies = [
+ "dynasm 2.0.0",
+ "dynasmrt 2.0.0",
+ "enumset",
+ "finite-wasm",
+ "lazy_static",
+ "memoffset 0.8.0",
+ "more-asserts",
+ "rayon",
+ "smallvec",
+ "strum",
+ "tracing",
+ "unc-vm-compiler 0.7.1",
+ "unc-vm-types 0.7.1",
+ "unc-vm-vm 0.7.1",
 ]
 
 [[package]]
@@ -5958,9 +6210,35 @@ dependencies = [
  "target-lexicon 0.12.14",
  "thiserror",
  "tracing",
- "unc-vm-compiler",
- "unc-vm-types",
- "unc-vm-vm",
+ "unc-vm-compiler 0.6.1",
+ "unc-vm-types 0.6.1",
+ "unc-vm-vm 0.6.1",
+]
+
+[[package]]
+name = "unc-vm-engine"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3b1fe061641416b069c90576e509986415d919581549a2678914547dc1fe5d69"
+dependencies = [
+ "backtrace",
+ "cfg-if 1.0.0",
+ "crossbeam-queue",
+ "enumset",
+ "finite-wasm",
+ "lazy_static",
+ "memmap2",
+ "more-asserts",
+ "region",
+ "rkyv",
+ "rustc-demangle",
+ "rustix 0.37.27",
+ "target-lexicon 0.12.14",
+ "thiserror",
+ "tracing",
+ "unc-vm-compiler 0.7.1",
+ "unc-vm-types 0.7.1",
+ "unc-vm-vm 0.7.1",
 ]
 
 [[package]]
@@ -5992,15 +6270,15 @@ dependencies = [
  "strum",
  "thiserror",
  "tracing",
- "unc-crypto",
- "unc-parameters",
- "unc-primitives-core",
- "unc-stdx",
- "unc-vm-compiler",
- "unc-vm-compiler-singlepass",
- "unc-vm-engine",
- "unc-vm-types",
- "unc-vm-vm",
+ "unc-crypto 0.6.1",
+ "unc-parameters 0.6.1",
+ "unc-primitives-core 0.6.1",
+ "unc-stdx 0.6.1",
+ "unc-vm-compiler 0.6.1",
+ "unc-vm-compiler-singlepass 0.6.1",
+ "unc-vm-engine 0.6.1",
+ "unc-vm-types 0.6.1",
+ "unc-vm-vm 0.6.1",
  "wasm-encoder 0.27.0",
  "wasmer-compiler-near",
  "wasmer-compiler-singlepass-near",
@@ -6016,10 +6294,74 @@ dependencies = [
 ]
 
 [[package]]
+name = "unc-vm-runner"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cc437576756875e8c24bd0a260a83785e94bf33b02cacbd4f4b94bdd95b0bcf2"
+dependencies = [
+ "anyhow",
+ "base64 0.21.7",
+ "borsh 1.3.1",
+ "ed25519-dalek 2.1.1",
+ "enum-map",
+ "finite-wasm",
+ "loupe",
+ "memoffset 0.8.0",
+ "num-rational 0.3.2",
+ "once_cell",
+ "parity-wasm 0.41.0",
+ "parity-wasm 0.42.2",
+ "prefix-sum-vec",
+ "pwasm-utils",
+ "ripemd",
+ "serde",
+ "serde_repr",
+ "serde_with",
+ "sha2 0.10.8",
+ "sha3",
+ "strum",
+ "thiserror",
+ "tracing",
+ "unc-crypto 0.7.1",
+ "unc-parameters 0.7.1",
+ "unc-primitives-core 0.7.1",
+ "unc-stdx 0.7.1",
+ "unc-vm-compiler 0.7.1",
+ "unc-vm-compiler-singlepass 0.7.1",
+ "unc-vm-engine 0.7.1",
+ "unc-vm-types 0.7.1",
+ "unc-vm-vm 0.7.1",
+ "wasm-encoder 0.27.0",
+ "wasmer-compiler-near",
+ "wasmer-compiler-singlepass-near",
+ "wasmer-engine-near",
+ "wasmer-engine-universal-near",
+ "wasmer-runtime-core-near",
+ "wasmer-runtime-near",
+ "wasmer-types-near",
+ "wasmer-vm-near",
+ "wasmparser 0.99.0",
+ "wasmtime",
+ "zeropool-bn",
+]
+
+[[package]]
 name = "unc-vm-types"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2d089b3cbba6b4dd44cd09419df4cd82d1b9931acbc04db21f4a0cda0b7e22c"
+dependencies = [
+ "indexmap 1.9.3",
+ "num-traits",
+ "rkyv",
+ "thiserror",
+]
+
+[[package]]
+name = "unc-vm-types"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "55ab235867ac684c575527e3437e8878fa967977bd65434fc0c663ad9e68b1d1"
 dependencies = [
  "indexmap 1.9.3",
  "num-traits",
@@ -6045,7 +6387,30 @@ dependencies = [
  "rkyv",
  "thiserror",
  "tracing",
- "unc-vm-types",
+ "unc-vm-types 0.6.1",
+ "wasmparser 0.99.0",
+ "winapi",
+]
+
+[[package]]
+name = "unc-vm-vm"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0d214b3446fe2a14a79c4a371852e9c179b983b71638636385f1945dcf9ce31e"
+dependencies = [
+ "backtrace",
+ "cc",
+ "cfg-if 1.0.0",
+ "finite-wasm",
+ "indexmap 1.9.3",
+ "libc",
+ "memoffset 0.8.0",
+ "more-asserts",
+ "region",
+ "rkyv",
+ "thiserror",
+ "tracing",
+ "unc-vm-types 0.7.1",
  "wasmparser 0.99.0",
  "winapi",
 ]
@@ -6482,9 +6847,9 @@ dependencies = [
 
 [[package]]
 name = "wasmparser"
-version = "0.201.0"
+version = "0.202.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84e5df6dba6c0d7fafc63a450f1738451ed7a0b52295d83e868218fa286bf708"
+checksum = "d6998515d3cf3f8b980ef7c11b29a9b1017d4cf86b99ae93b546992df9931413"
 dependencies = [
  "bitflags 2.5.0",
  "indexmap 2.2.5",
@@ -6923,6 +7288,16 @@ name = "winreg"
 version = "0.50.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "524e57b2c537c0f9b1e69f1965311ec12182b4122e45035b1508cd24d2adadb1"
+dependencies = [
+ "cfg-if 1.0.0",
+ "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "winreg"
+version = "0.52.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a277a57398d4bfa075df44f501a17cfdf8542d224f0d36095a2adc7aee4ef0a5"
 dependencies = [
  "cfg-if 1.0.0",
  "windows-sys 0.48.0",

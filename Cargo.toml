@@ -1,6 +1,6 @@
 [package]
 name = "unc-cli-rs"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["hello Inc <hello@unc.com>"]
 license = "MIT OR Apache-2.0"
 edition = "2021"
@@ -53,7 +53,7 @@ open = "5.1.1"
 shell-words = "1"
 cargo-util = "0.2.9"
 
-wasmparser = "0.201.0"
+wasmparser = "0.202.0"
 
 semver = { version = "1.0.4", optional = true }
 self_update = { version = "0.39.0", features = [
@@ -69,10 +69,10 @@ prettytable = "0.10.0"
 textwrap = "0.16.1"
 
 unc-ledger = { version = "0.6.1", optional = true }
-unc-crypto = "0.6.1"
-unc-primitives = "0.6.1"
-unc-jsonrpc-client = "0.6.1"
-unc-jsonrpc-primitives = "0.6.1"
+unc-crypto = "0.7.1"
+unc-primitives = "0.7.1"
+unc-jsonrpc-client = "0.7.1"
+unc-jsonrpc-primitives = "0.7.1"
 
 unc-gas = { version = "0.1.0", features = [
     "serde",

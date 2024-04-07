@@ -972,7 +972,7 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
                 public_key, account_id
             ))
         }
-        unc_primitives::errors::ActionErrorKind::DeleteAccountStaking { account_id } => {
+        unc_primitives::errors::ActionErrorKind::DeleteAccountPledging { account_id } => {
             color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
                 "Error: Account <{}> is pledging and can not be deleted",
                 account_id
@@ -1172,7 +1172,7 @@ pub fn handler_invalid_tx_error(
                 unc_primitives::errors::ActionsValidationError::FunctionCallArgumentsLengthExceeded {length, limit} => {
                     color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: The length ({}) of the arguments exceeded the limit ({}) in a Function Call action.", length, limit))
                 },
-                unc_primitives::errors::ActionsValidationError::UnsuitableStakingKey {public_key} => {
+                unc_primitives::errors::ActionsValidationError::UnsuitablePledgingKey {public_key} => {
                     color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: An attempt to pledge with a public key <{}> that is not convertible to ristretto.", public_key))
                 },
                 unc_primitives::errors::ActionsValidationError::FunctionCallZeroAttachedGas => {
