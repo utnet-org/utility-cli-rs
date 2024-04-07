@@ -5603,7 +5603,7 @@ dependencies = [
 
 [[package]]
 name = "unc-cli-rs"
-version = "0.7.1"
+version = "0.7.2"
 dependencies = [
  "bip39",
  "bs58 0.5.1",
