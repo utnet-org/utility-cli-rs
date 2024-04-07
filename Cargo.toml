@@ -1,6 +1,6 @@
 [package]
 name = "unc-cli-rs"
-version = "0.7.2"
+version = "0.8.0"
 authors = ["hello Inc <hello@unc.com>"]
 license = "MIT OR Apache-2.0"
 edition = "2021"
@@ -89,8 +89,8 @@ unc-abi = "0.1.0"
 zstd = "0.13.0"
 
 keyring = "2.0.5"
-interactive-clap = "0.2.8"
-interactive-clap-derive = "0.2.8"
+interactive-clap = "0.2.9"
+interactive-clap-derive = "0.2.9"
 
 [features]
 default = ["ledger", "self-update"]
