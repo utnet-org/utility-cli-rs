@@ -68,7 +68,7 @@ bytesize = "1.1.0"
 prettytable = "0.10.0"
 textwrap = "0.16.1"
 
-unc-ledger = { version = "0.6.1", optional = true }
+unc-ledger = { version = "0.7.1", optional = true }
 unc-crypto = "0.7.1"
 unc-primitives = "0.7.1"
 unc-jsonrpc-client = "0.7.1"
