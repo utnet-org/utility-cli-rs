@@ -1,11 +1,11 @@
 use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 
 mod send_ft;
-mod send_unc;
 mod send_nft;
+mod send_unc;
 mod view_ft_balance;
-mod view_unc_balance;
 mod view_nft_assets;
+mod view_unc_balance;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = crate::GlobalContext)]

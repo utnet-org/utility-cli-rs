@@ -92,17 +92,15 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                             {
                                 (
                                     vec![unc_primitives::transaction::Action::FunctionCall(
-                                        Box::new(
-                                            unc_primitives::transaction::FunctionCallAction {
-                                                method_name: "create_account".to_string(),
-                                                args,
-                                                gas: crate::common::UncGas::from_tgas(30).as_gas(),
-                                                deposit: item
-                                                    .account_properties
-                                                    .initial_balance
-                                                    .as_attounc(),
-                                            },
-                                        ),
+                                        Box::new(unc_primitives::transaction::FunctionCallAction {
+                                            method_name: "create_account".to_string(),
+                                            args,
+                                            gas: crate::common::UncGas::from_tgas(30).as_gas(),
+                                            deposit: item
+                                                .account_properties
+                                                .initial_balance
+                                                .as_attounc(),
+                                        }),
                                     )],
                                     linkdrop_account_id.clone(),
                                 )

@@ -228,8 +228,7 @@ impl DepositContext {
                                     method_name: "storage_deposit".to_string(),
                                     args,
                                     gas: previous_context.gas.as_gas(),
-                                    deposit: unc_token::UncToken::from_milliunc(100)
-                                        .as_attounc(),
+                                    deposit: unc_token::UncToken::from_milliunc(100).as_attounc(),
                                 },
                             ));
                         return Ok(crate::commands::PrepopulatedTransaction {

@@ -74,10 +74,10 @@ impl SubmitContext {
                 .network_config
                 .json_rpc_client()
                 .blocking_call(
-                unc_jsonrpc_client::methods::broadcast_tx_async::RpcBroadcastTxAsyncRequest {
-                    signed_transaction: previous_context.signed_transaction.clone(),
-                },
-            );
+                    unc_jsonrpc_client::methods::broadcast_tx_async::RpcBroadcastTxAsyncRequest {
+                        signed_transaction: previous_context.signed_transaction.clone(),
+                    },
+                );
             match transaction_info_result {
                 Ok(response) => {
                     break response;
@@ -88,6 +88,9 @@ impl SubmitContext {
                 },
             };
         };
-        crate::common::print_async_transaction_status(&transaction_tx, &previous_context.network_config)
+        crate::common::print_async_transaction_status(
+            &transaction_tx,
+            &previous_context.network_config,
+        )
     }
 }

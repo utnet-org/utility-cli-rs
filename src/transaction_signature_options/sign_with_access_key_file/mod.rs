@@ -189,10 +189,8 @@ impl SignAccessKeyFile {
     ) -> color_eyre::eyre::Result<Option<unc_primitives::types::BlockHeight>> {
         if context.global_context.offline {
             return Ok(Some(
-                CustomType::<unc_primitives::types::BlockHeight>::new(
-                    "Enter recent block height:",
-                )
-                .prompt()?,
+                CustomType::<unc_primitives::types::BlockHeight>::new("Enter recent block height:")
+                    .prompt()?,
             ));
         }
         Ok(None)

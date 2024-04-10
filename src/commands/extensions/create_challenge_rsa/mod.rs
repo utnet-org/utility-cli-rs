@@ -72,8 +72,12 @@ impl PemFileContext {
         let data = std::fs::read_to_string(&scope.file_path).wrap_err_with(|| {
             format!("Failed to open or read the file: {:?}.", &scope.file_path.0,)
         })?;
-        let rsa_json: super::Rsa2048KeyPair = serde_json::from_str(&data)
-        .wrap_err_with(|| format!("Error json codec reading data from file: {:?}", &scope.file_path.0))?;
+        let rsa_json: super::Rsa2048KeyPair = serde_json::from_str(&data).wrap_err_with(|| {
+            format!(
+                "Error json codec reading data from file: {:?}",
+                &scope.file_path.0
+            )
+        })?;
 
         Ok(Self {
             global_context: previous_context.global_context,

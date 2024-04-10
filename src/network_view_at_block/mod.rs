@@ -1,8 +1,8 @@
 use std::str::FromStr;
 
 use color_eyre::eyre::ContextCompat;
-use unc_primitives::types::{BlockId, BlockReference, Finality};
 use strum::{EnumDiscriminants, EnumIter, EnumMessage};
+use unc_primitives::types::{BlockId, BlockReference, Finality};
 
 pub type OnAfterGettingBlockReferenceCallback =
     std::sync::Arc<dyn Fn(&crate::config::NetworkConfig, &BlockReference) -> crate::CliResult>;

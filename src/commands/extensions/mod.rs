@@ -1,8 +1,8 @@
 use serde::Deserialize;
 use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 
-pub mod register_rsa_keys;
 pub mod create_challenge_rsa;
+pub mod register_rsa_keys;
 pub mod self_update;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]

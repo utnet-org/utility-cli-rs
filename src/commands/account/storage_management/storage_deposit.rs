@@ -117,16 +117,16 @@ impl SignerAccountIdContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_account_id.clone(),
                         receiver_id: get_contract_account_id(network_config)?,
-                        actions: vec![unc_primitives::transaction::Action::FunctionCall(
-                            Box::new(unc_primitives::transaction::FunctionCallAction {
+                        actions: vec![unc_primitives::transaction::Action::FunctionCall(Box::new(
+                            unc_primitives::transaction::FunctionCallAction {
                                 method_name: "storage_deposit".to_string(),
                                 args: serde_json::to_vec(&serde_json::json!({
                                     "account_id": &receiver_account_id
                                 }))?,
                                 gas: crate::common::UncGas::from_tgas(50).as_gas(),
                                 deposit: deposit.as_attounc(),
-                            }),
-                        )],
+                            },
+                        ))],
                     })
                 }
             });

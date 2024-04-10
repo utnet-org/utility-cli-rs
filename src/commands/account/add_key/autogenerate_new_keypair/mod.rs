@@ -40,7 +40,6 @@ impl GenerateKeypairContext {
         previous_context: super::access_key_type::AccessTypeContext,
         scope: &<GenerateKeypair as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-
         let key_type = scope.key_type.clone();
         let key_pair_properties = match key_type {
             super::super::KeysType::Rsa2048 => crate::common::generate_rsa2048_keypair()?,

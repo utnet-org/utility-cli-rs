@@ -527,7 +527,6 @@ pub fn generate_ed25519_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
     Ok(key_pair_properties)
 }
 
-
 /// The length of an rsa `RsaPublicKey`, in bytes.
 pub const RAW_PUBLIC_KEY_RSA_2048_LENGTH: usize = 294;
 
@@ -555,7 +554,7 @@ pub fn generate_rsa2048_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
 
     let implicit_account_id =
         unc_primitives::types::AccountId::try_from(format!("test{}", rng.gen_range(0..10000)))?;
-    
+
     let der_pk_encoded = pub_key.to_public_key_der().unwrap();
     let public_key_str = format!(
         "rsa2048:{}",
@@ -658,9 +657,7 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     "{:>18} {:<13} {}",
                     "",
                     "deposit:",
-                    crate::types::unc_token::UncToken::from_attounc(
-                        function_call_action.deposit
-                    )
+                    crate::types::unc_token::UncToken::from_attounc(function_call_action.deposit)
                 );
             }
             unc_primitives::transaction::Action::Transfer(transfer_action) => {
@@ -734,8 +731,10 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     "{:>18} {:<13} {}",
                     "", "op type:", &register_rsa2048_action.operation_type
                 );
-            },
-            unc_primitives::transaction::Action::CreateRsa2048Challenge(create_rsa2048keys_challenge_action) => {
+            }
+            unc_primitives::transaction::Action::CreateRsa2048Challenge(
+                create_rsa2048keys_challenge_action,
+            ) => {
                 eprintln!(
                     "{:>18} {:<13} {}",
                     "", "public key:", &create_rsa2048keys_challenge_action.public_key
@@ -744,7 +743,9 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                     "{:>18} {:<13} {}",
                     "",
                     "args:",
-                    match serde_json::from_slice::<serde_json::Value>(&create_rsa2048keys_challenge_action.args) {
+                    match serde_json::from_slice::<serde_json::Value>(
+                        &create_rsa2048keys_challenge_action.args
+                    ) {
                         Ok(parsed_args) => {
                             serde_json::to_string_pretty(&parsed_args)
                                 .unwrap_or_else(|_| "".to_string())
@@ -753,12 +754,14 @@ pub fn print_unsigned_transaction(transaction: &crate::commands::PrepopulatedTra
                         Err(_) => {
                             format!(
                                 "<non-printable data ({})>",
-                                bytesize::ByteSize(create_rsa2048keys_challenge_action.args.len() as u64)
+                                bytesize::ByteSize(
+                                    create_rsa2048keys_challenge_action.args.len() as u64
+                                )
                             )
                         }
                     }
                 );
-            },
+            }
         }
     }
 }
@@ -845,18 +848,26 @@ fn print_value_successful_transaction(
                     delegate_action.sender_id,
                 );
             }
-            unc_primitives::views::ActionView::RegisterRsa2048Keys { public_key, operation_type, args: _, } => {
+            unc_primitives::views::ActionView::RegisterRsa2048Keys {
+                public_key,
+                operation_type,
+                args: _,
+            } => {
                 eprintln!(
                     "Rsa2048 key <{}>, op_type <{}> for account <{}> has been successfully registered.",
                     public_key, operation_type, transaction_info.transaction.signer_id,
                 );
-            },
-            unc_primitives::views::ActionView::CreateRsa2048Challenge { public_key, challenge_key, args: _, } => {
+            }
+            unc_primitives::views::ActionView::CreateRsa2048Challenge {
+                public_key,
+                challenge_key,
+                args: _,
+            } => {
                 eprintln!(
                     "Rsa2048  <{}> with ChallengeKey <{}> for account <{}> has been successfully challenge created.",
                     public_key, challenge_key, transaction_info.transaction.signer_id,
                 );
-            },
+            }
         }
     }
 }
@@ -1980,9 +1991,8 @@ pub impl unc_jsonrpc_client::JsonRpcClient {
 #[easy_ext::ext(RpcQueryResponseExt)]
 pub impl unc_jsonrpc_primitives::types::query::RpcQueryResponse {
     fn access_key_view(&self) -> color_eyre::eyre::Result<unc_primitives::views::AccessKeyView> {
-        if let unc_jsonrpc_primitives::types::query::QueryResponseKind::AccessKey(
-            access_key_view,
-        ) = &self.kind
+        if let unc_jsonrpc_primitives::types::query::QueryResponseKind::AccessKey(access_key_view) =
+            &self.kind
         {
             Ok(access_key_view.clone())
         } else {

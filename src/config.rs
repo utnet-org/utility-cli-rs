@@ -17,9 +17,7 @@ impl Default for Config {
                 network_name: "mainnet".to_string(),
                 rpc_url: "http://16.78.8.159:3030".parse().unwrap(),
                 wallet_url: "https://app.wallet.com/".parse().unwrap(),
-                explorer_transaction_url: "https://explorer.unc.org/transactions/"
-                    .parse()
-                    .unwrap(),
+                explorer_transaction_url: "https://explorer.unc.org/transactions/".parse().unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("unc".parse().unwrap()),
                 faucet_url: None,
@@ -40,7 +38,6 @@ impl Default for Config {
                 faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
-        
         );
         network_connection.insert(
             "custom".to_string(),
@@ -56,7 +53,6 @@ impl Default for Config {
                 faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
-        
         );
         Self {
             credentials_home_dir,
@@ -88,8 +84,7 @@ pub struct NetworkConfig {
 
 impl NetworkConfig {
     pub fn json_rpc_client(&self) -> unc_jsonrpc_client::JsonRpcClient {
-        let mut json_rpc_client =
-            unc_jsonrpc_client::JsonRpcClient::connect(self.rpc_url.as_ref());
+        let mut json_rpc_client = unc_jsonrpc_client::JsonRpcClient::connect(self.rpc_url.as_ref());
         if let Some(rpc_api_key) = &self.rpc_api_key {
             json_rpc_client =
                 json_rpc_client.header(unc_jsonrpc_client::auth::ApiKey::from(rpc_api_key.clone()))

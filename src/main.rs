@@ -182,8 +182,7 @@ fn main() -> crate::common::CliResult {
                 eprintln!(
                     "To update `unc` CLI use: {}",
                     shell_words::join(
-                        std::iter::once(unc_cli_exec_path)
-                            .chain(self_update_cli_cmd.to_cli_args())
+                        std::iter::once(unc_cli_exec_path).chain(self_update_cli_cmd.to_cli_args())
                     )
                 );
             }

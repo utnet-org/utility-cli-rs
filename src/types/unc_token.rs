@@ -89,8 +89,7 @@ mod tests {
     fn unc_token_to_string_0dot00001230045600789_unc() {
         assert_eq!(
             UncToken(
-                unc_token::UncToken::from_str("0.000012300456007890000000 unc")
-                    .unwrap_or_default()
+                unc_token::UncToken::from_str("0.000012300456007890000000 unc").unwrap_or_default()
             )
             .to_string(),
             "0.00001230045600789 unc".to_string()
