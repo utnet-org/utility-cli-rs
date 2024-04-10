@@ -800,9 +800,9 @@ checksum = "fd16c4719339c4530435d38e511904438d07cce7950afa3718a84ac36c10e89e"
 
 [[package]]
 name = "chrono"
-version = "0.4.35"
+version = "0.4.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8eaf5903dcbc0a39312feb77df2ff4c76387d591b9fc7b04a238dcf8bb62639a"
+checksum = "8a0d04d43504c61aa6c7531f1871dd0d418d91130162063b789da00fd7057a5e"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
@@ -5580,9 +5580,9 @@ dependencies = [
 
 [[package]]
 name = "unc-chain-configs"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7077478ffecfa5800394d2bde90700f9bc7ec7b4009a1a151e1d27ef941a598a"
+checksum = "bd12d21e63ddab5f9d81bd97f8a2b14ac538fdc2048b120ec069f55e3afa4b9c"
 dependencies = [
  "anyhow",
  "bytesize",
@@ -5603,7 +5603,7 @@ dependencies = [
 
 [[package]]
 name = "unc-cli-rs"
-version = "0.8.0"
+version = "0.8.1"
 dependencies = [
  "bip39",
  "bs58 0.5.1",
@@ -5657,9 +5657,9 @@ dependencies = [
 
 [[package]]
 name = "unc-config-utils"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3a54df2ea4fe912ed63be5c45eff859136cd4a5bcbfd31c25b7869f4211b40df"
+checksum = "2e16b63a75a6339bc1447586b4ab519ac34f03f02a69c72f3a337713de0d6040"
 dependencies = [
  "anyhow",
  "json_comments",
@@ -5669,9 +5669,9 @@ dependencies = [
 
 [[package]]
 name = "unc-crypto"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bea60d0421ad3a1143daae0ff50372bcf33ab148506427932bc3ac2c93701e27"
+checksum = "984649ffa71b9464e828a23653c7e1d01cff95c156fd3afefb4b9534efa08a1c"
 dependencies = [
  "blake2",
  "borsh 1.3.1",
@@ -5698,9 +5698,9 @@ dependencies = [
 
 [[package]]
 name = "unc-fmt"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "40f4867a51e2e806c51e6a02412593294252d904df6a08cee140c1cc3ec68e81"
+checksum = "4274ab959ddc3f2fc7763d9b6699cca7b01cc202f6e5b8f008997b4f17f1864b"
 dependencies = [
  "unc-primitives-core",
 ]
@@ -5718,9 +5718,9 @@ dependencies = [
 
 [[package]]
 name = "unc-jsonrpc-client"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f93c2f2beadb72152bc44f406509bd57afe211e4f68ce6fa1dc647adea412aa2"
+checksum = "bf1144417a0582ba022856257dabe8e3170ef1a4e092770acbaa984877b997d7"
 dependencies = [
  "borsh 1.3.1",
  "lazy_static",
@@ -5737,9 +5737,9 @@ dependencies = [
 
 [[package]]
 name = "unc-jsonrpc-primitives"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ac43eb7c7781d7f84c27695f0a934999129cb479885e0854a8083ac362435c1f"
+checksum = "8577df21f9c2ece90594118b4aae5917e8446f6c3aa4e4cbcae301f2ff6ad9ed"
 dependencies = [
  "arbitrary",
  "serde",
@@ -5753,9 +5753,9 @@ dependencies = [
 
 [[package]]
 name = "unc-ledger"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77ea1b226e048c1ac5637a6e5bdc08bbe7a0321fe75cd158a770bf155109a339"
+checksum = "eabe0a6d6f87e7dbfbb3709134624b1438076a09590ff8b325529d7aee8b0e8e"
 dependencies = [
  "ed25519-dalek 1.0.1",
  "hex",
@@ -5770,9 +5770,9 @@ dependencies = [
 
 [[package]]
 name = "unc-o11y"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb9479942b286319f66958287cfdc07daad363a00df6551b2f3d82ff420f54a2"
+checksum = "6cf6e61d46fcf9134c7224a4dd2d508d26395c8a8d44cd4503709046eed5dee4"
 dependencies = [
  "actix",
  "base64 0.21.7",
@@ -5798,9 +5798,9 @@ dependencies = [
 
 [[package]]
 name = "unc-parameters"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a15e33eb98816e44fde64850484e884ca15e6b16a7b6af73a2b88e6e7c13f2f0"
+checksum = "42220a2cd15078df7c30a78639e6e7c74bf79bf3cb9a12022d6ea280e1c205db"
 dependencies = [
  "assert_matches",
  "borsh 1.3.1",
@@ -5817,9 +5817,9 @@ dependencies = [
 
 [[package]]
 name = "unc-primitives"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "623f84d1d2b696c8361da102cd8a3fc1d6d45bb652d52bbbf678d00adacabd76"
+checksum = "7a31077953d0d86fd48c1663b399193c633ab371bb3c8ffdfaee81141098680b"
 dependencies = [
  "arbitrary",
  "base64 0.21.7",
@@ -5859,9 +5859,9 @@ dependencies = [
 
 [[package]]
 name = "unc-primitives-core"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "191af8d0649b6492ed8683cdbb2c532eccfa8233bd1f15ea9c1da632afd1648a"
+checksum = "a64f087e01386970ecc6ea45e476600082e77891377b27aafa1375ac96023484"
 dependencies = [
  "arbitrary",
  "base64 0.21.7",
@@ -5881,9 +5881,9 @@ dependencies = [
 
 [[package]]
 name = "unc-rpc-error-core"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d3381d9428542752f4ae8e2e30ed5a327dbd7993eed9341b07082391752135eb"
+checksum = "a418b0307b6ccbc7c05127d8e1d323ca5c67ec6e565f9e24f36c92a5bb734f51"
 dependencies = [
  "quote",
  "serde",
@@ -5892,9 +5892,9 @@ dependencies = [
 
 [[package]]
 name = "unc-rpc-error-macro"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2b7d9c03f6bb7160cb5d9849ba68c5aa6d22ccb9c9e62f6062804a68f01e85e7"
+checksum = "1aae1416b5a9eb63e1462d8af8133a112b47403fb70bf527c7d857b07278547c"
 dependencies = [
  "fs2",
  "serde",
@@ -5904,9 +5904,9 @@ dependencies = [
 
 [[package]]
 name = "unc-stdx"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce66a74fa5b8783b170214729c7779337aae1c4dcb290a4748aa0c8d8103fa0d"
+checksum = "9b5f83a88e29e260dd11680bbc987c69eced0450da97d32254854c01569309bb"
 
 [[package]]
 name = "unc-token"
@@ -5921,9 +5921,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-compiler"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e76f9d0a91b2f0bf70f85a8bdb07a028b87c34ffd2054b3101568cc411dfe7ea"
+checksum = "0c6338509bab624a1e65f097315518b0289a326a82ae5833a6179125b9d24d96"
 dependencies = [
  "enumset",
  "finite-wasm",
@@ -5939,9 +5939,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-compiler-singlepass"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "62892b8d05c44b5fe2a82381795e3b4b7ddefef472faf8aecdf00c30fc879838"
+checksum = "69fc0e9981415f04948ae30248d3338d59e1626e46f218c6929c99b3a52f85f5"
 dependencies = [
  "dynasm 2.0.0",
  "dynasmrt 2.0.0",
@@ -5961,9 +5961,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-engine"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3b1fe061641416b069c90576e509986415d919581549a2678914547dc1fe5d69"
+checksum = "bbdefd3bd738b91d019aa45608769bde47a0bda167c4082be72d379c6b3f1cc1"
 dependencies = [
  "backtrace",
  "cfg-if 1.0.0",
@@ -5987,9 +5987,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-runner"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cc437576756875e8c24bd0a260a83785e94bf33b02cacbd4f4b94bdd95b0bcf2"
+checksum = "bb0ae7c1bd8d1cc66f0545c82e5ec08aee28c1c3304999ef47874c90935be228"
 dependencies = [
  "anyhow",
  "base64 0.21.7",
@@ -6039,9 +6039,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-types"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "55ab235867ac684c575527e3437e8878fa967977bd65434fc0c663ad9e68b1d1"
+checksum = "b7022b0a3360fa513ab7d7c1d2326e786a56ef6e6b3d0619613ca5e90dada99c"
 dependencies = [
  "indexmap 1.9.3",
  "num-traits",
@@ -6051,9 +6051,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-vm"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0d214b3446fe2a14a79c4a371852e9c179b983b71638636385f1945dcf9ce31e"
+checksum = "d2eaa9af29af1597b20097d2b8dd51a42b0c2007af34ce8453dbb9a7bae304e7"
 dependencies = [
  "backtrace",
  "cc",
