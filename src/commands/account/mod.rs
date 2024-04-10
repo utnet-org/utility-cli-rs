@@ -11,7 +11,6 @@ mod list_keys;
 pub mod storage_management;
 mod view_account_summary;
 
-
 pub const MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH: usize = 2;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
@@ -68,14 +67,11 @@ pub enum AccountActions {
     ManageStorageDeposit(self::storage_management::Contract),
 }
 
-
 #[derive(Debug, EnumDiscriminants, Clone, clap::ValueEnum)]
 #[strum_discriminants(derive(EnumMessage, EnumIter))]
 /// How do you want to pass the keys type?
 pub enum KeysType {
-    #[strum_discriminants(strum(
-        message = "rsa2048 keypairs    - generate rsa2048 keytype"
-    ))]
+    #[strum_discriminants(strum(message = "rsa2048 keypairs    - generate rsa2048 keytype"))]
     Rsa2048,
     #[strum_discriminants(strum(message = "ed25519 keypairs    - generate ed25519 keytype"))]
     Ed25519,
@@ -116,11 +112,7 @@ impl std::fmt::Display for KeysTypeDiscriminants {
 
 pub fn input_keys_type() -> color_eyre::eyre::Result<Option<KeysType>> {
     let variants = KeysTypeDiscriminants::iter().collect::<Vec<_>>();
-    let selected = Select::new(
-        "How would you like to pass the key type?",
-        variants,
-    )
-    .prompt()?;
+    let selected = Select::new("How would you like to pass the key type?", variants).prompt()?;
     match selected {
         KeysTypeDiscriminants::Rsa2048 => Ok(Some(KeysType::Rsa2048)),
         KeysTypeDiscriminants::Ed25519 => Ok(Some(KeysType::Ed25519)),

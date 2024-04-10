@@ -116,8 +116,7 @@ async fn display_inspect_contract(
         format!("At block #{}\n({})", view_code_response.block_height, view_code_response.block_hash)
     ]);
 
-    let contract_status = if account_view.code_hash == unc_primitives::hash::CryptoHash::default()
-    {
+    let contract_status = if account_view.code_hash == unc_primitives::hash::CryptoHash::default() {
         "No contract code".to_string()
     } else {
         hex::encode(account_view.code_hash.as_ref())

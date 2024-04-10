@@ -32,9 +32,7 @@ impl interactive_clap::ToCli for SignedDelegateActionAsBase64 {
     type CliVariant = SignedDelegateActionAsBase64;
 }
 
-impl From<unc_primitives::action::delegate::SignedDelegateAction>
-    for SignedDelegateActionAsBase64
-{
+impl From<unc_primitives::action::delegate::SignedDelegateAction> for SignedDelegateActionAsBase64 {
     fn from(value: unc_primitives::action::delegate::SignedDelegateAction) -> Self {
         Self { inner: value }
     }

@@ -28,14 +28,14 @@ impl WithdrawAllContext {
                     Ok(crate::commands::PrepopulatedTransaction {
                         signer_id: signer_id.clone(),
                         receiver_id: validator_account_id.clone(),
-                        actions: vec![unc_primitives::transaction::Action::FunctionCall(
-                            Box::new(unc_primitives::transaction::FunctionCallAction {
+                        actions: vec![unc_primitives::transaction::Action::FunctionCall(Box::new(
+                            unc_primitives::transaction::FunctionCallAction {
                                 method_name: "withdraw_all".to_string(),
                                 args: serde_json::to_vec(&serde_json::json!({}))?,
                                 gas: crate::common::UncGas::from_tgas(50).as_gas(),
                                 deposit: 0,
-                            }),
-                        )],
+                            },
+                        ))],
                     })
                 }
             });

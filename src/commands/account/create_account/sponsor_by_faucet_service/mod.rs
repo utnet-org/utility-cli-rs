@@ -90,8 +90,7 @@ pub fn before_creating_account(
             }
 
             let account_creation_transaction =
-                response
-                    .json::<unc_jsonrpc_client::methods::tx::RpcTransactionStatusResponse>()?;
+                response.json::<unc_jsonrpc_client::methods::tx::RpcTransactionStatusResponse>()?;
             match account_creation_transaction.status {
                 unc_primitives::views::FinalExecutionStatus::SuccessValue(ref value) => {
                     if value == b"false" {

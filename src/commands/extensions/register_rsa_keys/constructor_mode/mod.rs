@@ -11,7 +11,6 @@ pub enum ConstructorMode {
     /// Add an initialize
     #[strum_discriminants(strum(message = "with-init-args  - Add an initialize"))]
     WithInitCall(Initialize),
-
 }
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
@@ -34,34 +33,38 @@ impl InitializeContext {
         previous_context: super::RsaFileContext,
         _scope: &<Initialize as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
-
         let mut actions = Vec::new();
         for m in previous_context.miners.iter() {
-            let data = format!(r#"
+            let data = format!(
+                r#"
             {{
                 "power": "{}",
                 "sn": "{}",
                 "bus_id": "{}",
                 "p2key": "{}"
             }}
-            "#, m.power * ONE_TERA, m.sn, m.bus_id, m.p2key);
+            "#,
+                m.power * ONE_TERA,
+                m.sn,
+                m.bus_id,
+                m.p2key
+            );
 
             let data_json: serde_json::Value = serde_json::from_str(&data).unwrap();
-            let args = serde_json::to_vec(&data_json).wrap_err("Internal error!").unwrap();
+            let args = serde_json::to_vec(&data_json)
+                .wrap_err("Internal error!")
+                .unwrap();
 
-            actions.push(
-                unc_primitives::transaction::Action::RegisterRsa2048Keys(
-                    Box::new(unc_primitives::transaction::RegisterRsa2048KeysAction {
-                        public_key: m.public_key.clone(),
-                        operation_type: 0u8,
-                        args: args.clone(),
-                    }),
-                )
-            )
-            
+            actions.push(unc_primitives::transaction::Action::RegisterRsa2048Keys(
+                Box::new(unc_primitives::transaction::RegisterRsa2048KeysAction {
+                    public_key: m.public_key.clone(),
+                    operation_type: 0u8,
+                    args: args.clone(),
+                }),
+            ))
         }
         Ok(Self {
-            ctx:  super::RsaFileContext {
+            ctx: super::RsaFileContext {
                 global_context: previous_context.global_context,
                 receiver_account_id: previous_context.receiver_account_id,
                 signer_account_id: previous_context.signer_account_id,
