@@ -19,6 +19,10 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
       - name: Install packages (Linux)
