@@ -46,7 +46,7 @@ impl Default for Config {
             "custom".to_string(),
             NetworkConfig {
                 network_name: "betanet".to_string(),
-                rpc_url: "http://43.218.226.63:3030".parse().unwrap(),
+                rpc_url: "http://127.0.0.1:3034".parse().unwrap(),
                 wallet_url: "https://testnet.wallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.testnet.unc.org/transactions/"
                     .parse()
