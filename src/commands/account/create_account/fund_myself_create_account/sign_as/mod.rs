@@ -1,4 +1,5 @@
 use serde_json::json;
+use unc_primitives::account::id::AccountType;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = super::AccountPropertiesContext)]
@@ -46,19 +47,10 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                 let signer_id = item.signer_account_id.clone();
 
                 move |network_config| {
-                    if new_account_id.as_str().chars().count()
-                        < super::MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH
-                        && new_account_id.is_top_level()
-                    {
-                        return color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                            "\nAccount <{}> has <{}> character count. Only REGISTRAR_ACCOUNT_ID account can create new top level accounts that are shorter than MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH (32) characters.",
-                            new_account_id, new_account_id.as_str().chars().count()
-                        ));
-                    }
                     if !item.global_context.offline {
                         validate_new_account_id(network_config, &new_account_id)?;
                     }
-                    let (actions, receiver_id) = if new_account_id.is_sub_account_of(&signer_id) {
+                    let (actions, receiver_id) = if AccountType::UtilityAccount == new_account_id.get_account_type() {
                         (vec![
                                 unc_primitives::transaction::Action::CreateAccount(
                                     unc_primitives::transaction::CreateAccountAction {},
@@ -87,8 +79,7 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                         }))?;
 
                         if let Some(linkdrop_account_id) = &network_config.linkdrop_account_id {
-                            if new_account_id.is_sub_account_of(linkdrop_account_id)
-                                || new_account_id.is_top_level()
+                            if new_account_id.as_str().chars().count() > super::MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH
                             {
                                 (
                                     vec![unc_primitives::transaction::Action::FunctionCall(
@@ -161,18 +152,10 @@ impl SignerAccountId {
     fn input_signer_account_id(
         context: &super::AccountPropertiesContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::account_id::AccountId>> {
-        let parent_account_id =
-            crate::types::account_id::AccountId::get_parent_account_id_from_sub_account(
-                context.account_properties.new_account_id.clone().into(),
-            );
-        if !parent_account_id.0.is_top_level() {
-            Ok(Some(parent_account_id))
-        } else {
-            crate::common::input_signer_account_id_from_used_account_list(
-                &context.global_context.config.credentials_home_dir,
-                "What is the signer account ID?",
-            )
-        }
+        crate::common::input_signer_account_id_from_used_account_list(
+            &context.global_context.config.credentials_home_dir,
+            "What is the signer account ID?",
+        )
     }
 }
 

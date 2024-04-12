@@ -87,7 +87,6 @@ impl NewAccount {
                     };
                 } else if account_id.0.as_str().chars().count()
                     < MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH
-                    && account_id.0.is_top_level()
                 {
                     eprintln!(
                         "\nAccount <{}> has <{}> character count. Only the registrar account can create new top level accounts that are shorter than {} characters. Read more about it in nomicon: https://nomicon.io/DataStructures/Account#top-level-accounts",
@@ -101,26 +100,21 @@ impl NewAccount {
                 } else {
                     let parent_account_id =
                         account_id.clone().get_parent_account_id_from_sub_account();
-                    if !unc_primitives::types::AccountId::from(parent_account_id.clone())
-                        .is_top_level()
+
+                    if crate::common::find_network_where_account_exist(
+                        context,
+                        parent_account_id.clone().into(),
+                    )
+                    .is_none()
                     {
-                        if crate::common::find_network_where_account_exist(
-                            context,
-                            parent_account_id.clone().into(),
-                        )
-                        .is_none()
-                        {
-                            eprintln!("\nThe parent account <{}> does not exist on [{}] networks. Therefore, you cannot create an account <{}>.",
-                                parent_account_id,
-                                context.config.network_names().join(", "),
-                                account_id
-                            );
-                            if !crate::common::ask_if_different_account_id_wanted()? {
-                                return Ok(Some(account_id));
-                            };
-                        } else {
+                        eprintln!("\nThe parent account <{}> does not exist on [{}] networks. Therefore, you cannot create an account <{}>.",
+                            parent_account_id,
+                            context.config.network_names().join(", "),
+                            account_id
+                        );
+                        if !crate::common::ask_if_different_account_id_wanted()? {
                             return Ok(Some(account_id));
-                        }
+                        };
                     } else {
                         return Ok(Some(account_id));
                     }
