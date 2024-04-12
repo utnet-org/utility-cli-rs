@@ -163,7 +163,7 @@ pub fn get_account_transfer_allowance(
         get_account_state(network_config.clone(), account_id.clone(), block_reference)
     {
         account_view
-    } else if !account_id.get_account_type().is_implicit() {
+    } else if !account_id.get_account_type().is_valid() {
         return color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
             "Account <{}> does not exist on network <{}>.",
             account_id,
@@ -945,13 +945,6 @@ pub fn print_action_error(action_error: &unc_primitives::errors::ActionError) ->
                 "Error: TX receiver ID <{}> doesn't exist (but action is not \"Create Account\").",
                 account_id
             ))
-        }
-        unc_primitives::errors::ActionErrorKind::CreateAccountOnlyByRegistrar {
-            account_id: _,
-            registrar_account_id: _,
-            predecessor_id: _,
-        } => {
-            color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!("Error: A top-level account ID can only be created by registrar."))
         }
         unc_primitives::errors::ActionErrorKind::CreateAccountNotAllowed {
             account_id,

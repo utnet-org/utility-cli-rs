@@ -5570,9 +5570,9 @@ dependencies = [
 
 [[package]]
 name = "unc-account-id"
-version = "0.1.0"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6568505d6185d67606e842f07ff475f0f4a45d862bce80f5d5bd31a7d7058881"
+checksum = "9cd52d4b96d80bba758f7baae4e833fadc5548d76e75e040a3d292617ab7ab71"
 dependencies = [
  "borsh 1.3.1",
  "serde",
@@ -5580,9 +5580,9 @@ dependencies = [
 
 [[package]]
 name = "unc-chain-configs"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd12d21e63ddab5f9d81bd97f8a2b14ac538fdc2048b120ec069f55e3afa4b9c"
+checksum = "52cb442e263f52f86e8bd4ea76ea06a8d895a3c39c7bf08824485adcb80b2de7"
 dependencies = [
  "anyhow",
  "bytesize",
@@ -5602,64 +5602,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "unc-cli-rs"
-version = "0.8.1"
-dependencies = [
- "bip39",
- "bs58 0.5.1",
- "bytesize",
- "cargo-util",
- "clap",
- "color-eyre",
- "derive_more",
- "dirs",
- "easy-ext 1.0.1",
- "ed25519-dalek 1.0.1",
- "futures",
- "hex",
- "inquire",
- "interactive-clap",
- "interactive-clap-derive",
- "keyring",
- "linked-hash-map",
- "open",
- "openssl",
- "prettytable",
- "rand 0.8.5",
- "reqwest 0.12.3",
- "rsa 0.9.6",
- "self_update",
- "semver 1.0.22",
- "serde",
- "serde_json",
- "shell-words",
- "shellexpand",
- "slip10",
- "smart-default 0.7.1",
- "strum",
- "strum_macros",
- "textwrap",
- "thiserror",
- "tokio",
- "toml 0.8.12",
- "unc-abi",
- "unc-crypto",
- "unc-gas",
- "unc-jsonrpc-client",
- "unc-jsonrpc-primitives",
- "unc-ledger",
- "unc-primitives",
- "unc-token",
- "url",
- "wasmparser 0.202.0",
- "zstd",
-]
-
-[[package]]
 name = "unc-config-utils"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2e16b63a75a6339bc1447586b4ab519ac34f03f02a69c72f3a337713de0d6040"
+checksum = "baf363a9568f31dcf40c086ff09cb235477342df3bb6a363963dca4eeca30b76"
 dependencies = [
  "anyhow",
  "json_comments",
@@ -5669,9 +5615,9 @@ dependencies = [
 
 [[package]]
 name = "unc-crypto"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "984649ffa71b9464e828a23653c7e1d01cff95c156fd3afefb4b9534efa08a1c"
+checksum = "ac8bc6f09276683c6ab642e3dbcee40343fd8ee8bb59b5569ad7903df22aae81"
 dependencies = [
  "blake2",
  "borsh 1.3.1",
@@ -5698,9 +5644,9 @@ dependencies = [
 
 [[package]]
 name = "unc-fmt"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4274ab959ddc3f2fc7763d9b6699cca7b01cc202f6e5b8f008997b4f17f1864b"
+checksum = "e8ffa6ac4603854b638dbed907aac55812c50c9f206e6f8298ac74b98790420e"
 dependencies = [
  "unc-primitives-core",
 ]
@@ -5718,9 +5664,9 @@ dependencies = [
 
 [[package]]
 name = "unc-jsonrpc-client"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf1144417a0582ba022856257dabe8e3170ef1a4e092770acbaa984877b997d7"
+checksum = "1273465b1068c030537d689fda4672276200f1de4b0f60edfb2573542b0014e4"
 dependencies = [
  "borsh 1.3.1",
  "lazy_static",
@@ -5737,9 +5683,9 @@ dependencies = [
 
 [[package]]
 name = "unc-jsonrpc-primitives"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8577df21f9c2ece90594118b4aae5917e8446f6c3aa4e4cbcae301f2ff6ad9ed"
+checksum = "fa456ad89b9949b34ff194c71dacc4c757d5388c761475a471cd75675c84a49c"
 dependencies = [
  "arbitrary",
  "serde",
@@ -5753,9 +5699,9 @@ dependencies = [
 
 [[package]]
 name = "unc-ledger"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eabe0a6d6f87e7dbfbb3709134624b1438076a09590ff8b325529d7aee8b0e8e"
+checksum = "a8c164b305e9b3fdd82c253f130a31529fd495937c737b0eb29f0e47b6f2d75e"
 dependencies = [
  "ed25519-dalek 1.0.1",
  "hex",
@@ -5770,9 +5716,9 @@ dependencies = [
 
 [[package]]
 name = "unc-o11y"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6cf6e61d46fcf9134c7224a4dd2d508d26395c8a8d44cd4503709046eed5dee4"
+checksum = "987171b23bb19b32ee45ecfffe1d19cb4bb7d0f8913e7e0809895cebde0b3d16"
 dependencies = [
  "actix",
  "base64 0.21.7",
@@ -5798,9 +5744,9 @@ dependencies = [
 
 [[package]]
 name = "unc-parameters"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "42220a2cd15078df7c30a78639e6e7c74bf79bf3cb9a12022d6ea280e1c205db"
+checksum = "afc5c9d32a7bddac8bc64b4f18079d92604a98b9c1e13a4b27eb80658d92096b"
 dependencies = [
  "assert_matches",
  "borsh 1.3.1",
@@ -5817,9 +5763,9 @@ dependencies = [
 
 [[package]]
 name = "unc-primitives"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a31077953d0d86fd48c1663b399193c633ab371bb3c8ffdfaee81141098680b"
+checksum = "9f0392d04410bd6b17a172d143b8fb9fd9bb874d0e8bc3de106423762940a9fe"
 dependencies = [
  "arbitrary",
  "base64 0.21.7",
@@ -5859,9 +5805,9 @@ dependencies = [
 
 [[package]]
 name = "unc-primitives-core"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a64f087e01386970ecc6ea45e476600082e77891377b27aafa1375ac96023484"
+checksum = "aa5d9f72d9b9a788c07a7e790e49c2edf6a8333eaf07cb57ace315406bda9de9"
 dependencies = [
  "arbitrary",
  "base64 0.21.7",
@@ -5881,9 +5827,9 @@ dependencies = [
 
 [[package]]
 name = "unc-rpc-error-core"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a418b0307b6ccbc7c05127d8e1d323ca5c67ec6e565f9e24f36c92a5bb734f51"
+checksum = "b87e6423e80576faa9af195855e1970fb16e062bdf87e543850918470f6a5890"
 dependencies = [
  "quote",
  "serde",
@@ -5892,9 +5838,9 @@ dependencies = [
 
 [[package]]
 name = "unc-rpc-error-macro"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1aae1416b5a9eb63e1462d8af8133a112b47403fb70bf527c7d857b07278547c"
+checksum = "ec005856a97ac75674108c2623382cde83d1a8c2f93ff53fd1a60ff2681ebf1f"
 dependencies = [
  "fs2",
  "serde",
@@ -5904,9 +5850,9 @@ dependencies = [
 
 [[package]]
 name = "unc-stdx"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9b5f83a88e29e260dd11680bbc987c69eced0450da97d32254854c01569309bb"
+checksum = "5a1d92436eccb46e60416d790f7e3a77c8cfd8e08b64d3cb692c860a7efe798e"
 
 [[package]]
 name = "unc-token"
@@ -5921,9 +5867,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-compiler"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c6338509bab624a1e65f097315518b0289a326a82ae5833a6179125b9d24d96"
+checksum = "23fbb99ba6a75428431c6f9e8b26ea44da4e4e650674e98b659a7317a389610f"
 dependencies = [
  "enumset",
  "finite-wasm",
@@ -5939,9 +5885,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-compiler-singlepass"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "69fc0e9981415f04948ae30248d3338d59e1626e46f218c6929c99b3a52f85f5"
+checksum = "4225dbe704da52378200117fbd3264fe9767e333b8eb19bcaa8b72042724960d"
 dependencies = [
  "dynasm 2.0.0",
  "dynasmrt 2.0.0",
@@ -5961,9 +5907,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-engine"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bbdefd3bd738b91d019aa45608769bde47a0bda167c4082be72d379c6b3f1cc1"
+checksum = "0cc75629e9de4ee4cad6c32bdbf1e7bc7d622f52477c13bf157a409e6b86c710"
 dependencies = [
  "backtrace",
  "cfg-if 1.0.0",
@@ -5987,9 +5933,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-runner"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb0ae7c1bd8d1cc66f0545c82e5ec08aee28c1c3304999ef47874c90935be228"
+checksum = "055e7e311b7a04a0825670e649a06890bfa68c68e584c0b6a022a696b5aec64c"
 dependencies = [
  "anyhow",
  "base64 0.21.7",
@@ -6039,9 +5985,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-types"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b7022b0a3360fa513ab7d7c1d2326e786a56ef6e6b3d0619613ca5e90dada99c"
+checksum = "d6f8e0e50b4590d66d9dd0c8050c157e80bc075720b3487fa35a664ff7490dd2"
 dependencies = [
  "indexmap 1.9.3",
  "num-traits",
@@ -6051,9 +5997,9 @@ dependencies = [
 
 [[package]]
 name = "unc-vm-vm"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2eaa9af29af1597b20097d2b8dd51a42b0c2007af34ce8453dbb9a7bae304e7"
+checksum = "d2a04121224d84a1840aa6a82037ab38eadc9c285643571b669fece7bb37878d"
 dependencies = [
  "backtrace",
  "cc",
@@ -6140,6 +6086,60 @@ name = "utf8parse"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "711b9620af191e0cdc7468a8d14e709c3dcdb115b36f838e601583af800a370a"
+
+[[package]]
+name = "utility-cli-rs"
+version = "0.8.2"
+dependencies = [
+ "bip39",
+ "bs58 0.5.1",
+ "bytesize",
+ "cargo-util",
+ "clap",
+ "color-eyre",
+ "derive_more",
+ "dirs",
+ "easy-ext 1.0.1",
+ "ed25519-dalek 1.0.1",
+ "futures",
+ "hex",
+ "inquire",
+ "interactive-clap",
+ "interactive-clap-derive",
+ "keyring",
+ "linked-hash-map",
+ "open",
+ "openssl",
+ "prettytable",
+ "rand 0.8.5",
+ "reqwest 0.12.3",
+ "rsa 0.9.6",
+ "self_update",
+ "semver 1.0.22",
+ "serde",
+ "serde_json",
+ "shell-words",
+ "shellexpand",
+ "slip10",
+ "smart-default 0.7.1",
+ "strum",
+ "strum_macros",
+ "textwrap",
+ "thiserror",
+ "tokio",
+ "toml 0.8.12",
+ "unc-abi",
+ "unc-crypto",
+ "unc-gas",
+ "unc-jsonrpc-client",
+ "unc-jsonrpc-primitives",
+ "unc-ledger",
+ "unc-primitives",
+ "unc-token",
+ "url",
+ "wasmparser 0.202.0",
+ "zstd",
+]
 
 [[package]]
 name = "uuid"
