@@ -10,13 +10,13 @@ Just run `unc` and let it guide you through!
 
 ## Install
 
-Visit [Releases page](https://github.com/unc/unc-cli-rs/releases/) to see the latest updates.
+Visit [Releases page](https://github.com/unc/utility-cli-rs/releases/) to see the latest updates.
 
 <details>
   <summary>Install prebuilt binaries via shell script (macOS, Linux, WSL)</summary>
 
 ```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/unc/unc-cli-rs/releases/latest/download/unc-cli-rs-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/unc/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.sh | sh
 ```
 </details>
 
@@ -24,7 +24,7 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/unc/unc-cli-rs/releases
   <summary>Install prebuilt binaries via powershell script (Windows)</summary>
 
 ```sh
-irm https://github.com/unc/unc-cli-rs/releases/latest/download/unc-cli-rs-installer.ps1 | iex
+irm https://github.com/unc/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.ps1 | iex
 ```
 </details>
 
@@ -32,7 +32,7 @@ irm https://github.com/unc/unc-cli-rs/releases/latest/download/unc-cli-rs-instal
   <summary>Run prebuilt binaries with npx (Node.js)</summary>
 
 ```sh
-npx unc-cli-rs
+npx utility-cli-rs
 ```
 </details>
 
@@ -40,7 +40,7 @@ npx unc-cli-rs
   <summary>Install prebuilt binaries into your npm project (Node.js)</summary>
 
 ```sh
-npm install unc-cli-rs
+npm install utility-cli-rs
 ```
 </details>
 
@@ -50,13 +50,13 @@ npm install unc-cli-rs
 Install it with `cargo`, just make sure you have [Rust](https://rustup.rs) installed on your computer.
 
 ```bash
-cargo install unc-cli-rs
+cargo install utility-cli-rs
 ```
 
 or, install the most recent version from git repository:
 
 ```bash
-$ cargo install --git https://github.com/unc/unc-cli-rs
+$ cargo install --git https://github.com/unc/utility-cli-rs
 ```
 </details>
 
@@ -88,7 +88,7 @@ jobs:
 
     - name: Install unc cli
       run: |
-        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utility/utility-cli-rs/releases/download/v0.2.0/unc-cli-rs-installer.sh | sh
+        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utility/utility-cli-rs/releases/download/v0.2.0/utility-cli-rs-installer.sh | sh
 
     - name: Call some function
       run: |
