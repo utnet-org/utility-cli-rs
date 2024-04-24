@@ -104,7 +104,7 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                             }
                         } else {
                             return color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                                "\nAccount <{}> cannot be created on network <{}> because a <linkdrop_account_id> is not specified in the configuration file.\nYou can learn about working with the configuration file: https://github.com/unc/unc-cli-rs/blob/master/docs/README.en.md#config. \nExample <linkdrop_account_id> in configuration file: https://github.com/unc/unc-cli-rs/blob/master/docs/media/linkdrop account_id.png",
+                                "\nAccount <{}> cannot be created on network <{}> because a <linkdrop_account_id> is not specified in the configuration file.\nYou can learn about working with the configuration file: https://github.com/utnet-org/utitlity-cli-rs/blob/master/docs/README.en.md#config. \nExample <linkdrop_account_id> in configuration file: https://github.com/utnet-org/utitlity-cli-rs/blob/master/docs/media/linkdrop account_id.png",
                                 new_account_id,
                                 network_config.network_name
                             ));

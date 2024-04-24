@@ -1,6 +1,6 @@
-# unc CLI
+# Utility CLI
 
-unc CLI is your **human-friendly** companion that helps to interact with [UNC Protocol](https://unc.org) from command line.
+Utility CLI is your **human-friendly** companion that helps to interact with [Utility](https://utility.org) from command line.
 
 Just run `unc` and let it guide you through!
 
@@ -18,6 +18,7 @@ Visit [Releases page](https://github.com/unc/utility-cli-rs/releases/) to see th
 ```sh
 curl --proto '=https' --tlsv1.2 -LsSf https://github.com/unc/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.sh | sh
 ```
+
 </details>
 
 <details>
@@ -26,6 +27,7 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/unc/utility-cli-rs/rele
 ```sh
 irm https://github.com/unc/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.ps1 | iex
 ```
+
 </details>
 
 <details>
@@ -34,6 +36,7 @@ irm https://github.com/unc/utility-cli-rs/releases/latest/download/utility-cli-r
 ```sh
 npx utility-cli-rs
 ```
+
 </details>
 
 <details>
@@ -42,6 +45,7 @@ npx utility-cli-rs
 ```sh
 npm install utility-cli-rs
 ```
+
 </details>
 
 <details>
@@ -56,8 +60,9 @@ cargo install utility-cli-rs
 or, install the most recent version from git repository:
 
 ```bash
-$ cargo install --git https://github.com/unc/utility-cli-rs
+cargo install --git https://github.com/utnet-org/utility-cli-rs
 ```
+
 </details>
 
 <details>
@@ -120,9 +125,10 @@ $ unc
 
 The CLI interactively guides you through some pretty complex topics, helping you make informed decisions along the way.
 
-## [Read more in English](docs/README.en.md)  
-  - [Usage](docs/README.en.md#usage)
-  - [Installation](docs/README.en.md#installation)
-  - [User Guide](docs/README.en.md#user-guide)
-  - [Config](docs/README.en.md#config)
-  - [Building](docs/README.en.md#building)
+## [Read more](docs/README.en.md)  
+
+- [Usage](docs/README.en.md#usage)
+- [Installation](docs/README.en.md#installation)
+- [User Guide](docs/README.en.md#user-guide)
+- [Config](docs/README.en.md#config)
+- [Building](docs/README.en.md#building)

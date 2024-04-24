@@ -49,7 +49,7 @@ However, using _unc CLI_, you can press _Enter_ anywhere in the command line and
 ## Installation
 
 At this stage of the development of the utility, installation of the program is not required.  
-It is enough to [download](https://github.com/unc/unc-cli-rs/releases/) the archive file suitable for your operating system installed on the computer and unzip it.  
+It is enough to [download](https://github.com/utnet-org/utitlity-cli-rs/releases/) the archive file suitable for your operating system installed on the computer and unzip it.  
 The resulting directory contains the executable file _unc CLI_, which is accompanied by detailed [user guide](GUIDE.en.md).
 
 ## User Guide
@@ -75,7 +75,7 @@ _unc CLI_ compiles with Rust 1.64.0 (stable) or newer. In general, _unc CLI_ tra
 To build _unc CLI_:
 
 ```txt
-$ git clone https://github.com/unc/unc-cli-rs.git
+$ git clone https://github.com/utnet-org/utitlity-cli-rs.git
 $ cd unc-cli-rs
 $ cargo build --release
 $ ./target/release/unc --version

@@ -5,7 +5,7 @@ authors = ["hello Inc <hello@unc.com>"]
 license = "GPL-2.0-or-later"
 edition = "2021"
 homepage = "https://utility.cli.rs"
-repository = "https://github.com/utnet.org/utility-cli-rs"
+repository = "https://github.com/utnet-org/utility-cli-rs"
 description = "human-friendly console utility that helps to interact with unc Protocol from command line."
 
 [package.metadata.wix]
