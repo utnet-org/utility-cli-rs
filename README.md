@@ -22,15 +22,6 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-r
 </details>
 
 <details>
-  <summary>Install prebuilt binaries via powershell script (Windows)</summary>
-
-```sh
-irm https://github.com/unc/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.ps1 | iex
-```
-
-</details>
-
-<details>
   <summary>Run prebuilt binaries with npx (Node.js)</summary>
 
 ```sh
