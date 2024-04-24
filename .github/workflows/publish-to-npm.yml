@@ -12,7 +12,7 @@ on:
 
 jobs:
   publish:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Configure credentials
         run: |

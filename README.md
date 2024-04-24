@@ -79,9 +79,9 @@ on:
 jobs:
   deploy-widgets:
     runs-on: ubuntu-latest
-    name: Make a function call on mainnet
+    name: Make a function call on testnet
     env:
-      UNC_NETWORK_CONNECTION: mainnet
+      UNC_NETWORK_CONNECTION: testnet
       UNC_CONTRACT_ACCOUNT_ID: ${{ vars.UNC_CONTRACT_ACCOUNT_ID }}
       UNC_SIGNER_ACCOUNT_ID: ${{ vars.UNC_SIGNER_ACCOUNT_ID }}
       UNC_SIGNER_ACCOUNT_PUBLIC_KEY: ${{ vars.UNC_SIGNER_ACCOUNT_PUBLIC_KEY }}
@@ -93,7 +93,7 @@ jobs:
 
     - name: Install unc cli
       run: |
-        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utility/utility-cli-rs/releases/download/v0.2.0/utility-cli-rs-installer.sh | sh
+        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/download/v0.8.2/utility-cli-rs-installer.sh | sh
 
     - name: Call some function
       run: |

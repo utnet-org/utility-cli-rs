@@ -50,7 +50,9 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                     if !item.global_context.offline {
                         validate_new_account_id(network_config, &new_account_id)?;
                     }
-                    let (actions, receiver_id) = if AccountType::UtilityAccount == new_account_id.get_account_type() {
+                    let (actions, receiver_id) = if AccountType::UtilityAccount
+                        == new_account_id.get_account_type()
+                    {
                         (vec![
                                 unc_primitives::transaction::Action::CreateAccount(
                                     unc_primitives::transaction::CreateAccountAction {},
@@ -79,7 +81,8 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                         }))?;
 
                         if let Some(linkdrop_account_id) = &network_config.linkdrop_account_id {
-                            if new_account_id.as_str().chars().count() > super::MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH
+                            if new_account_id.as_str().chars().count()
+                                > super::MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH
                             {
                                 (
                                     vec![unc_primitives::transaction::Action::FunctionCall(
