@@ -2566,9 +2566,9 @@ dependencies = [
 
 [[package]]
 name = "interactive-clap"
-version = "0.2.9"
+version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77bb929d523b1d6327de5ccd55052fe339f32a263f9a58c2104d32d874d5d92e"
+checksum = "7295a8d03a71e15612a524a8e1dec1a913459e0000e530405f20d09fb0f014f7"
 dependencies = [
  "interactive-clap-derive",
  "strum",
@@ -2577,9 +2577,9 @@ dependencies = [
 
 [[package]]
 name = "interactive-clap-derive"
-version = "0.2.9"
+version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "09a31fb5111f8e16f1a776e45d67d7b87e1a85f16e7d83af6051f4211ee50b6b"
+checksum = "9a0c8d4a6b99054853778e3e9ffb0b74bcb5e8f43d99d97e5c0252c57ce67bf6"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -6137,7 +6137,7 @@ dependencies = [
  "unc-primitives",
  "unc-token",
  "url",
- "wasmparser 0.202.0",
+ "wasmparser 0.200.0",
  "zstd",
 ]
 
@@ -6504,9 +6504,9 @@ dependencies = [
 
 [[package]]
 name = "wasmparser"
-version = "0.202.0"
+version = "0.200.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6998515d3cf3f8b980ef7c11b29a9b1017d4cf86b99ae93b546992df9931413"
+checksum = "a03f65ac876612140c57ff6c3b8fe4990067cce97c2cfdb07368a3cc3354b062"
 dependencies = [
  "bitflags 2.5.0",
  "indexmap 2.2.5",

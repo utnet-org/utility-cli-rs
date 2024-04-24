@@ -53,7 +53,7 @@ open = "5.1.1"
 shell-words = "1"
 cargo-util = "0.2.9"
 
-wasmparser = "0.202.0"
+wasmparser = "0.200.0"
 
 semver = { version = "1.0.4", optional = true }
 self_update = { version = "0.39.0", features = [
@@ -89,8 +89,8 @@ unc-abi = "0.1.0"
 zstd = "0.13.0"
 
 keyring = "2.0.5"
-interactive-clap = "0.2.9"
-interactive-clap-derive = "0.2.9"
+interactive-clap = "0.2.10"
+interactive-clap-derive = "0.2.10"
 
 [features]
 default = ["ledger", "self-update"]
@@ -114,17 +114,16 @@ ci = ["github"]
 # The installers to generate for each app
 installers = ["shell", "powershell", "npm", "msi"]
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu"]
 # The archive format to use for windows builds (defaults .zip)
 windows-archive = ".tar.gz"
 # The archive format to use for non-windows builds (defaults .tar.xz)
 unix-archive = ".tar.gz"
 # Publish jobs to run in CI
 pr-run-mode = "upload"
-# Skip checking whether the specified configuration files are up to date
+# XXX: In order to use GITHUB_TOKEN to trigger npm-publish workflow, 
+# we allow dirty CI scripts to avoid cargo-dist complains.
 allow-dirty = ["ci"]
-# Whether to install an updater program
-install-updater = false
 
 [workspace.metadata.dist.dependencies.apt]
 libudev-dev = { version = "*", targets = ["x86_64-unknown-linux-gnu"] }
