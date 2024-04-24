@@ -10,13 +10,13 @@ Just run `unc` and let it guide you through!
 
 ## Install
 
-Visit [Releases page](https://github.com/unc/utility-cli-rs/releases/) to see the latest updates.
+Visit [Releases page](https://github.com/utnet-org/utility-cli-rs/releases/) to see the latest updates.
 
 <details>
   <summary>Install prebuilt binaries via shell script (macOS, Linux, WSL)</summary>
 
 ```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/unc/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.sh | sh
 ```
 
 </details>
