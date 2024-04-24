@@ -62,7 +62,7 @@
         Id='*'
         Name='utility-cli-rs'
         UpgradeCode='A6432354-8256-45E3-9E10-53C117EE22B4'
-        Manufacturer='FroVolod; unc Inc'
+        Manufacturer='hello Inc'
         Language='1033'
         Codepage='1252'
         Version='$(var.Version)'>
@@ -70,7 +70,7 @@
         <Package Id='*'
             Keywords='Installer'
             Description='human-friendly console utility that helps to interact with unc Protocol from command line.'
-            Manufacturer='FroVolod; unc Inc'
+            Manufacturer='hello Inc'
             InstallerVersion='450'
             Languages='1033'
             Compressed='yes'
