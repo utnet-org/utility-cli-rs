@@ -5558,9 +5558,9 @@ dependencies = [
 
 [[package]]
 name = "unc-abi"
-version = "0.1.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b70a9fcdae4e0281e74a571775b789dab97097c18bdc797531fae7f786fa3785"
+checksum = "d922cffb21d7761ca8905e3c7f75f868837afa0ca8a575f1c709cbe21a27a68f"
 dependencies = [
  "borsh 1.3.1",
  "schemars",
@@ -5653,9 +5653,9 @@ dependencies = [
 
 [[package]]
 name = "unc-gas"
-version = "0.1.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e619ba31849d3b9285353ddfdb36df18f58ad522e68a4565fe9135bf9296c0e6"
+checksum = "fbf87c5ab473b65d134c3d1d7ef28960072c8751db6c2737fa5ae766c6f230c3"
 dependencies = [
  "borsh 1.3.1",
  "interactive-clap",
@@ -5856,9 +5856,9 @@ checksum = "eb24d823bfb8955cd862d4a614ad9c37ba42add4c5321ffbdaac22e72c20583d"
 
 [[package]]
 name = "unc-token"
-version = "0.4.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1186d26c4e91fb7fd30868693aa17ba0c4153e5c12bff3d8f445597b6dd0917b"
+checksum = "5d8dc9721a8afa15c0fe44f77ccc96f93fc3b984efb2ef92e8e39a5d7c4acf7f"
 dependencies = [
  "borsh 1.3.1",
  "interactive-clap",
