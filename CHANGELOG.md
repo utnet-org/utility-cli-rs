@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.1](https://github.com/utnet-org/utility-cli-rs/compare/v0.12.0...v0.12.1) - 2024-05-21
+
+### Other
+- Rename PledgingType variant to Directly
+
 ## [0.8.2](https://github.com/utnet-org/utitlity-cli-rs/compare/v0.8.1...v0.8.2) - 2024-04-21
 
 ### Other
