@@ -6,8 +6,10 @@ use std::str::FromStr;
 use color_eyre::eyre::{ContextCompat, WrapErr};
 use futures::{StreamExt, TryStreamExt};
 use prettytable::Table;
+use num_rational::Rational32;
 
 use unc_primitives::{hash::CryptoHash, types::BlockReference, views::AccessKeyPermissionView};
+use crate::types::unc_token::UncToken;
 
 pub type CliResult = color_eyre::eyre::Result<()>;
 
@@ -2229,4 +2231,78 @@ fn input_account_id_from_used_account_list(
     let account_id = crate::types::account_id::AccountId::from_str(&account_id_str)?;
     update_used_account_list(credentials_home_dir, account_id.as_ref(), account_is_signer);
     Ok(Some(account_id))
+}
+
+
+pub fn find_seat_price(
+    pledges: Vec<u128>,
+    max_number_of_seats: u64,
+    minimum_pledge_ratio: Rational32,
+    protocol_version: unc_primitives::types::ProtocolVersion,
+) -> color_eyre::eyre::Result<UncToken> {
+    if protocol_version < 49 {
+        return find_seat_price_for_protocol_before_49(pledges, max_number_of_seats);
+    }
+    find_seat_price_for_protocol_after_49(pledges, max_number_of_seats, minimum_pledge_ratio)
+}
+
+/// This implementation is ported from unc-api-js:
+fn find_seat_price_for_protocol_before_49(
+    pledges: Vec<u128>,
+    num_seats: u64,
+) -> color_eyre::eyre::Result<UncToken> {
+    let pledges_sum: u128 = pledges.iter().sum();
+    if pledges_sum < num_seats.into() {
+        return Err(color_eyre::eyre::Report::msg("Pledges are below seats"));
+    }
+    let mut left: u128 = 1;
+    let mut right: u128 = pledges_sum + 1;
+    while left != (right - 1) {
+        let mid = left.saturating_add(right) / 2;
+        let mut found = false;
+        let mut current_sum: u128 = 0;
+        for pledge in &pledges {
+            current_sum = current_sum.saturating_add(pledge.saturating_div(mid));
+            if current_sum >= num_seats.into() {
+                left = mid;
+                found = true;
+                break;
+            }
+        }
+        if !found {
+            right = mid;
+        }
+    }
+    Ok(UncToken::from_attounc(left))
+}
+
+/// This implementation is ported from unc-api-js:
+fn find_seat_price_for_protocol_after_49(
+    mut pledges: Vec<u128>,
+    max_number_of_seats: u64,
+    minimum_pledge_ratio: Rational32,
+) -> color_eyre::eyre::Result<UncToken> {
+    let pledges_sum: u128 = pledges.iter().sum();
+    if u64::try_from(pledges.len()).wrap_err("pledges.len() must fit in u64.")?
+        < max_number_of_seats
+    {
+        return Ok(UncToken::from_attounc(
+            pledges_sum
+                .checked_mul(
+                    (*minimum_pledge_ratio.numer())
+                        .try_into()
+                        .wrap_err("minimum_pledge_ratio.numer must be positive.")?,
+                )
+                .wrap_err("Can't multiply these numbers")?
+                .checked_div(
+                    (*minimum_pledge_ratio.denom())
+                        .try_into()
+                        .wrap_err("minimum_pledge_ratio.denom must be positive.")?,
+                )
+                .wrap_err("Can't divide these numbers")?,
+        ));
+    };
+    pledges.sort();
+
+    Ok(UncToken::from_attounc(pledges[0] + 1))
 }
