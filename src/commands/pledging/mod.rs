@@ -37,7 +37,7 @@ pub enum PledgingType {
     /// Show both new proposals in the current epoch as well as current validators who are implicitly proposing
     Proposals(self::proposals::Proposals),
     #[strum_discriminants(strum(
-        message = "pledging      -   For validators, there is an option to pledging without deploying a pledging pool smart contract (pledge, unpledge, view pledge)"
+        message = "directly      -   For validators, there is an option to pledging without deploying a pledging pool smart contract (pledge, unpledge, view pledge)"
     ))]
     /// For validators, there is an option to pledging without deploying a pledging pool smart contract (pledge, unpledge, view pledge)
     Directly(self::directly::Pledging),
