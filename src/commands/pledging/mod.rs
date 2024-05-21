@@ -40,5 +40,5 @@ pub enum PledgingType {
         message = "pledging      -   For validators, there is an option to pledging without deploying a pledging pool smart contract (pledge, unpledge, view pledge)"
     ))]
     /// For validators, there is an option to pledging without deploying a pledging pool smart contract (pledge, unpledge, view pledge)
-    Pledging(self::directly::Pledging),
+    Directly(self::directly::Pledging),
 }
