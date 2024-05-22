@@ -1,6 +1,4 @@
-use std::str::FromStr;
-
-use inquire::{CustomType, Select, Text};
+use inquire::{CustomType, Select};
 
 use crate::commands::account::MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH;
 
@@ -129,15 +127,11 @@ impl NewAccount {
         _context: &crate::GlobalContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
-        match crate::types::unc_token::UncToken::from_str(&Text::new("Enter the amount of the unc tokens you want to fund the new account with (example: 10unc or 0.5unc or 10000attounc):")
-            .with_initial_value("0.1 unc")
-            .prompt()?
-            ) {
-                Ok(initial_balance) => Ok(Some(initial_balance)),
-                Err(err) => Err(color_eyre::Report::msg(
-                    err,
-                ))
-            }
+        Ok(Some(
+            CustomType::new("Enter the amount of the Utility tokens you want to fund the new account with (example: 10UNC or 0.5unc or 10000attounc):")
+                .with_starting_input("0.1 unc")
+                .prompt()?
+        ))
     }
 }
 

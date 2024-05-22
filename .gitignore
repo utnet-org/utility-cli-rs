@@ -3,3 +3,5 @@
 .DS_Store
 *.wasm
 *.json
+.idea
+.vscode

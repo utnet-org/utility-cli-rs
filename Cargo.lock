@@ -6089,7 +6089,7 @@ checksum = "711b9620af191e0cdc7468a8d14e709c3dcdb115b36f838e601583af800a370a"
 
 [[package]]
 name = "utility-cli-rs"
-version = "0.12.0"
+version = "0.12.1"
 dependencies = [
  "bip39",
  "bs58 0.5.1",

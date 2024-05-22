@@ -1,6 +1,5 @@
-use std::str::FromStr;
 
-use inquire::Text;
+use inquire::CustomType;
 use serde_json::json;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
@@ -142,38 +141,32 @@ impl SendNftCommand {
         _context: &super::TokensCommandsContext,
     ) -> color_eyre::eyre::Result<Option<crate::common::UncGas>> {
         eprintln!();
-        let gas = loop {
-            match crate::common::UncGas::from_str(
-                &Text::new("Enter gas for function call:")
-                    .with_initial_value("100 TeraGas")
-                    .prompt()?,
-            ) {
-                Ok(input_gas) => {
-                    if input_gas <= unc_gas::UncGas::from_tgas(300) {
-                        break input_gas;
+        Ok(Some(
+            CustomType::new("Enter gas for function call:")
+                .with_starting_input("100 TeraGas")
+                .with_validator(move |gas: &crate::common::UncGas| {
+                    if gas > &unc_gas::UncGas::from_tgas(300) {
+                        Ok(inquire::validator::Validation::Invalid(
+                            inquire::validator::ErrorMessage::Custom(
+                                "You need to enter a value of no more than 300 TeraGas".to_string(),
+                            ),
+                        ))
                     } else {
-                        eprintln!("You need to enter a value of no more than 300 TERAGAS")
+                        Ok(inquire::validator::Validation::Valid)
                     }
-                }
-                Err(err) => return Err(color_eyre::Report::msg(err)),
-            }
-        };
-        Ok(Some(gas))
+                })
+                .prompt()?,
+        ))
     }
 
     fn input_deposit(
         _context: &super::TokensCommandsContext,
     ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
-        match crate::types::unc_token::UncToken::from_str(
-            &Text::new(
-                "Enter deposit for a function call (example: 10unc or 0.5unc or 10000attounc):",
-            )
-            .with_initial_value("1 attounc")
-            .prompt()?,
-        ) {
-            Ok(deposit) => Ok(Some(deposit)),
-            Err(err) => Err(color_eyre::Report::msg(err)),
-        }
+        Ok(Some(
+            CustomType::new("Enter deposit for a function call (example: 10 UNC or 0.5 unc or 10000 attounc):")
+                .with_starting_input("1 attounc")
+                .prompt()?
+        ))
     }
 }
