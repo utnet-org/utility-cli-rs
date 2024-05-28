@@ -179,7 +179,7 @@ fn test_dependency_renamed() -> unc::CliResult {
 #[named]
 fn test_dependency_patch() -> unc::CliResult {
     // [dependencies]
-    // unc-sdk = "4.0.0"
+    // unc-sdk = "2.0.3"
     //
     // [patch.crates-io]
     // unc-sdk = { git = "https://github.com/utnet-org/utility-sdk-rs.git", rev = "10b0dea3b1a214d789cc90314aa814a4181610ad" }
@@ -198,8 +198,8 @@ fn test_dependency_patch() -> unc::CliResult {
 }
 
 /// this is a test of Cargo.toml format
-/// TODO: un-ignore when `5.x.x` unc-sdk is published
-/// and `unc_integration_tests::SDK_VERSION` is changed 4.x.x -> 5.x.x
+/// TODO: un-ignore when `2.x.x` unc-sdk is published
+/// and `unc_integration_tests::SDK_VERSION` is changed 1.x.x -> 2.x.x
 #[test]
 #[ignore]
 #[named]

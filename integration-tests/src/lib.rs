@@ -2,7 +2,7 @@
 pub mod from_crates_io {
     use const_format::formatcp;
 
-    pub const SDK_VERSION: &str = "2.0.2";
+    pub const SDK_VERSION: &str = "2.0.3";
     pub const SDK_VERSION_TOML: &str = formatcp!(r#"version = "{SDK_VERSION}""#);
 }
 

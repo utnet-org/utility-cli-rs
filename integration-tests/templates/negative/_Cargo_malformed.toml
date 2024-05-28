@@ -7,7 +7,7 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-unc-sdk = 5
+unc-sdk = 2
 serde = { version = "1", features = ["derive"] }
 
 [workspace]

@@ -69,7 +69,7 @@
 
         <Package Id='*'
             Keywords='Installer'
-            Description='human-friendly console utility that helps to interact with unc Protocol from command line.'
+            Description='human-friendly console utility that helps to interact with utility building Rust smart contracts from command line.'
             Manufacturer='hello Inc'
             InstallerVersion='450'
             Languages='1033'

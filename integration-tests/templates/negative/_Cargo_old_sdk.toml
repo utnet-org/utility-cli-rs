@@ -7,7 +7,7 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-unc-sdk = "=4.0.0"
+unc-sdk = "=2.0.3"
 serde = { version = "1", features = ["derive"] }
 
 # XXX: parity-secp256k1 was purged from crates.io, so we need to patch the old SDK with git dependency:
