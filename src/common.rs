@@ -1,15 +1,15 @@
+use color_eyre::eyre::{ContextCompat, WrapErr};
+use futures::{StreamExt, TryStreamExt};
+use num_rational::Rational32;
+use prettytable::Table;
 use std::collections::VecDeque;
 use std::convert::{TryFrom, TryInto};
 use std::io::Write;
-use std::str::FromStr;
+use std::{env, str::FromStr};
+use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 
-use color_eyre::eyre::{ContextCompat, WrapErr};
-use futures::{StreamExt, TryStreamExt};
-use prettytable::Table;
-use num_rational::Rational32;
-
-use unc_primitives::{hash::CryptoHash, types::BlockReference, views::AccessKeyPermissionView};
 use crate::types::unc_token::UncToken;
+use unc_primitives::{hash::CryptoHash, types::BlockReference, views::AccessKeyPermissionView};
 
 pub type CliResult = color_eyre::eyre::Result<()>;
 
@@ -2233,7 +2233,6 @@ fn input_account_id_from_used_account_list(
     Ok(Some(account_id))
 }
 
-
 pub fn find_seat_price(
     pledges: Vec<u128>,
     max_number_of_seats: u64,
@@ -2305,4 +2304,72 @@ fn find_seat_price_for_protocol_after_49(
     pledges.sort();
 
     Ok(UncToken::from_attounc(pledges[0] + 1))
+}
+
+#[derive(Debug, EnumDiscriminants, Clone, clap::ValueEnum)]
+#[strum_discriminants(derive(EnumMessage, EnumIter))]
+pub enum ColorPreference {
+    Auto,
+    Always,
+    Never,
+}
+
+impl interactive_clap::ToCli for ColorPreference {
+    type CliVariant = ColorPreference;
+}
+
+impl std::fmt::Display for ColorPreference {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::Auto => write!(f, "auto"),
+            Self::Always => write!(f, "always"),
+            Self::Never => write!(f, "never"),
+        }
+    }
+}
+
+impl FromStr for ColorPreference {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "auto" => Ok(default_mode()),
+            "always" => Ok(ColorPreference::Always),
+            "never" => Ok(ColorPreference::Never),
+            _ => Err(format!("invalid color preference: {}", s)),
+        }
+    }
+}
+
+fn default_mode() -> ColorPreference {
+    match env::var("NO_COLOR") {
+        Ok(v) if v != "0" => ColorPreference::Never,
+        _ => {
+            if atty::is(atty::Stream::Stderr) {
+                ColorPreference::Always
+            } else {
+                ColorPreference::Never
+            }
+        }
+    }
+}
+
+impl ColorPreference {
+    pub fn as_str(&self) -> &str {
+        match self {
+            ColorPreference::Auto => "auto",
+            ColorPreference::Always => "always",
+            ColorPreference::Never => "never",
+        }
+    }
+
+    pub fn apply(&self) {
+        match self {
+            ColorPreference::Auto => {
+                default_mode().apply();
+            }
+            ColorPreference::Always => colored::control::set_override(true),
+            ColorPreference::Never => colored::control::set_override(false),
+        }
+    }
 }

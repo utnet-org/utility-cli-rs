@@ -44,13 +44,11 @@ impl ViewPledgeContext {
                 Ok(())
             }
         });
-        Ok(Self(
-            crate::network_view_at_block::ArgsForViewContext {
-                config: previous_context.config,
-                interacting_with_account_ids: vec![scope.validator_account_id.clone().into()],
-                on_after_getting_block_reference_callback,
-            },
-        ))
+        Ok(Self(crate::network_view_at_block::ArgsForViewContext {
+            config: previous_context.config,
+            interacting_with_account_ids: vec![scope.validator_account_id.clone().into()],
+            on_after_getting_block_reference_callback,
+        }))
     }
 }
 

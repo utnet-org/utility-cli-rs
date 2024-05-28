@@ -1,4 +1,3 @@
-
 use inquire::CustomType;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
@@ -168,9 +167,11 @@ impl Deposit {
     ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
         Ok(Some(
-            CustomType::new("Enter deposit for a function call (example: 10 UNC or 0.5 unc or 10000 attounc):")
-                .with_starting_input("0 unc")
-                .prompt()?
+            CustomType::new(
+                "Enter deposit for a function call (example: 10 UNC or 0.5 unc or 10000 attounc):",
+            )
+            .with_starting_input("0 unc")
+            .prompt()?,
         ))
     }
 }

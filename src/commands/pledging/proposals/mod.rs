@@ -42,9 +42,7 @@ impl From<ProposalsContext> for crate::network::NetworkContext {
     }
 }
 
-pub fn display_proposals_info(
-    network_config: &crate::config::NetworkConfig,
-) -> crate::CliResult {
+pub fn display_proposals_info(network_config: &crate::config::NetworkConfig) -> crate::CliResult {
     let json_rpc_client = network_config.json_rpc_client();
 
     let epoch_validator_info = json_rpc_client
@@ -180,8 +178,7 @@ pub fn display_proposals_info(
                     proposals.status
                 };
                 (
-                    crate::types::unc_token::UncToken::from_attounc(new_pledge)
-                        .to_string(),
+                    crate::types::unc_token::UncToken::from_attounc(new_pledge).to_string(),
                     status,
                 )
             }
@@ -196,9 +193,7 @@ pub fn display_proposals_info(
             }
         };
         let pledge = match current_validators_pledge.get(&proposals.account_id) {
-            Some(pledge) => {
-                crate::types::unc_token::UncToken::from_attounc(*pledge).to_string()
-            }
+            Some(pledge) => crate::types::unc_token::UncToken::from_attounc(*pledge).to_string(),
             None => "".to_string(),
         };
 

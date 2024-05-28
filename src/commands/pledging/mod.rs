@@ -1,10 +1,10 @@
 use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 
 pub mod delegate;
-mod current_validators;
 mod directly;
 mod proposals;
-mod next_validators;
+mod validators;
+mod validators_x;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(context = crate::GlobalContext)]
@@ -23,14 +23,14 @@ pub enum PledgingType {
         message = "validator-list   - View the list of current validators to delegate"
     ))]
     /// View the list of validators to delegate
-    ValidatorList(self::current_validators::ValidatorList),
+    ValidatorList(self::validators::ValidatorList),
     #[strum_discriminants(strum(message = "delegation       - Delegation management"))]
     /// Delegation management
     Delegation(self::delegate::PledgeDelegation),
 
     #[strum_discriminants(strum(message = "validators   -   Lookup validators for next epoch"))]
     /// Lookup validators for given epoch
-    Validators(self::next_validators::Validators),
+    Validators(self::validators_x::Validators),
     #[strum_discriminants(strum(
         message = "proposals    -   Show both new proposals in the current epoch as well as current validators who are implicitly proposing"
     ))]

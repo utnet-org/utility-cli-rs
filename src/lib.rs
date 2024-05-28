@@ -10,6 +10,7 @@ pub mod network_for_transaction;
 pub mod network_view_at_block;
 pub mod transaction_signature_options;
 pub mod types;
+pub mod util;
 pub mod utils_command;
 
 #[derive(Debug, Clone)]

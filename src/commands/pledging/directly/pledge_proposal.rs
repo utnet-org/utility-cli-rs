@@ -41,21 +41,21 @@ impl PledgeProposalContext {
 
 impl From<PledgeProposalContext> for crate::commands::ActionContext {
     fn from(item: PledgeProposalContext) -> Self {
-        let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback =
-            {
-                let validator = item.validator.clone();
-                std::sync::Arc::new(move |_network_config| {
+        let on_after_getting_network_callback: crate::commands::OnAfterGettingNetworkCallback = {
+            let validator = item.validator.clone();
+            std::sync::Arc::new(move |_network_config| {
                 Ok(crate::commands::PrepopulatedTransaction {
                     signer_id: validator.clone(),
                     receiver_id: validator.clone(),
-                    actions: vec![unc_primitives::transaction::Action::Pledge(
-                        Box::new(unc_primitives::transaction::PledgeAction {
+                    actions: vec![unc_primitives::transaction::Action::Pledge(Box::new(
+                        unc_primitives::transaction::PledgeAction {
                             pledge: item.pledge.as_attounc(),
                             public_key: item.public_key.clone(),
-                        }),
-                    )],
+                        },
+                    ))],
                 })
-            })};
+            })
+        };
         Self {
             global_context: item.global_context,
             interacting_with_account_ids: vec![item.validator],

@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::super::network_view_at_block::NetworkViewAtBlockArgsContext)]
+#[interactive_clap(input_context = super::validators_x::network_view_at_block::NetworkViewAtBlockArgsContext)]
 #[interactive_clap(output_context = LatestContext)]
 pub struct Latest {}
 

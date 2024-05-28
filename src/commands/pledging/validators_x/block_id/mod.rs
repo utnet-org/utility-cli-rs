@@ -10,7 +10,7 @@ use unc_primitives::types::{BlockId, BlockReference, EpochReference, Finality};
 use crate::common::JsonRpcClientExt;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::network_view_at_block::NetworkViewAtBlockArgsContext)]
+#[interactive_clap(input_context = validators_x::network_view_at_block::NetworkViewAtBlockArgsContext)]
 #[interactive_clap(output_context = AtBlockHeightContext)]
 pub struct AtBlockHeight {
     /// Type the block height:
@@ -32,7 +32,7 @@ impl AtBlockHeightContext {
 }
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::network_view_at_block::NetworkViewAtBlockArgsContext)]
+#[interactive_clap(input_context = validators_x::network_view_at_block::NetworkViewAtBlockArgsContext)]
 #[interactive_clap(output_context = AtBlockHashContext)]
 pub struct AtBlockHash {
     /// Type the block hash:

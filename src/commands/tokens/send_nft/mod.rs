@@ -1,4 +1,3 @@
-
 use inquire::CustomType;
 use serde_json::json;
 
@@ -164,9 +163,11 @@ impl SendNftCommand {
     ) -> color_eyre::eyre::Result<Option<crate::types::unc_token::UncToken>> {
         eprintln!();
         Ok(Some(
-            CustomType::new("Enter deposit for a function call (example: 10 UNC or 0.5 unc or 10000 attounc):")
-                .with_starting_input("1 attounc")
-                .prompt()?
+            CustomType::new(
+                "Enter deposit for a function call (example: 10 UNC or 0.5 unc or 10000 attounc):",
+            )
+            .with_starting_input("1 attounc")
+            .prompt()?,
         ))
     }
 }

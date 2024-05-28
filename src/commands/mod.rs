@@ -4,6 +4,7 @@ use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 pub mod account;
 mod config;
 pub mod contract;
+pub mod dev_tools;
 mod pledging;
 mod tokens;
 pub mod transaction;
@@ -44,6 +45,10 @@ pub enum TopLevelCommand {
     ))]
     /// Use this to manage connections in a configuration file (config.toml).
     Config(self::config::ConfigCommands),
+
+    /// develop rust smart contract tools
+    DevTool(self::dev_tools::DevCommands),
+
     #[cfg(feature = "self-update")]
     #[strum_discriminants(strum(message = "extension   - Manage unc CLI and extensions"))]
     /// Use this to manage unc CLI and extensions
