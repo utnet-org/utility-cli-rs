@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install unc CLI
-        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/unc/releases/download/v0.7.0/unc-installer.sh | sh
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/download/v0.7.0/unc-installer.sh | sh
       - name: Remove staging account
         run: |
           unc account delete-account "${{ env.UNC_CONTRACT_PR_STAGING_ACCOUNT_ID }}" \

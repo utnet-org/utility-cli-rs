@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install unc CLI
-        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/unc/releases/download/v0.7.0/unc-installer.sh | sh
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/download/v0.7.0/unc-installer.sh | sh
       - name: Create staging account
         if: github.event.action == 'opened' || github.event.action == 'reopened'
         run: |
@@ -34,7 +34,7 @@ jobs:
             send
 
       - name: Install unc CLI
-        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/unc/releases/download/unc-v0.4.1/unc-installer.sh | sh
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/download/unc-v0.4.1/unc-installer.sh | sh
       - name: Deploy to staging
         run: |
           cargo unc deploy "${{ env.UNC_CONTRACT_PR_STAGING_ACCOUNT_ID }}" \

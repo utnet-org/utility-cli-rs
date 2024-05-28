@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install unc CLI
-        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/unc/releases/download/unc-v0.4.1/unc-installer.sh | sh
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/download/unc-v0.4.1/unc-installer.sh | sh
       - name: Deploy to production
         run: |
           cargo unc deploy "${{ vars.UNC_CONTRACT_PRODUCTION_ACCOUNT_ID }}" \
