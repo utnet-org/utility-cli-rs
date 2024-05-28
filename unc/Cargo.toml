@@ -69,7 +69,7 @@ cargo-util = "0.2.9"
 wasmparser = "0.200.0"
 
 semver = { version = "1.0.4", optional = true }
-self_update = { version = "0.39.0", features = [
+self_update = { version = "0.40.0", features = [
     "archive-tar",
     "compression-flate2",
 ], optional = true }

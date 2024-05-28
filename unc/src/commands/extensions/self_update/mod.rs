@@ -19,10 +19,10 @@ impl SelfUpdateCommandContext {
         _scope: &<SelfUpdateCommand as interactive_clap::ToInteractiveClapContextScope>::InteractiveClapContextScope,
     ) -> color_eyre::eyre::Result<Self> {
         let status = self_update::backends::github::Update::configure()
-            .repo_owner("unc")
-            .repo_name("unc-cli-rs")
+            .repo_owner("utnet-org")
+            .repo_name("utility-cli-rs")
             .bin_path_in_archive(
-                format!("unc-cli-rs-{}/{}", self_update::get_target(), BIN_NAME).as_str(),
+                format!("utility-cli-rs-{}/{}", self_update::get_target(), BIN_NAME).as_str(),
             )
             .bin_name(BIN_NAME)
             .show_download_progress(true)
@@ -39,11 +39,11 @@ impl SelfUpdateCommandContext {
                 "!".green().bold()
             );
             println!("Report any bugs:\n");
-            println!("\thttps://github.com/utility/unc/issues\n");
+            println!("\thttps://github.com/utnet-org/utility-cli-rs/issues\n");
             println!("What's new:\n");
             println!(
                 "\t{}{}\n",
-                "https://github.com/utility/unc/releases/tag/v".truecolor(0, 160, 150),
+                "https://github.com/utnet-org/utility-cli-rs/releases/tag/v".truecolor(0, 160, 150),
                 release.truecolor(0, 160, 150)
             );
         }
@@ -54,8 +54,8 @@ impl SelfUpdateCommandContext {
 
 pub fn get_latest_version() -> color_eyre::eyre::Result<String> {
     Ok(self_update::backends::github::Update::configure()
-        .repo_owner("unc")
-        .repo_name("unc-cli-rs")
+        .repo_owner("utnet-org")
+        .repo_name("utility-cli-rs")
         .bin_name("unc")
         .current_version(self_update::cargo_crate_version!())
         .build()
