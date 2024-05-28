@@ -37,7 +37,7 @@ jobs:
         run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/download/unc-v0.4.1/unc-installer.sh | sh
       - name: Deploy to staging
         run: |
-          cargo unc deploy "${{ env.UNC_CONTRACT_PR_STAGING_ACCOUNT_ID }}" \
+          unc dev-tool deploy "${{ env.UNC_CONTRACT_PR_STAGING_ACCOUNT_ID }}" \
             without-init-call \
             network-config "${{ vars.UNC_CONTRACT_STAGING_NETWORK }}" \
             sign-with-plaintext-private-key \

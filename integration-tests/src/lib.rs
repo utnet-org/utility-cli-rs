@@ -10,8 +10,8 @@ pub mod from_crates_io {
 pub mod from_git {
     use const_format::formatcp;
 
-    pub const SDK_VERSION: &str = "2.0.2";
-    pub const SDK_REVISION: &str = "b74cc5f596d4d44f5759444f2736ddfd5818d834";
+    pub const SDK_VERSION: &str = "2.0.3";
+    pub const SDK_REVISION: &str = "3ca93ea104519b944823d564169eb1b24903a67f";
     pub const SDK_SHORT_VERSION_TOML: &str = formatcp!(r#"version = "{SDK_VERSION}""#);
     pub const SDK_REPO: &str = "https://github.com/utnet-org/utility-sdk-rs.git";
     pub const SDK_VERSION_TOML: &str =

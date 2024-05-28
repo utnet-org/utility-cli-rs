@@ -7,13 +7,13 @@ unc-new-project-description
 Install [`unc`](https://github.com/utnet-org/utility-cli-rs) and run:
 
 ```bash
-cargo unc build
+unc dev-tool build
 ```
 
 ## How to Test Locally?
 
 ```bash
-cargo test
+cargo nextest run --nocapture
 ```
 
 ## How to Deploy?
@@ -22,5 +22,5 @@ Deployment is automated with GitHub Actions CI/CD pipeline.
 To deploy manually, install [`unc`](https://github.com/utnet-org/utility-cli-rs) and run:
 
 ```bash
-cargo unc deploy <account-id>
+unc dev-tool deploy <account-id>
 ```
