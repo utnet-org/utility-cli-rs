@@ -46,6 +46,9 @@ pub enum TopLevelCommand {
     /// Use this to manage connections in a configuration file (config.toml).
     Config(self::config::ConfigCommands),
 
+    #[strum_discriminants(strum(
+        message = "dev-tool      - Developer tools to build and deploy smart contracts"
+    ))]
     /// develop rust smart contract tools
     DevTool(self::dev_tools::DevCommands),
 

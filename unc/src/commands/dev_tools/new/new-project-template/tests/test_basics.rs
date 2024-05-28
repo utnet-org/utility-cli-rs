@@ -2,8 +2,8 @@ use serde_json::json;
 
 #[tokio::test]
 async fn test_contract_is_operational() -> Result<(), Box<dyn std::error::Error>> {
-    let sandbox = unc_workspaces::sandbox().await?;
-    let contract_wasm = unc_workspaces::compile_project("./").await?;
+    let sandbox = utility_workspaces::sandbox().await?;
+    let contract_wasm = utility_workspaces::compile_project("./").await?;
 
     let contract = sandbox.dev_deploy(&contract_wasm).await?;
 

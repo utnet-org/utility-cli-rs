@@ -30,7 +30,7 @@ async fn test_build_no_embed_abi() -> unc::CliResult {
         }
     };
 
-    let worker = unc_workspaces::sandbox().await?;
+    let worker = utility_workspaces::sandbox().await?;
     let contract = worker.dev_deploy(&build_result.wasm).await?;
     let outcome = contract.call("__contract_abi").view().await;
     outcome.unwrap_err();

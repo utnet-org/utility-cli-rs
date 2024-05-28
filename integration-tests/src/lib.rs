@@ -58,21 +58,21 @@ macro_rules! invoke_unc {
 
         std::env::set_var("CARGO_TARGET_DIR", workspace_dir.join("target"));
 
-        let unc::CliOpts::Unc(cli_args) = unc::Opts::try_parse_from($cli_opts)?;
+        let cmd = unc::commands::dev_tools::DevCommandsType::try_parse_from($cli_opts);
 
-        match cli_args.cmd {
-            Some(unc::commands::CliUncCommand::Abi(cmd)) => {
-                let args = unc::commands::abi_command::AbiCommand {
+        match cmd {
+            Ok(unc::commands::dev_tools::CliDevCommandsType::Abi(cmd)) => {
+                let args = unc::commands::dev_tools::abi_command::AbiCommand {
                     no_doc: cmd.no_doc,
                     compact_abi: cmd.compact_abi,
                     out_dir: cmd.out_dir,
                     manifest_path: Some(cargo_path.into()),
                     color: cmd.color,
                 };
-                unc::commands::abi_command::abi::run(args)?;
+                unc::commands::dev_tools::abi_command::abi::run(args)?;
             },
-            Some(unc::commands::CliUncCommand::Build(cmd)) => {
-                let args = unc::commands::build_command::BuildCommand {
+            Ok(unc::commands::dev_tools::CliDevCommandsType::Build(cmd)) => {
+                let args = unc::commands::dev_tools::build_command::BuildCommand {
                     no_release: cmd.no_release,
                     no_abi: cmd.no_abi,
                     no_embed_abi: cmd.no_embed_abi,
@@ -83,10 +83,10 @@ macro_rules! invoke_unc {
                     no_default_features: cmd.no_default_features,
                     color: cmd.color,
                 };
-                unc::commands::build_command::build::run(args)?;
+                unc::commands::dev_tools::build_command::build::run(args)?;
             },
-            Some(_) => todo!(),
-            None => ()
+            Ok(_) => todo!(),
+            Err(_) => ()
         }
 
         workspace_dir.join("target").join("unc")
@@ -166,7 +166,7 @@ pub struct BuildResult {
 macro_rules! build_with {
     ($(Cargo: $cargo_path:expr;)? $(Vars: $cargo_vars:expr;)? $(Opts: $cli_opts:expr;)? Code: $($code:tt)*) => {{
         let opts = "cargo unc build";
-        $(let opts = format!("cargo unc build {}", $cli_opts);)?;
+        $(let opts = format!("unc dev-tool build {}", $cli_opts);)?;
         let result_dir = $crate::invoke_unc! {
             $(Cargo: $cargo_path;)? $(Vars: $cargo_vars;)?
             Opts: &opts;
