@@ -1,0 +1,115 @@
+[package]
+name = "utility-cli-rs"
+version = "0.12.4"
+authors = ["hello Inc <hello@utnet.org>"]
+license = "GPL-2.0-or-later"
+edition = "2021"
+rust-version = "1.78.0"
+homepage = "https://utility.cli.rs"
+description = "human-friendly console utility that helps to interact with utility building Rust smart contracts from command line."
+readme = "README.md"
+repository = "https://github.com/utnet-org/utility-cli-rs"
+keywords = ["cargo", "unc", "contract", "abi", "build"]
+categories = ["development-tools", "development-tools::cargo-plugins", "development-tools::build-utils", "command-line-utilities"]
+
+[package.metadata.wix]
+upgrade-guid = "A6432354-8256-45E3-9E10-53C117EE22B4"
+path-guid = "3A5A99B6-61EC-4DFB-AA36-763EE316AF18"
+license = false
+eula = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "unc"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.0.18", features = ["derive"] }
+inquire = "0.7.0"
+colored = "2.0"
+log = "0.4"
+strum = { version = "0.24", features = ["derive"] }
+strum_macros = "0.24"
+smart-default = "0.7.1"
+derive_more = "0.99.9"
+easy-ext = "1"
+camino = "1.1.1"
+cargo_metadata = "0.18.1"
+atty = "0.2.14"
+dunce = "1"
+names = { version = "0.14.0", default-features = false }
+
+reqwest = { version = "0.12.0", features = ["blocking", "json"] }
+tokio = { version = "1.0", features = ["rt-multi-thread"] }
+futures = "0.3"
+# Ad-hoc fix for compilation errors (rustls is used instead of openssl to ease the deployment avoiding the system dependency on openssl)
+openssl = { version = "0.10", features = ["vendored"] }
+
+sha2 = "0.10"
+
+rsa = { version = "0.9.6" }
+rand = { version = "0.8"}
+bip39 = { version = "2.0.0", features = ["rand"] }
+bs58 = "0.5"
+ed25519-dalek = { version = "1" }
+hex = "0.4.2"
+linked-hash-map = { version = "0.5", features = ["serde_impl"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.57"
+toml = "0.8.10"
+dirs = "5"
+shellexpand = "3"
+slip10 = "0.4.3"
+url = { version = "2", features = ["serde"] }
+open = "5.1.1"
+shell-words = "1"
+cargo-util = "0.2.9"
+
+wasmparser = "0.200.0"
+
+semver = { version = "1.0.4", optional = true }
+self_update = { version = "0.39.0", features = [
+    "archive-tar",
+    "compression-flate2",
+], optional = true }
+
+color-eyre = "0.6"
+thiserror = "1"
+
+bytesize = "1.1.0"
+prettytable = "0.10.0"
+textwrap = "0.16.1"
+num-rational = "0.3.2"
+
+unc-ledger = { version = "0.10.2", optional = true }
+unc-crypto = "0.10.2"
+unc-primitives = "0.10.2"
+unc-jsonrpc-client = "0.10.2"
+unc-jsonrpc-primitives = "0.10.2"
+unc-gas = { version = "0.10.0", features = [
+    "serde",
+    "borsh",
+    "interactive-clap",
+] }
+unc-token = { version = "0.10.0", features = [
+    "serde",
+    "borsh",
+    "interactive-clap",
+] }
+
+unc-abi = { version = "0.10.2", features = ["__chunked-entries"] }
+libloading = "0.7.3"
+rustc_version = "0.4"
+zstd = "0.13.0"
+symbolic-debuginfo = "8.8"
+schemars = "0.8"
+
+keyring = "2.0.5"
+interactive-clap = "0.2.10"
+interactive-clap-derive = "0.2.10"
+
+[features]
+default = ["ledger", "self-update"]
+ledger = ["unc-ledger"]
+self-update = ["self_update", "semver"]

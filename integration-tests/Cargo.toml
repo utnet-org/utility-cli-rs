@@ -1,0 +1,27 @@
+[package]
+name = "cargo-unc-integration-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+const_format = "0.2"
+unc-abi = "0.10.2"
+
+[dev-dependencies]
+borsh = { version = "1.0.0", features = ["derive", "unstable__schema"]}
+camino = "1.1.1"
+utility-cli-rs = { path = "../cargo-unc" }
+color-eyre = "0.6"
+function_name = "0.3"
+git2 = "0.18"
+minifier = "0.3"
+prettyplease = "0.2"
+schemars = "0.8"
+serde_json = "1.0"
+syn = "2"
+tempfile = "3.3"
+tokio = "1.0"
+quote = "1.0"
+utility-workspaces = "0.9.1"
+zstd = "0.11"

@@ -1,0 +1,25 @@
+[package]
+name = "::name::"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+unc-sdk = "::sdk-git-version::"
+serde = { version = "1", features = ["derive"] }
+
+[patch.crates-io.unc-sdk]
+::sdk-git-version-toml-table::
+
+[workspace]
+members = []
+
+[profile.release]
+codegen-units = 1
+# Tell `rustc` to optimize for small code size.
+opt-level = "z"
+lto = true
+debug = false
+panic = "abort"
