@@ -165,7 +165,7 @@ pub struct BuildResult {
 #[macro_export]
 macro_rules! build_with {
     ($(Cargo: $cargo_path:expr;)? $(Vars: $cargo_vars:expr;)? $(Opts: $cli_opts:expr;)? Code: $($code:tt)*) => {{
-        let opts = "cargo unc build";
+        let opts = "unc dev-tool build";
         $(let opts = format!("unc dev-tool build {}", $cli_opts);)?;
         let result_dir = $crate::invoke_unc! {
             $(Cargo: $cargo_path;)? $(Vars: $cargo_vars;)?
