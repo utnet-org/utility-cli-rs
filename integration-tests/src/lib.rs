@@ -26,7 +26,7 @@ pub mod from_git {
 }
 
 #[macro_export]
-macro_rules! invoke_utility_cli_rs {
+macro_rules! invoke_unc {
     ($(Cargo: $cargo_path:expr;)? $(Vars: $cargo_vars:expr;)? Opts: $cli_opts:expr; Code: $($code:tt)*) => {{
         let manifest_dir: camino::Utf8PathBuf = env!("CARGO_MANIFEST_DIR").into();
         let workspace_dir = manifest_dir.parent().unwrap().join("target").join("_abi-integration-tests");
@@ -58,21 +58,21 @@ macro_rules! invoke_utility_cli_rs {
 
         std::env::set_var("CARGO_TARGET_DIR", workspace_dir.join("target"));
 
-        let utility_cli_rs::CliOpts::Unc(cli_args) = utility_cli_rs::Opts::try_parse_from($cli_opts)?;
+        let unc::CliOpts::Unc(cli_args) = unc::Opts::try_parse_from($cli_opts)?;
 
         match cli_args.cmd {
-            Some(utility_cli_rs::commands::CliUncCommand::Abi(cmd)) => {
-                let args = utility_cli_rs::commands::abi_command::AbiCommand {
+            Some(unc::commands::CliUncCommand::Abi(cmd)) => {
+                let args = unc::commands::abi_command::AbiCommand {
                     no_doc: cmd.no_doc,
                     compact_abi: cmd.compact_abi,
                     out_dir: cmd.out_dir,
                     manifest_path: Some(cargo_path.into()),
                     color: cmd.color,
                 };
-                utility_cli_rs::commands::abi_command::abi::run(args)?;
+                unc::commands::abi_command::abi::run(args)?;
             },
-            Some(utility_cli_rs::commands::CliUncCommand::Build(cmd)) => {
-                let args = utility_cli_rs::commands::build_command::BuildCommand {
+            Some(unc::commands::CliUncCommand::Build(cmd)) => {
+                let args = unc::commands::build_command::BuildCommand {
                     no_release: cmd.no_release,
                     no_abi: cmd.no_abi,
                     no_embed_abi: cmd.no_embed_abi,
@@ -83,7 +83,7 @@ macro_rules! invoke_utility_cli_rs {
                     no_default_features: cmd.no_default_features,
                     color: cmd.color,
                 };
-                utility_cli_rs::commands::build_command::build::run(args)?;
+                unc::commands::build_command::build::run(args)?;
             },
             Some(_) => todo!(),
             None => ()
@@ -98,7 +98,7 @@ macro_rules! generate_abi_with {
     ($(Cargo: $cargo_path:expr;)? $(Vars: $cargo_vars:expr;)? $(Opts: $cli_opts:expr;)? Code: $($code:tt)*) => {{
         let opts = "cargo unc abi";
         $(let opts = format!("cargo unc abi {}", $cli_opts);)?;
-        let result_dir = $crate::invoke_utility_cli_rs! {
+        let result_dir = $crate::invoke_unc! {
             $(Cargo: $cargo_path;)? $(Vars: $cargo_vars;)?
             Opts: &opts;
             Code:
@@ -161,13 +161,13 @@ pub struct BuildResult {
     pub abi_compressed: Option<Vec<u8>>,
 }
 
-// TODO: make cargo-unc agnostic of stdin/stdout and capture the resulting paths from Writer
+// TODO: make unc agnostic of stdin/stdout and capture the resulting paths from Writer
 #[macro_export]
 macro_rules! build_with {
     ($(Cargo: $cargo_path:expr;)? $(Vars: $cargo_vars:expr;)? $(Opts: $cli_opts:expr;)? Code: $($code:tt)*) => {{
         let opts = "cargo unc build";
         $(let opts = format!("cargo unc build {}", $cli_opts);)?;
-        let result_dir = $crate::invoke_utility_cli_rs! {
+        let result_dir = $crate::invoke_unc! {
             $(Cargo: $cargo_path;)? $(Vars: $cargo_vars;)?
             Opts: &opts;
             Code:

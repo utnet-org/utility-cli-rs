@@ -1,10 +1,10 @@
-use utility_cli_rs_integration_tests::generate_abi_fn_with;
+use unc_integration_tests::generate_abi_fn_with;
 use function_name::named;
 use std::fs;
 
 #[test]
 #[named]
-fn test_abi_no_doc() -> utility_cli_rs::CliResult {
+fn test_abi_no_doc() -> unc::CliResult {
     let abi_root = generate_abi_fn_with! {
         Opts: "--no-doc";
         Code:
@@ -23,7 +23,7 @@ fn test_abi_no_doc() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_abi_opt_compact_abi() -> utility_cli_rs::CliResult {
+fn test_abi_opt_compact_abi() -> unc::CliResult {
     generate_abi_fn_with! {
         Opts: "--compact-abi";
         Code:
@@ -52,7 +52,7 @@ fn test_abi_opt_compact_abi() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_abi_opt_out_dir() -> utility_cli_rs::CliResult {
+fn test_abi_opt_out_dir() -> unc::CliResult {
     let out_dir = tempfile::tempdir()?;
     let abi_root = generate_abi_fn_with! {
         Opts: format!("--out-dir {}", out_dir.path().display());

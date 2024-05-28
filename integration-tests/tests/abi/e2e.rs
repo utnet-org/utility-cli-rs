@@ -1,11 +1,11 @@
-use utility_cli_rs_integration_tests::generate_abi_fn;
+use unc_integration_tests::generate_abi_fn;
 use function_name::named;
 use schemars::gen::SchemaGenerator;
 use unc_abi::{AbiFunction, AbiFunctionKind, AbiJsonParameter, AbiParameters, AbiType};
 
 #[test]
 #[named]
-fn test_simple_function() -> utility_cli_rs::CliResult {
+fn test_simple_function() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn add(&self, a: u32, b: u32) -> u32 {
             a + b

@@ -1,4 +1,4 @@
-use utility_cli_rs_integration_tests::{from_git, generate_abi_fn_with, generate_abi_with};
+use unc_integration_tests::{from_git, generate_abi_fn_with, generate_abi_with};
 use function_name::named;
 use git2::build::CheckoutBuilder;
 use git2::Repository;
@@ -19,7 +19,7 @@ fn clone_git_repo() -> color_eyre::eyre::Result<TempDir> {
 
 #[test]
 #[named]
-fn test_dependency_local_path() -> utility_cli_rs::CliResult {
+fn test_dependency_local_path() -> unc::CliResult {
     let unc_sdk_dir = clone_git_repo()?;
     let unc_sdk_dep_path = unc_sdk_dir.path().join("unc-sdk");
 
@@ -41,7 +41,7 @@ fn test_dependency_local_path() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_dependency_local_path_with_version() -> utility_cli_rs::CliResult {
+fn test_dependency_local_path_with_version() -> unc::CliResult {
     let unc_sdk_dir = clone_git_repo()?;
     let unc_sdk_dep_path = unc_sdk_dir.path().join("unc-sdk");
 
@@ -62,7 +62,7 @@ fn test_dependency_local_path_with_version() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_dependency_default_features() -> utility_cli_rs::CliResult {
+fn test_dependency_default_features() -> unc::CliResult {
     let abi_root = generate_abi_fn_with! {
         Cargo: "/templates/_Cargo.toml";
         Code:
@@ -79,7 +79,7 @@ fn test_dependency_default_features() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_dependency_explicit() -> utility_cli_rs::CliResult {
+fn test_dependency_explicit() -> unc::CliResult {
     let abi_root = generate_abi_fn_with! {
         Cargo: "/templates/sdk-dependency/_Cargo_explicit.toml";
         Code:
@@ -96,7 +96,7 @@ fn test_dependency_explicit() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_dependency_no_default_features() -> utility_cli_rs::CliResult {
+fn test_dependency_no_default_features() -> unc::CliResult {
     let abi_root = generate_abi_fn_with! {
         Cargo: "/templates/sdk-dependency/_Cargo_no_default_features.toml";
         Code:
@@ -113,7 +113,7 @@ fn test_dependency_no_default_features() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_dependency_multiple_features() -> utility_cli_rs::CliResult {
+fn test_dependency_multiple_features() -> unc::CliResult {
     let abi_root = generate_abi_fn_with! {
         Cargo: "/templates/sdk-dependency/_Cargo_multiple_features.toml";
         Code:
@@ -130,7 +130,7 @@ fn test_dependency_multiple_features() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_dependency_platform_specific() -> utility_cli_rs::CliResult {
+fn test_dependency_platform_specific() -> unc::CliResult {
     let abi_root = generate_abi_fn_with! {
         Cargo: "/templates/sdk-dependency/_Cargo_platform_specific.toml";
         Code:
@@ -149,7 +149,7 @@ fn test_dependency_platform_specific() -> utility_cli_rs::CliResult {
 #[ignore]
 #[test]
 #[named]
-fn test_dependency_renamed() -> utility_cli_rs::CliResult {
+fn test_dependency_renamed() -> unc::CliResult {
     let abi_root = generate_abi_with! {
         Cargo: "/templates/sdk-dependency/_Cargo_renamed.toml";
         Code:
@@ -177,7 +177,7 @@ fn test_dependency_renamed() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_dependency_patch() -> utility_cli_rs::CliResult {
+fn test_dependency_patch() -> unc::CliResult {
     // [dependencies]
     // unc-sdk = "4.0.0"
     //
@@ -199,11 +199,11 @@ fn test_dependency_patch() -> utility_cli_rs::CliResult {
 
 /// this is a test of Cargo.toml format
 /// TODO: un-ignore when `5.x.x` unc-sdk is published
-/// and `utility_cli_rs_integration_tests::SDK_VERSION` is changed 4.x.x -> 5.x.x
+/// and `unc_integration_tests::SDK_VERSION` is changed 4.x.x -> 5.x.x
 #[test]
 #[ignore]
 #[named]
-fn test_abi_not_a_table() -> utility_cli_rs::CliResult {
+fn test_abi_not_a_table() -> unc::CliResult {
     let abi_root = generate_abi_fn_with! {
         Cargo: "/templates/sdk-dependency/_Cargo_not_a_table.toml";
         Code:

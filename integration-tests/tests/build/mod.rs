@@ -1,12 +1,12 @@
 use crate::util;
-use utility_cli_rs_integration_tests::build_fn;
+use unc_integration_tests::build_fn;
 use function_name::named;
 
 mod opts;
 
 #[tokio::test]
 #[named]
-async fn test_build_simple() -> utility_cli_rs::CliResult {
+async fn test_build_simple() -> unc::CliResult {
     let build_result = build_fn! {
         /// Adds `a` and `b`.
         pub fn add(&self, a: u32, b: u32) -> u32 {

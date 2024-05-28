@@ -1,12 +1,12 @@
 use crate::util::AsBorshSchema;
 use borsh::schema::{BorshSchemaContainer, Definition, Fields};
-use utility_cli_rs_integration_tests::{generate_abi, generate_abi_fn};
+use unc_integration_tests::{generate_abi, generate_abi_fn};
 use function_name::named;
 use std::collections::BTreeMap;
 
 #[test]
 #[named]
-fn test_borsh_schema_numeric_primitives_signed() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_numeric_primitives_signed() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(
             &self,
@@ -56,7 +56,7 @@ fn test_borsh_schema_numeric_primitives_signed() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_numeric_primitives_unsigned() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_numeric_primitives_unsigned() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(
             &self,
@@ -106,7 +106,7 @@ fn test_borsh_schema_numeric_primitives_unsigned() -> utility_cli_rs::CliResult 
 
 #[test]
 #[named]
-fn test_borsh_schema_numeric_primitives_float() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_numeric_primitives_float() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, #[serializer(borsh)] a: f32, #[serializer(borsh)] b: f64) {}
     };
@@ -131,7 +131,7 @@ fn test_borsh_schema_numeric_primitives_float() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_string() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_string() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, #[serializer(borsh)] a: String, #[serializer(borsh)] b: &str, #[serializer(borsh)] c: &'static str) {}
     };
@@ -163,7 +163,7 @@ fn test_borsh_schema_string() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_other_primitives() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_other_primitives() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, #[serializer(borsh)] b: bool, #[serializer(borsh)] c: ()) {}
     };
@@ -193,7 +193,7 @@ fn test_borsh_schema_other_primitives() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_tuples() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_tuples() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(
             &self,
@@ -252,7 +252,7 @@ fn test_borsh_schema_tuples() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_arrays() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_arrays() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(
             &self,
@@ -317,7 +317,7 @@ fn test_borsh_schema_arrays() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_struct() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_struct() -> unc::CliResult {
     let abi_root = generate_abi! {
         use unc_sdk::borsh::{BorshDeserialize, BorshSerialize};
         use unc_sdk::{unc_bindgen, UncSchema};
@@ -385,7 +385,7 @@ fn test_borsh_schema_struct() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_enum() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_enum() -> unc::CliResult {
     let abi_root = generate_abi! {
         use unc_sdk::borsh::{BorshDeserialize, BorshSerialize};
         use unc_sdk::{unc_bindgen, UncSchema};
@@ -497,7 +497,7 @@ fn test_borsh_schema_enum() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_borsh_schema_complex() -> utility_cli_rs::CliResult {
+fn test_borsh_schema_complex() -> unc::CliResult {
     let abi_root = generate_abi! {
         use unc_sdk::borsh::{BorshDeserialize, BorshSerialize};
         use unc_sdk::{unc_bindgen, UncSchema};

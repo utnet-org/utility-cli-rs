@@ -1,10 +1,10 @@
-# cargo-unc-new-project-name
+# unc-new-project-name
 
-cargo-unc-new-project-description
+unc-new-project-description
 
 ## How to Build Locally?
 
-Install [`cargo-unc`](https://github.com/utnet-org/cargo-unc) and run:
+Install [`unc`](https://github.com/utnet-org/unc) and run:
 
 ```bash
 cargo unc build
@@ -19,7 +19,7 @@ cargo test
 ## How to Deploy?
 
 Deployment is automated with GitHub Actions CI/CD pipeline.
-To deploy manually, install [`cargo-unc`](https://github.com/utnet-org/cargo-unc) and run:
+To deploy manually, install [`unc`](https://github.com/utnet-org/unc) and run:
 
 ```bash
 cargo unc deploy <account-id>
@@ -27,7 +27,7 @@ cargo unc deploy <account-id>
 
 ## Useful Links
 
-- [cargo-unc](https://github.com/utnet-org/cargo-unc) - UNC smart contract development toolkit for Rust
+- [unc](https://github.com/utnet-org/unc) - UNC smart contract development toolkit for Rust
 - [unc CLI](https://unc.cli.rs) - Iteract with UNC blockchain from command line
 - [UNC Rust SDK Documentation](https://docs.unc.org/sdk/rust/introduction)
 - [UNC Documentation](https://docs.unc.org)

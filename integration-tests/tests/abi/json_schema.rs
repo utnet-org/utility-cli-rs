@@ -1,11 +1,11 @@
 use crate::util::AsJsonSchema;
-use utility_cli_rs_integration_tests::{generate_abi, generate_abi_fn};
+use unc_integration_tests::{generate_abi, generate_abi_fn};
 use function_name::named;
 use schemars::schema::Schema;
 
 #[test]
 #[named]
-fn test_schema_numeric_primitives_signed() -> utility_cli_rs::CliResult {
+fn test_schema_numeric_primitives_signed() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, a: i8, b: i16, c: i32, d: i64, e: i128, f: isize) {}
     };
@@ -79,7 +79,7 @@ fn test_schema_numeric_primitives_signed() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_numeric_primitives_unsigned() -> utility_cli_rs::CliResult {
+fn test_schema_numeric_primitives_unsigned() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, a: u8, b: u16, c: u32, d: u64, e: u128, f: usize) {}
     };
@@ -159,7 +159,7 @@ fn test_schema_numeric_primitives_unsigned() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_numeric_primitives_float() -> utility_cli_rs::CliResult {
+fn test_schema_numeric_primitives_float() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, a: f32, b: f64) {}
     };
@@ -197,7 +197,7 @@ fn test_schema_numeric_primitives_float() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_string() -> utility_cli_rs::CliResult {
+fn test_schema_string() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, a: String, b: &str, c: &'static str) {}
     };
@@ -222,7 +222,7 @@ fn test_schema_string() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_other_primitives() -> utility_cli_rs::CliResult {
+fn test_schema_other_primitives() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, a: char, b: bool, c: ()) {}
     };
@@ -263,7 +263,7 @@ fn test_schema_other_primitives() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_tuples() -> utility_cli_rs::CliResult {
+fn test_schema_tuples() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, a: (bool,), b: (bool, bool), c: (bool, bool, bool)) {}
     };
@@ -332,7 +332,7 @@ fn test_schema_tuples() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_arrays() -> utility_cli_rs::CliResult {
+fn test_schema_arrays() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, a: [bool; 8], b: [bool; 16], c: &[bool]) {}
     };
@@ -384,7 +384,7 @@ fn test_schema_arrays() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_struct() -> utility_cli_rs::CliResult {
+fn test_schema_struct() -> unc::CliResult {
     let abi_root = generate_abi! {
         use unc_sdk::borsh::{BorshDeserialize, BorshSerialize};
         use unc_sdk::{unc_bindgen, UncSchema};
@@ -490,7 +490,7 @@ fn test_schema_struct() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_enum() -> utility_cli_rs::CliResult {
+fn test_schema_enum() -> unc::CliResult {
     let abi_root = generate_abi! {
         use unc_sdk::borsh::{BorshDeserialize, BorshSerialize};
         use unc_sdk::{unc_bindgen, UncSchema};
@@ -623,7 +623,7 @@ fn test_schema_enum() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_schema_complex() -> utility_cli_rs::CliResult {
+fn test_schema_complex() -> unc::CliResult {
     let abi_root = generate_abi! {
         use unc_sdk::borsh::{BorshDeserialize, BorshSerialize};
         use unc_sdk::{unc_bindgen, UncSchema};

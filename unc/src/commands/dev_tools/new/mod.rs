@@ -40,7 +40,7 @@ impl NewContext {
                 &new_file_path,
                 new_project_file
                     .content
-                    .replace("cargo-unc-new-project-name", project_name),
+                    .replace("unc-new-project-name", project_name),
             )
             .wrap_err_with(|| format!("Failed to write to file: {}", new_file_path.display()))?;
         }
@@ -52,7 +52,7 @@ impl NewContext {
             .wrap_err("Failed to execute process: `git init`")?;
 
         println!("New project is created at '{}'.\n", project_dir.display());
-        println!("Now you can build, test, and deploy your project using cargo-unc:");
+        println!("Now you can build, test, and deploy your project using unc:");
         println!(" * `cargo unc build`");
         println!(" * `cargo test`");
         println!(" * `cargo unc deploy`");

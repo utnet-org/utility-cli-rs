@@ -1,11 +1,11 @@
 use crate::build::util;
-use utility_cli_rs_integration_tests::build_fn_with;
+use unc_integration_tests::build_fn_with;
 use function_name::named;
 use std::fs;
 
 #[test]
 #[named]
-fn test_build_no_abi() -> utility_cli_rs::CliResult {
+fn test_build_no_abi() -> unc::CliResult {
     let build_result = build_fn_with! {
         Opts: "--no-abi";
         Code:
@@ -21,7 +21,7 @@ fn test_build_no_abi() -> utility_cli_rs::CliResult {
 
 #[tokio::test]
 #[named]
-async fn test_build_no_embed_abi() -> utility_cli_rs::CliResult {
+async fn test_build_no_embed_abi() -> unc::CliResult {
     let build_result = build_fn_with! {
         Opts: "--no-embed-abi";
         Code:
@@ -40,7 +40,7 @@ async fn test_build_no_embed_abi() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_build_no_doc() -> utility_cli_rs::CliResult {
+fn test_build_no_doc() -> unc::CliResult {
     let build_result = build_fn_with! {
         Opts: "--no-doc";
         Code:
@@ -60,7 +60,7 @@ fn test_build_no_doc() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_build_opt_out_dir() -> utility_cli_rs::CliResult {
+fn test_build_opt_out_dir() -> unc::CliResult {
     let out_dir = tempfile::tempdir()?;
     let build_result = build_fn_with! {
         Opts: format!("--out-dir {}", out_dir.path().display());
@@ -85,7 +85,7 @@ fn test_build_opt_out_dir() -> utility_cli_rs::CliResult {
 
 #[tokio::test]
 #[named]
-async fn test_build_no_release() -> utility_cli_rs::CliResult {
+async fn test_build_no_release() -> unc::CliResult {
     let build_result = build_fn_with! {
         Opts: "--no-release";
         Code:

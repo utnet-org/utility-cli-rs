@@ -1,5 +1,5 @@
 [package]
-name = "utility-cli-rs"
+name = "unc"
 version = "0.12.4"
 authors = ["hello Inc <hello@utnet.org>"]
 license = "GPL-2.0-or-later"
@@ -8,7 +8,7 @@ rust-version = "1.78.0"
 homepage = "https://utility.cli.rs"
 description = "human-friendly console utility that helps to interact with utility building Rust smart contracts from command line."
 readme = "README.md"
-repository = "https://github.com/utnet-org/utility-cli-rs"
+repository = "https://github.com/utnet-org/unc"
 keywords = ["cargo", "unc", "contract", "abi", "build"]
 categories = ["development-tools", "development-tools::cargo-plugins", "development-tools::build-utils", "command-line-utilities"]
 

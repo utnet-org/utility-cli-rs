@@ -1,10 +1,10 @@
 [package]
-name = "cargo-unc-new-project-name"
-description = "cargo-unc-new-project-description"
+name = "unc-new-project-name"
+description = "unc-new-project-description"
 version = "0.1.0"
 edition = "2021"
 # TODO: Fill out the repository field to help UNC ecosystem tools to discover your project.
-# NEP-0330 is automatically implemented for all contracts built with https://github.com/utnet-org/cargo-unc.
+# NEP-0330 is automatically implemented for all contracts built with https://github.com/utnet-org/unc.
 # Link to the repository will be available via `contract_source_metadata` view-function.
 #repository = "https://github.com/xxx/xxx"
 

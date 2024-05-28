@@ -67,7 +67,7 @@ pub fn run(args: super::BuildCommand) -> color_eyre::eyre::Result<util::Compilat
         )?;
         contract_abi.metadata.build = Some(BuildInfo {
             compiler: format!("rustc {}", rustc_version::version()?),
-            builder: format!("cargo-unc {}", env!("CARGO_PKG_VERSION")),
+            builder: format!("unc {}", env!("CARGO_PKG_VERSION")),
             image: None,
         });
         if !args.no_embed_abi {

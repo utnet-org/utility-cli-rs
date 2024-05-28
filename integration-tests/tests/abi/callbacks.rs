@@ -1,4 +1,4 @@
-use utility_cli_rs_integration_tests::generate_abi_fn;
+use unc_integration_tests::generate_abi_fn;
 use function_name::named;
 use schemars::gen::SchemaGenerator;
 use unc_abi::{AbiJsonParameter, AbiType};
@@ -7,7 +7,7 @@ use crate::util::AsJsonSchema;
 
 #[test]
 #[named]
-fn test_callbacks_unwrapped() -> utility_cli_rs::CliResult {
+fn test_callbacks_unwrapped() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self, #[callback_unwrap] a: bool, #[callback_unwrap] b: u32) {}
     };
@@ -37,7 +37,7 @@ fn test_callbacks_unwrapped() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_callbacks_result() -> utility_cli_rs::CliResult {
+fn test_callbacks_result() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(
             &self,
@@ -71,7 +71,7 @@ fn test_callbacks_result() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_callbacks_vec() -> utility_cli_rs::CliResult {
+fn test_callbacks_vec() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(
             &self,
@@ -105,7 +105,7 @@ fn test_callbacks_vec() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_callbacks_mixed_with_params() -> utility_cli_rs::CliResult {
+fn test_callbacks_mixed_with_params() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(
             &self,

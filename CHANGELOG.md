@@ -7,13 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.12.2](https://github.com/utnet-org/utility-cli-rs/compare/v0.12.1...v0.12.2) - 2024-05-22
+## [0.12.2](https://github.com/utnet-org/unc/compare/v0.12.1...v0.12.2) - 2024-05-22
 
 ### Other
 - Remove unused .idea files
-- release ([#9](https://github.com/utnet-org/utility-cli-rs/pull/9))
+- release ([#9](https://github.com/utnet-org/unc/pull/9))
 
-## [0.12.1](https://github.com/utnet-org/utility-cli-rs/compare/v0.12.0...v0.12.1) - 2024-05-21
+## [0.12.1](https://github.com/utnet-org/unc/compare/v0.12.0...v0.12.1) - 2024-05-21
 
 ### Other
 - Rename PledgingType variant to Directly

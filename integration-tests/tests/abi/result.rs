@@ -1,11 +1,11 @@
-use utility_cli_rs_integration_tests::generate_abi_fn;
+use unc_integration_tests::generate_abi_fn;
 use function_name::named;
 use schemars::gen::SchemaGenerator;
 use unc_abi::AbiType;
 
 #[test]
 #[named]
-fn test_result_default() -> utility_cli_rs::CliResult {
+fn test_result_default() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self) {}
     };
@@ -19,7 +19,7 @@ fn test_result_default() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_result_type() -> utility_cli_rs::CliResult {
+fn test_result_type() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn foo(&self) -> u32 {
             1
@@ -41,7 +41,7 @@ fn test_result_type() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_result_handle_result() -> utility_cli_rs::CliResult {
+fn test_result_handle_result() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         #[handle_result]
         pub fn foo(&self) -> Result<u32, &'static str> {

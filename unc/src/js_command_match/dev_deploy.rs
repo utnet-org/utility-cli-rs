@@ -23,7 +23,7 @@ pub struct DevDeployArgs {
 impl DevDeployArgs {
     pub fn to_cli_args(&self, network_config: String) {
         eprintln!("The command you tried to run is deprecated in the new unc CLI, but we tried our best to match the old command with the new syntax, try it instead:\n");
-        eprintln!("Make sure you have the cargo-unc app installed on your computer (https://github.com/unc/cargo-unc/blob/main/README.md)");
+        eprintln!("Make sure you have the unc app installed on your computer (https://github.com/utnet-org/unc/blob/main/README.md)");
         eprintln!("In your project folder (cargo.toml) do the following:");
         eprintln!("1. Create a dev-account using the command:\n   cargo unc create-dev-account\n");
         eprintln!(

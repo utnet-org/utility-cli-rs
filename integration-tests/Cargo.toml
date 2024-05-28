@@ -1,5 +1,5 @@
 [package]
-name = "cargo-unc-integration-tests"
+name = "unc-integration-tests"
 version = "0.1.0"
 edition = "2021"
 publish = false
@@ -11,7 +11,7 @@ unc-abi = "0.10.2"
 [dev-dependencies]
 borsh = { version = "1.0.0", features = ["derive", "unstable__schema"]}
 camino = "1.1.1"
-utility-cli-rs = { path = "../cargo-unc" }
+unc = { path = "../unc" }
 color-eyre = "0.6"
 function_name = "0.3"
 git2 = "0.18"

@@ -3,7 +3,7 @@ use unc_abi::AbiRoot;
 use unc_abi::{AbiBorshParameter, AbiJsonParameter, AbiParameters};
 
 /// Utility method to test that the `add` function is available and works as intended
-pub async fn test_add(wasm: &[u8]) -> utility_cli_rs::CliResult {
+pub async fn test_add(wasm: &[u8]) -> unc::CliResult {
     let worker = unc_workspaces::sandbox().await?;
     let contract = worker.dev_deploy(wasm).await?;
     let outcome = contract

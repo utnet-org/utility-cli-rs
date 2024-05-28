@@ -39,11 +39,11 @@ impl SelfUpdateCommandContext {
                 "!".green().bold()
             );
             println!("Report any bugs:\n");
-            println!("\thttps://github.com/utility/utility-cli-rs/issues\n");
+            println!("\thttps://github.com/utility/unc/issues\n");
             println!("What's new:\n");
             println!(
                 "\t{}{}\n",
-                "https://github.com/utility/utility-cli-rs/releases/tag/v".truecolor(0, 160, 150),
+                "https://github.com/utility/unc/releases/tag/v".truecolor(0, 160, 150),
                 release.truecolor(0, 160, 150)
             );
         }

@@ -10,13 +10,13 @@ Just run `unc` and let it guide you through!
 
 ## Install
 
-Visit [Releases page](https://github.com/utnet-org/utility-cli-rs/releases/) to see the latest updates.
+Visit [Releases page](https://github.com/utnet-org/unc/releases/) to see the latest updates.
 
 <details>
   <summary>Install prebuilt binaries via shell script (macOS, Linux, WSL)</summary>
 
 ```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/latest/download/utility-cli-rs-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/unc/releases/latest/download/unc-installer.sh | sh
 ```
 
 </details>
@@ -25,7 +25,7 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-r
   <summary>Run prebuilt binaries with npx (Node.js)</summary>
 
 ```sh
-npx utility-cli-rs
+npx unc
 ```
 
 </details>
@@ -34,7 +34,7 @@ npx utility-cli-rs
   <summary>Install prebuilt binaries into your npm project (Node.js)</summary>
 
 ```sh
-npm install utility-cli-rs
+npm install unc
 ```
 
 </details>
@@ -45,13 +45,13 @@ npm install utility-cli-rs
 Install it with `cargo`, just make sure you have [Rust](https://rustup.rs) installed on your computer.
 
 ```bash
-cargo install utility-cli-rs
+cargo install unc
 ```
 
 or, install the most recent version from git repository:
 
 ```bash
-cargo install --git https://github.com/utnet-org/utility-cli-rs
+cargo install --git https://github.com/utnet-org/unc
 ```
 
 </details>
@@ -84,7 +84,7 @@ jobs:
 
     - name: Install unc cli
       run: |
-        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/utility-cli-rs/releases/download/v0.8.2/utility-cli-rs-installer.sh | sh
+        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/utnet-org/unc/releases/download/v0.8.2/unc-installer.sh | sh
 
     - name: Call some function
       run: |

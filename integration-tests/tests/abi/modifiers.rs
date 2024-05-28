@@ -1,10 +1,10 @@
-use utility_cli_rs_integration_tests::generate_abi_fn;
+use unc_integration_tests::generate_abi_fn;
 use function_name::named;
 use unc_abi::{AbiFunctionKind, AbiFunctionModifier};
 
 #[test]
 #[named]
-fn test_view_function() -> utility_cli_rs::CliResult {
+fn test_view_function() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn add(&self, a: u32, b: u32) -> u32 {
             a + b
@@ -21,7 +21,7 @@ fn test_view_function() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_call_function() -> utility_cli_rs::CliResult {
+fn test_call_function() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         pub fn add(&mut self, a: u32, b: u32) -> u32 {
             a + b
@@ -38,7 +38,7 @@ fn test_call_function() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_init_function() -> utility_cli_rs::CliResult {
+fn test_init_function() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         #[init]
         pub fn add(a: u32, b: u32) -> Self {
@@ -57,7 +57,7 @@ fn test_init_function() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_payable_function() -> utility_cli_rs::CliResult {
+fn test_payable_function() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         #[payable]
         pub fn add(&mut self, a: u32, b: u32) -> u32 {
@@ -75,7 +75,7 @@ fn test_payable_function() -> utility_cli_rs::CliResult {
 
 #[test]
 #[named]
-fn test_private_function() -> utility_cli_rs::CliResult {
+fn test_private_function() -> unc::CliResult {
     let abi_root = generate_abi_fn! {
         #[private]
         pub fn add(&mut self, a: u32, b: u32) -> u32 {
