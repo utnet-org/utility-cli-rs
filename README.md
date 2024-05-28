@@ -104,13 +104,13 @@ Once installed, you just run it with `unc` command:
 $ unc
 
 ? What are you up to? (select one of the options with the up-down arrows on your keyboard and press Enter)
-> account     - Manage accounts
+  account     - Manage accounts
   tokens      - Manage token assets such as UNC, FT, NFT
   pledging     - Manage pledging: view, add and withdraw pledge
-  contract    - Manage smart-contracts: deploy code, call functions
+> contract    - Manage smart-contracts: deploy code, call functions
   transaction - Operate transactions
   config      - Manage connections in a configuration file (config.toml)
-  extension   - Manage unc CLI and extensions
+v dev-tool      - Developer tools to build and deploy smart contracts
 [↑↓ to move, enter to select, type to filter]
 ```
 

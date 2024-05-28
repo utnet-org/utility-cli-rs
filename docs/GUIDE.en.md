@@ -11,8 +11,8 @@ With _unc CLI_ you can create, sign and send transactions in _online_ mode, whic
 In _offline_ mode, you can create and sign a transaction. The base64 encoding transaction can be [signed](#sign-transaction---sign-previously-prepared-unsigned-transaction) or [sent](#send-signed-transaction---send-a-signed-transaction) later (even from another computer). To enter the _offline_ mode, you need to set the ```--offline``` flag in the command:
 ```txt
 unc --offline tokens \
-    fro_volod.testnet \
-    send-unc volodymyr.testnet 0.1unc \
+    alice \
+    send-unc bob 0.1unc \
     network-config testnet \
     sign-later
 ```
@@ -32,7 +32,7 @@ Before proceeding to the description of specific commands, it is necessary to co
         _unc CLI_ will independently find access keys and sign the created transaction.
         Directory with access keys defined in [config](#config---manage-connections-in-a-configuration-file).
         The access keys must be in the _public-key.json_ file located in _/Users/user/.unc-credentials/network-name/user-name/_
-        For example, _/Users/frovolod/.unc-credentials/testnet/volodymyr.testnet/ed25519_8h7kFK4quSUJRkUwo3LLiK83sraEm2jnQTECuZhWu8HC.json_
+        For example, _/Users/alice/.unc-credentials/testnet/bob/ed25519_8h7kFK4quSUJRkUwo3LLiK83sraEm2jnQTECuZhWu8HC.json_
 
         <details><summary><i>Demonstration of the command in interactive mode</i></summary>
         <a href="https://asciinema.org/a/30jHxm9lRevRG4K1h0GWlEciV?autoplay=1&t=1&speed=2">
@@ -66,7 +66,7 @@ Before proceeding to the description of specific commands, it is necessary to co
 
    _unc CLI_ support for meta transactions as specified in [NEP-366](https://unc.github.io/unccore/architecture/how/meta-tx.html#meta-transactions). To create it, you just need to specify a _network_ that supports meta transactions. You can find out about such support in [config](#show-connections---Show-a-list-of-network-connections). The *meta_transaction_relayer_url* field is responsible for the ability to support meta transactions. For example:
    ```txt
-   meta_transaction_relayer_url = "https://unc-testnet.api.pagoda.co/relay"
+   meta_transaction_relayer_url = "https://unc-testnet.api.cloud.co/relay"
    ```
 
    A signed transaction / meta transactions can be sent for immediate execution:
@@ -112,7 +112,7 @@ To view an account summary for the last block, in the terminal command line type
 
 ```txt
 unc account \
-    view-account-summary fro_volod.testnet \
+    view-account-summary test.testnet \
     network-config testnet \
     now
 ```
@@ -120,7 +120,7 @@ unc account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Account details for 'fro_volod.testnet' at block #97804915 (5G8HHWMJMHRMMaHTjeZLSvL7ruYMtH9tXq25Q6BPUivu)
+Account details for 'test.testnet' at block #97804915 (5G8HHWMJMHRMMaHTjeZLSvL7ruYMtH9tXq25Q6BPUivu)
 Native account balance: 182.685021399504861699999997 unc
 Validator pledge: 0 unc
 Storage used by the account: 288962 bytes
@@ -154,7 +154,7 @@ Number of access keys: 14
 To view an account summary for a specific block, you can specify the height of that block. To do this, at the terminal command line, type:
 ```txt
 unc account \
-    view-account-summary fro_volod.testnet \
+    view-account-summary test.testnet \
     network-config testnet \
     at-block-height 73069245
 ```
@@ -162,7 +162,7 @@ unc account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Account details for 'fro_volod.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
+Account details for 'test.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
 Native account balance: 198.9924766125790117 unc
 Validator pledge: 0 unc
 Storage used by the account: 288660 bytes
@@ -194,7 +194,7 @@ Number of access keys: 12
 To view an account summary for a specific block, you can specify the hash of that block. To do this, at the terminal command line, type:
 ```txt
 unc account \
-    view-account-summary fro_volod.testnet \
+    view-account-summary test.testnet \
     network-config testnet \
     at-block-hash HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY
 ````
@@ -202,7 +202,7 @@ unc account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Account details for 'fro_volod.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
+Account details for 'test.testnet' at block #73069245 (HCUJq3vQ3ztyCZAhmRmHR3cwSDcoE4zEbaWkhAjFuxUY)
 Native account balance: 198.9924766125790117 unc
 Validator pledge: 0 unc
 Storage used by the account: 288660 bytes
@@ -528,7 +528,7 @@ Access keys to the created account can be added in several ways:
 In order to create a sub-account, in the terminal command line type:
 ```txt
 unc account \
-    create-account fund-myself new.fro_volod.testnet '1 unc' \
+    create-account fund-myself new.test.testnet '1 unc' \
     autogenerate-new-keypair \
     save-to-keychain \
     sign-as \
@@ -541,13 +541,13 @@ unc account \
 
 ```txt
 Transaction sent ...
-New account <new.fro_volod.testnet> created successfully.
+New account <new.test.testnet> created successfully.
 Transaction ID: DRT3EpCK9iT5APyGgfcgSoLPCLCYYKtnrVgDhGLDEZFo
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/DRT3EpCK9iT5APyGgfcgSoLPCLCYYKtnrVgDhGLDEZFo
 
-The data for the access key is saved in a file /Users/frovolod/.unc-credentials/testnet/new.fro_volod.testnet/ed25519_3ngtirechhepHKrzfkdgqqtwqSMtdbSLR6N1c4ivnzu6.json
-The data for the access key is saved in a file "/Users/frovolod/.unc-credentials/testnet/new.fro_volod.testnet.json"
+The data for the access key is saved in a file /Users/frovolod/.unc-credentials/testnet/new.test.testnet/ed25519_3ngtirechhepHKrzfkdgqqtwqSMtdbSLR6N1c4ivnzu6.json
+The data for the access key is saved in a file "/Users/frovolod/.unc-credentials/testnet/new.test.testnet.json"
 ```
 </details>
 
@@ -563,7 +563,7 @@ unc account \
     create-account fund-myself new7.testnet '0.1 unc' \
     autogenerate-new-keypair \
     save-to-keychain \
-    sign-as fro_volod.testnet \
+    sign-as test.testnet \
     network-config testnet \
     sign-with-keychain \
     send
@@ -777,9 +777,9 @@ To update the contract account profile using JSON arguments, enter the following
 
 ```txt
 unc account \
-    update-social-profile fro_volod.testnet \
+    update-social-profile test.testnet \
     json-args '{"name":"frovolod","image":{"ipfs_cid":"bafkreifdzusz6hp3j4njdtqqxr3tlvx4agedgh7znyac4wbuiao3gtppde"},"linktree":{"github":"FroVolod","telegram":"frovolod"},"tags": {"rust":"","unc":"","developer":""}}' \
-    sign-as fro_volod.testnet \
+    sign-as test.testnet \
     network-config testnet \
     sign-with-keychain \
     send
@@ -788,7 +788,7 @@ unc account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Profile for fro_volod.testnet updated successfully
+Profile for test.testnet updated successfully
 ```
 </details>
 
@@ -804,9 +804,9 @@ To update the account profile on the contract using the prepared file, you must 
 
 ```txt
 unc account \
-    update-social-profile fro_volod.testnet \
+    update-social-profile test.testnet \
     file-args profile.txt \
-    sign-as fro_volod.testnet \
+    sign-as test.testnet \
     network-config testnet \
     sign-with-keychain \
     send
@@ -815,7 +815,7 @@ unc account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Profile for fro_volod.testnet updated successfully
+Profile for test.testnet updated successfully
 ```
 </details>
 
@@ -831,15 +831,15 @@ To update the account profile on the contract in interactive mode, you must use 
 
 ```txt
 unc account \
-    update-social-profile fro_volod.testnet \
+    update-social-profile test.testnet \
     manually \
-        --name fro_volod.testnet \
+        --name test.testnet \
         --image-ipfs-cid bafkreifdzusz6hp3j4njdtqqxr3tlvx4agedgh7znyac4wbuiao3gtppde \
         --description 'This is my profile' \
         --github FroVolod \
         --website https://example.com/ \
         --tags dev,rust \
-    sign-as fro_volod.testnet \
+    sign-as test.testnet \
     network-config testnet \
     sign-with-keychain \
     send
@@ -848,7 +848,7 @@ unc account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-Profile for fro_volod.testnet updated successfully
+Profile for test.testnet updated successfully
 ```
 </details>
 
@@ -864,7 +864,7 @@ This command is designed to delete the current account. It is important to remem
 In order to execute this command, in the terminal command line type:
 ```txt
 unc account \
-    delete-account 2.fro_volod.testnet \
+    delete-account 2.test.testnet \
     beneficiary volodymyr.testnet \
     network-config testnet \
     sign-with-keychain \
@@ -876,7 +876,7 @@ unc account \
 ```txt
 Transaction sent ...
 Successful transaction
-Account <2.fro_volod.testnet> has been successfully deleted.
+Account <2.test.testnet> has been successfully deleted.
 Transaction ID: EHvB47npN8Z46qhsrw5XpKmD3n3jDn4MGiD85YSqw7cy
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/EHvB47npN8Z46qhsrw5XpKmD3n3jDn4MGiD85YSqw7cy
@@ -897,7 +897,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 To view the list of access keys, type the following in the terminal command line:
 ```txt
 unc account \
-    list-keys fro_volod.testnet \
+    list-keys test.testnet \
     network-config testnet \
     now
 ```
@@ -938,7 +938,7 @@ Let's execute the command to add a new pair of access keys to the account with t
 In order to execute this command, in the terminal command line type:
 ```txt
 unc account \
-    add-key fro_volod.testnet \
+    add-key test.testnet \
     grant-full-access \
     use-manually-provided-public-key ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3 \
     network-config testnet \
@@ -951,7 +951,7 @@ unc account \
 ```txt
 Transaction sent ...
 Successful transaction
-Added access key = ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3 to fro_volod.testnet.
+Added access key = ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3 to test.testnet.
 Transaction ID: 2oVDKopcWphN3qrUoq7XjFMpRuCUjz6jSU327q8trAQ5
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/2oVDKopcWphN3qrUoq7XjFMpRuCUjz6jSU327q8trAQ5
@@ -971,7 +971,7 @@ Let's change our parameters to add access keys:
 In order to execute this command, in the terminal command line type:
 ```txt
 unc account \
-    add-key fro_volod.testnet \
+    add-key test.testnet \
     grant-function-call-access \
         --allowance '1 unc' \
         --receiver-account-id 'meta.pool.testnet' \
@@ -990,7 +990,7 @@ unc account \
 ```txt
 Transaction sent ...
 Successful transaction
-Added access key = ed25519:27R66L6yevyHbsk4fESZDC8QUQBwCdx6vvkk1uQmG7NY to fro_volod.testnet.
+Added access key = ed25519:27R66L6yevyHbsk4fESZDC8QUQBwCdx6vvkk1uQmG7NY to test.testnet.
 Transaction ID: DaJySrNtSUZU7KPyvfUMbh6xYi9vZeMvnj4Umo7ZzdB3
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/DaJySrNtSUZU7KPyvfUMbh6xYi9vZeMvnj4Umo7ZzdB3
@@ -1008,7 +1008,7 @@ https://explorer.testnet.unc.org/transactions/DaJySrNtSUZU7KPyvfUMbh6xYi9vZeMvnj
 In order to remove access keys, in the terminal command line type:
 ```txt
 unc account \
-    delete-key fro_volod.testnet \
+    delete-key test.testnet \
     ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3 \
     network-config testnet \
     sign-with-keychain \
@@ -1020,7 +1020,7 @@ unc account \
 ```txt
 Transaction sent ...
 Successful transaction
-Access key <ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3> for account <fro_volod.testnet> has been successfully deleted.
+Access key <ed25519:75a5ZgVZ9DFTxs4THtFxPtLj7AY3YzpxtapTQBdcMXx3> for account <test.testnet> has been successfully deleted.
 Transaction ID: 6S7bJ76QNFypUvP7PCB1hkLM7X5GxPxP2gn4rnDHMzPz
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/6S7bJ76QNFypUvP7PCB1hkLM7X5GxPxP2gn4rnDHMzPz
@@ -1074,7 +1074,7 @@ To add a deposit to the account balance under the contract, you must enter in th
 unc account \
     manage-storage-deposit v1.social08.testnet \
     deposit volodymyr.testnet '1 unc' \
-    sign-as fro_volod.testnet \
+    sign-as test.testnet \
     network-config testnet \
     sign-with-macos-keychain \
     send
@@ -1083,7 +1083,7 @@ unc account \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-<fro_volod.testnet> has successfully added a deposit of 1 unc to <volodymyr.testnet> on contract <v1.social08.testnet>.
+<test.testnet> has successfully added a deposit of 1 unc to <volodymyr.testnet> on contract <v1.social08.testnet>.
 ```
 </details>
 
@@ -1134,7 +1134,7 @@ This command is used to transfer tokens between accounts. Please note that the a
 In order to execute this command, in the terminal command line type:
 ```txt
 unc tokens \
-    fro_volod.testnet \
+    test.testnet \
     send-unc volodymyr.testnet 0.1unc \
     network-config testnet \
     sign-with-keychain \
@@ -1146,7 +1146,7 @@ unc tokens \
 ```txt
 Transaction sent ...
 Successful transaction
-<fro_volod.testnet> has transferred 0.1 unc to <volodymyr.testnet> successfully.
+<test.testnet> has transferred 0.1 unc to <volodymyr.testnet> successfully.
 Transaction ID: 8BbB674VDxeg36egMzdHFsCUExpkLWAWeYqEfd9u9ZaD
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/8BbB674VDxeg36egMzdHFsCUExpkLWAWeYqEfd9u9ZaD
@@ -1165,7 +1165,7 @@ This command is used to transfer FT tokens between accounts. Please note that th
 In order to execute this command, in the terminal command line type:
 ```txt
 unc tokens \
-    fro_volod.testnet \
+    test.testnet \
     send-ft usdn.testnet volodymyr.testnet 10000000000000000000 \
         --prepaid-gas 100.000TeraGas \
         --attached-deposit 1attounc \
@@ -1179,7 +1179,7 @@ unc tokens \
 ```txt
 Transaction sent ...
 Successful transaction
-The "ft_transfer" call to <usdn.testnet> on behalf of <fro_volod.testnet> succeeded.
+The "ft_transfer" call to <usdn.testnet> on behalf of <test.testnet> succeeded.
 Transaction ID: 5a7YmANdpimiqUm6WC6n4dd91b6A9PafNNhad8HWKugN
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/5a7YmANdpimiqUm6WC6n4dd91b6A9PafNNhad8HWKugN
@@ -1198,7 +1198,7 @@ This command is used to transfer NFT tokens between accounts.
 In order to execute this command, in the terminal command line type:
 ```txt
 unc tokens \
-    fro_volod.testnet \
+    test.testnet \
     send-nft paras-token-v2.testnet volodymyr.testnet 1604:4 \
         --prepaid-gas 100.000TeraGas \
         --attached-deposit 1attounc \
@@ -1212,7 +1212,7 @@ unc tokens \
 ```txt
 Transaction sent ...
 Successful transaction
-The "nft_transfer" call to <paras-token-v2.testnet> on behalf of <fro_volod.testnet> succeeded.
+The "nft_transfer" call to <paras-token-v2.testnet> on behalf of <test.testnet> succeeded.
 Transaction ID: 9q2VbakZbj5ja6GAFXpFnbtbYHijEHyT7Ry34GQ6cvLB
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/9q2VbakZbj5ja6GAFXpFnbtbYHijEHyT7Ry34GQ6cvLB
@@ -1233,7 +1233,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 To view the amount in unc tokens on the account, type the following in the terminal command line:
 ```txt
 unc tokens \
-    fro_volod.testnet \
+    test.testnet \
     view-unc-balance \
     network-config testnet \
     now
@@ -1242,7 +1242,7 @@ unc tokens \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-fro_volod.testnet account has 169.589001320890476999999994 unc available for transfer (the total balance is 172.482461320890476999999994 unc, but 2.89246 unc is locked for storage and the transfer transaction fee is ~0.001 unc)
+test.testnet account has 169.589001320890476999999994 unc available for transfer (the total balance is 172.482461320890476999999994 unc, but 2.89246 unc is locked for storage and the transfer transaction fee is ~0.001 unc)
 ```
 </details>
 
@@ -1260,7 +1260,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 To view funds in FT tokens on the account, type the following in the terminal command line:
 ```txt
 unc tokens \
-    fro_volod.testnet \
+    test.testnet \
     view-ft-balance usdn.testnet \
     network-config testnet \
     now
@@ -1269,7 +1269,7 @@ unc tokens \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-fro_volod.testnet account has "31942967677775774595" FT tokens (FT-contract: usdn.testnet)
+test.testnet account has "31942967677775774595" FT tokens (FT-contract: usdn.testnet)
 ```
 </details>
 
@@ -1287,7 +1287,7 @@ Examples of the use of these parameters are discussed in the ([View properties f
 To view funds in NFT tokens on the account, type the following in the terminal command line:
 ```txt
 unc tokens \
-    fro_volod.testnet \
+    test.testnet \
     view-nft-assets paras-token-v2.testnet \
     network-config testnet \
     now
@@ -1296,7 +1296,7 @@ unc tokens \
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
-fro_volod.testnet account has NFT tokens:
+test.testnet account has NFT tokens:
 [
   {
     "approved_account_ids": {},
@@ -1314,7 +1314,7 @@ fro_volod.testnet account has NFT tokens:
       "title": "Apollo42 #01 #4",
       "updated_at": null
     },
-    "owner_id": "fro_volod.testnet",
+    "owner_id": "test.testnet",
     "token_id": "1604:4"
   }
 ]
@@ -1657,7 +1657,7 @@ unc contract \
     json-args '{"other_user":"volodymyr.testnet", "vote":5}' \
     prepaid-gas '3 Tgas' \
     attached-deposit '1 unc' \
-    sign-as fro_volod.testnet \
+    sign-as test.testnet \
     network-config testnet \
     sign-with-keychain \
     send
@@ -1668,7 +1668,7 @@ unc contract \
 ```txt
 Transaction sent ...
 Successful transaction
-The "rate" call to <turbo.volodymyr.testnet> on behalf of <fro_volod.testnet> succeeded.
+The "rate" call to <turbo.volodymyr.testnet> on behalf of <test.testnet> succeeded.
 Transaction ID: 7RuoSAdCctSEw63GKsfQJg1YXRzH3msUCo4oygzauPko
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/7RuoSAdCctSEw63GKsfQJg1YXRzH3msUCo4oygzauPko

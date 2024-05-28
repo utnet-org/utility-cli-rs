@@ -96,8 +96,8 @@ macro_rules! invoke_unc {
 #[macro_export]
 macro_rules! generate_abi_with {
     ($(Cargo: $cargo_path:expr;)? $(Vars: $cargo_vars:expr;)? $(Opts: $cli_opts:expr;)? Code: $($code:tt)*) => {{
-        let opts = "cargo unc abi";
-        $(let opts = format!("cargo unc abi {}", $cli_opts);)?;
+        let opts = "unc dev-tool abi";
+        $(let opts = format!("unc dev-tool abi {}", $cli_opts);)?;
         let result_dir = $crate::invoke_unc! {
             $(Cargo: $cargo_path;)? $(Vars: $cargo_vars;)?
             Opts: &opts;

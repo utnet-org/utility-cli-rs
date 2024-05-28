@@ -20,9 +20,9 @@ In general, it is difficult for a beginner to immediately understand how command
 For example, I consider having the following command to do a transfer:
 ```txt
 unc tokens \
-    'volodymyr.testnet' \
+    'bob' \
     send-unc \
-    'fro_volod.testnet' \
+    'alice' \
     '1 unc' \
     network testnet \
     sign-with-keychain \
@@ -31,7 +31,7 @@ unc tokens \
 This is the complete version of the command. The result of this command will be as follows:
 ```txt
 Successful transaction
-<volodymyr.testnet> has transferred 1 unc to <fro_volod.testnet> successfully.
+<bob> has transferred 1 unc to <alice> successfully.
 Transaction ID: G4t6Sgz2FjnNpruYjPP1ZJAKfRmBffVaqmj8Nup2TaAg
 To see the transaction in the transaction explorer, please open this url in your browser:
 https://explorer.testnet.unc.org/transactions/G4t6Sgz2FjnNpruYjPP1ZJAKfRmBffVaqmj8Nup2TaAg

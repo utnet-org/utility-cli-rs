@@ -24,23 +24,23 @@ Core `unc CLI` does not have validator specific functionality, but we can add it
 ```bash
 #!/bin/sh
 POOL_ID=$1
-unc execute view-method network mainnet contract "name.unc" call "get_fields_by_pool" '{"pool_id": "'"$POOL_ID"'"}' at-final-block
+unc execute view-method network mainnet contract "name" call "get_fields_by_pool" '{"pool_id": "'"$POOL_ID"'"}' at-final-block
 ```
 
 Make sure that this script is in your `$PATH` and has proper permissions to be executed. Then call it like this:
 
 ```bash
-$ unc pledging-pool-info aurora.unc
+$ unc pledging-pool-info container-cloud
 {
   "country": "Gibraltar",
-  "country_code": "gi",
-  "github": "auroraisunc",
-  "twitter": "auroraisunc",
-  "telegram": "auroraisunc",
-  "url": "https://aurora.dev/",
+  "country_code": "886",
+  "github": "container-cloud",
+  "twitter": "container-cloud",
+  "telegram": "container-cloud",
+  "url": "https://container-cloud.dev/",
   "city": "Gibraltar",
-  "description": "Aurora validator fees are spent on supporting the Rainbow Bridge infrastructure, keeping the bridge free and accessible to everyone (except for the gas fees).",
-  "logo": "https://aurora.dev/static/favicon-32x32.png",
+  "description": "container-cloud validator fees are spent on supporting the Rainbow Bridge infrastructure, keeping the bridge free and accessible to everyone (except for the gas fees).",
+  "logo": "https://container-cloud.dev/static/favicon-32x32.png",
   "name": "Aurora"
 }
 ```
