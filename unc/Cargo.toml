@@ -1,6 +1,6 @@
 [package]
 name = "unc"
-version = "0.12.4"
+version = "0.12.5"
 authors = ["hello Inc <hello@utnet.org>"]
 license = "GPL-2.0-or-later"
 edition = "2021"
