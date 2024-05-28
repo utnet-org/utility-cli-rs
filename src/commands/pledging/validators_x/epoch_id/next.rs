@@ -10,7 +10,7 @@ use unc_primitives::types::{BlockReference, EpochReference, Finality};
 use crate::common::JsonRpcClientExt;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
-#[interactive_clap(input_context = super::super::network_view_at_block::NetworkViewAtBlockArgsContext)]
+#[interactive_clap(input_context = super::validators_x::network_view_at_block::NetworkViewAtBlockArgsContext)]
 #[interactive_clap(output_context = NextContext)]
 pub struct Next {}
 
@@ -27,7 +27,9 @@ impl NextContext {
     }
 }
 
-fn display_next_validators_info(network_config: &crate::config::NetworkConfig) -> crate::CliResult {
+fn display_next_validators_info(
+    network_config: &crate::config::NetworkConfig,
+) -> crate::CliResult {
     let json_rpc_client = network_config.json_rpc_client();
 
     let epoch_validator_info = json_rpc_client
@@ -92,7 +94,8 @@ fn display_next_validators_info(network_config: &crate::config::NetworkConfig) -
         let mut previous_pledge = "".to_string();
         let mut status = "New".to_string();
         if let Some(pledge) = current_validators_pledge.remove(&validator.account_id) {
-            previous_pledge = crate::types::unc_token::UncToken::from_attounc(pledge).to_string();
+            previous_pledge =
+                crate::types::unc_token::UncToken::from_attounc(pledge).to_string();
             status = "Rewarded".to_string();
         };
         table.add_row(prettytable::row![
