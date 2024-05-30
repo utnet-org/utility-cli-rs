@@ -6253,7 +6253,7 @@ dependencies = [
 
 [[package]]
 name = "unc"
-version = "0.12.5"
+version = "0.13.0"
 dependencies = [
  "atty",
  "bip39",
@@ -6312,7 +6312,7 @@ dependencies = [
  "unc-jsonrpc-primitives 0.10.2",
  "unc-ledger",
  "unc-primitives 0.10.2",
- "unc-token 0.10.0",
+ "unc-token 0.10.1",
  "url",
  "wasmparser 0.200.0",
  "zstd 0.13.0",
@@ -6979,9 +6979,9 @@ dependencies = [
 
 [[package]]
 name = "unc-token"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5d8dc9721a8afa15c0fe44f77ccc96f93fc3b984efb2ef92e8e39a5d7c4acf7f"
+checksum = "452da397f4ff70873fe4dbaf55e6ff2053216a2393f800d54857526ed961ada2"
 dependencies = [
  "borsh 1.3.1",
  "interactive-clap",
@@ -7487,7 +7487,7 @@ dependencies = [
  "unc-jsonrpc-primitives 0.10.2",
  "unc-primitives 0.10.2",
  "unc-sandbox-utils",
- "unc-token 0.10.0",
+ "unc-token 0.10.1",
  "url",
 ]
 

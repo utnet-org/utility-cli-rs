@@ -1,6 +1,6 @@
 [package]
 name = "unc"
-version = "0.12.5"
+version = "0.13.0"
 authors = ["hello Inc <hello@utnet.org>"]
 license = "GPL-2.0-or-later"
 edition = "2021"
@@ -92,7 +92,7 @@ unc-gas = { version = "0.10.0", features = [
     "borsh",
     "interactive-clap",
 ] }
-unc-token = { version = "0.10.0", features = [
+unc-token = { version = "0.10.1", features = [
     "serde",
     "borsh",
     "interactive-clap",
