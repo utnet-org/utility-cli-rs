@@ -1,6 +1,6 @@
 use crate::commands::contract::deploy::initialize_mode::InitializeMode;
 
-use crate::commands::dev_tools::build_command;
+use crate::commands::devtool::build_command;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
 #[interactive_clap(input_context = crate::GlobalContext)]

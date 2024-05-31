@@ -4,7 +4,7 @@ use strum::{EnumDiscriminants, EnumIter, EnumMessage};
 pub mod account;
 mod config;
 pub mod contract;
-pub mod dev_tools;
+pub mod devtool;
 mod pledging;
 mod tokens;
 pub mod transaction;
@@ -50,7 +50,7 @@ pub enum TopLevelCommand {
         message = "dev-tool      - Developer tools to build and deploy smart contracts"
     ))]
     /// develop rust smart contract tools
-    DevTool(self::dev_tools::DevCommands),
+    DevTool(self::devtool::DevCommands),
 
     #[cfg(feature = "self-update")]
     #[strum_discriminants(strum(message = "extension   - Manage unc CLI and extensions"))]
