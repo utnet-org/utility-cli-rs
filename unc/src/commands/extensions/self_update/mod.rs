@@ -22,7 +22,7 @@ impl SelfUpdateCommandContext {
             .repo_owner("utnet-org")
             .repo_name("utility-cli-rs")
             .bin_path_in_archive(
-                format!("utility-cli-rs-{}/{}", self_update::get_target(), BIN_NAME).as_str(),
+                format!("unc-{}/{}", self_update::get_target(), BIN_NAME).as_str(),
             )
             .bin_name(BIN_NAME)
             .show_download_progress(true)
