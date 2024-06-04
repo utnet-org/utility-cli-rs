@@ -1,4 +1,3 @@
-use serde_json::json;
 use unc_primitives::account::id::AccountType;
 
 #[derive(Debug, Clone, interactive_clap::InteractiveClap)]
@@ -75,43 +74,11 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                             ],
                         new_account_id.clone())
                     } else {
-                        let args = serde_json::to_vec(&json!({
-                            "new_account_id": new_account_id.clone().to_string(),
-                            "new_public_key": item.account_properties.public_key.to_string()
-                        }))?;
-
-                        if let Some(linkdrop_account_id) = &network_config.linkdrop_account_id {
-                            if new_account_id.as_str().chars().count()
-                                > super::MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH
-                            {
-                                (
-                                    vec![unc_primitives::transaction::Action::FunctionCall(
-                                        Box::new(unc_primitives::transaction::FunctionCallAction {
-                                            method_name: "create_account".to_string(),
-                                            args,
-                                            gas: crate::common::UncGas::from_tgas(30).as_gas(),
-                                            deposit: item
-                                                .account_properties
-                                                .initial_balance
-                                                .as_attounc(),
-                                        }),
-                                    )],
-                                    linkdrop_account_id.clone(),
-                                )
-                            } else {
-                                return color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                                    "\nSigner account <{}> does not have permission to create account <{}>.",
-                                    signer_id,
-                                    new_account_id
-                                ));
-                            }
-                        } else {
                             return color_eyre::eyre::Result::Err(color_eyre::eyre::eyre!(
-                                "\nAccount <{}> cannot be created on network <{}> because a <linkdrop_account_id> is not specified in the configuration file.\nYou can learn about working with the configuration file: https://github.com/utnet-org/utitlity-cli-rs/blob/master/docs/README.en.md#config. \nExample <linkdrop_account_id> in configuration file: https://github.com/utnet-org/utitlity-cli-rs/blob/master/docs/media/linkdrop account_id.png",
-                                new_account_id,
-                                network_config.network_name
-                            ));
-                        }
+                            "\nAccount <{}> cannot be created on network <{}> because a <reserved_account_id> specified in the configuration file.\n",
+                            new_account_id,
+                            network_config.network_name
+                        ));
                     };
 
                     Ok(crate::commands::PrepopulatedTransaction {
