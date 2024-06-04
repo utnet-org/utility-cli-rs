@@ -51,6 +51,7 @@ impl From<SignerAccountIdContext> for crate::commands::ActionContext {
                     }
                     let (actions, receiver_id) = if AccountType::UtilityAccount
                         == new_account_id.get_account_type()
+                        || signer_id.get_account_type() == AccountType::Reserved // debug use
                     {
                         (vec![
                                 unc_primitives::transaction::Action::CreateAccount(
