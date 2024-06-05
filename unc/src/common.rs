@@ -400,7 +400,7 @@ fn need_check_account() -> bool {
 pub struct KeyPairProperties {
     pub seed_phrase_hd_path: crate::types::slip10::BIP32Path,
     pub master_seed_phrase: String,
-    pub implicit_account_id: unc_primitives::types::AccountId,
+    pub account_id: unc_primitives::types::AccountId,
     #[serde(rename = "public_key")]
     pub public_key_str: String,
     #[serde(rename = "private_key")]
@@ -430,7 +430,7 @@ pub fn get_key_pair_properties_from_seed_phrase(
         ed25519_dalek::Keypair { secret, public }
     };
 
-    let implicit_account_id =
+    let account_id =
         unc_primitives::types::AccountId::try_from(hex::encode(secret_keypair.public))?;
     let public_key_str = format!(
         "ed25519:{}",
@@ -443,7 +443,7 @@ pub fn get_key_pair_properties_from_seed_phrase(
     let key_pair_properties: KeyPairProperties = KeyPairProperties {
         seed_phrase_hd_path,
         master_seed_phrase,
-        implicit_account_id,
+        account_id,
         public_key_str,
         secret_keypair_str,
     };
@@ -509,7 +509,7 @@ pub fn generate_ed25519_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
         ed25519_dalek::Keypair { secret, public }
     };
 
-    let implicit_account_id =
+    let account_id =
         unc_primitives::types::AccountId::try_from(hex::encode(secret_keypair.public))?;
     let public_key_str = format!(
         "ed25519:{}",
@@ -522,7 +522,7 @@ pub fn generate_ed25519_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
     let key_pair_properties: KeyPairProperties = KeyPairProperties {
         seed_phrase_hd_path: generate_keypair.seed_phrase_hd_path,
         master_seed_phrase,
-        implicit_account_id,
+        account_id,
         public_key_str,
         secret_keypair_str,
     };
@@ -554,7 +554,7 @@ pub fn generate_rsa2048_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
     let priv_key = RsaPrivateKey::new(&mut rng, bits)?;
     let pub_key = RsaPublicKey::from(&priv_key);
 
-    let implicit_account_id =
+    let account_id =
         unc_primitives::types::AccountId::try_from(format!("test{}", rng.gen_range(0..10000)))?;
 
     let der_pk_encoded = pub_key.to_public_key_der().unwrap();
@@ -571,7 +571,7 @@ pub fn generate_rsa2048_keypair() -> color_eyre::eyre::Result<KeyPairProperties>
     let key_pair_properties: KeyPairProperties = KeyPairProperties {
         seed_phrase_hd_path: generate_keypair.seed_phrase_hd_path,
         master_seed_phrase,
-        implicit_account_id,
+        account_id,
         public_key_str,
         secret_keypair_str,
     };

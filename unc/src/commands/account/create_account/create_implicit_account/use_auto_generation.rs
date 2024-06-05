@@ -26,14 +26,14 @@ impl SaveWithUseAutoGenerationContext {
                     let buf = serde_json::json!({
                         "master_seed_phrase": key_pair_properties.master_seed_phrase,
                         "seed_phrase_hd_path": key_pair_properties.seed_phrase_hd_path,
-                        "implicit_account_id": key_pair_properties.implicit_account_id,
+                        "account_id": key_pair_properties.account_id,
                         "public_key": key_pair_properties.public_key_str,
                         "private_key": key_pair_properties.secret_keypair_str,
                     })
                     .to_string();
                     let mut file_path = std::path::PathBuf::new();
                     let mut file_name = std::path::PathBuf::new();
-                    file_name.push(format!("{}.json", key_pair_properties.implicit_account_id));
+                    file_name.push(format!("{}.json", key_pair_properties.account_id));
                     file_path.push(folder_path);
 
                     std::fs::create_dir_all(&file_path)?;

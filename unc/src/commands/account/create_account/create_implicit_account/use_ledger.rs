@@ -36,16 +36,16 @@ impl SaveWithLedgerContext {
                     })?;
                     let public_key_str =
                         format!("ed25519:{}", bs58::encode(&public_key).into_string());
-                    let implicit_account_id =
+                    let account_id =
                         unc_primitives::types::AccountId::try_from(hex::encode(public_key))?;
                     let buf = serde_json::json!({
                         "seed_phrase_hd_path": seed_phrase_hd_path.to_string(),
-                        "implicit_account_id": implicit_account_id.to_string(),
+                        "account_id": account_id.to_string(),
                         "public_key": public_key_str,
                     })
                     .to_string();
                     let file_name: std::path::PathBuf =
-                        format!("{}.json", implicit_account_id).into();
+                        format!("{}.json", account_id).into();
                     let mut file_path = std::path::PathBuf::new();
                     file_path.push(folder_path);
 
