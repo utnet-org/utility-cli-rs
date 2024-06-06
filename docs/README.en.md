@@ -2,12 +2,10 @@ unc CLI
 --------
 unc CLI is a command line utility for working with the unc Protocol blockchain.
 
-## README.md
-
-* ru [Русский](README.ru.md)
-
 ## Documentation quick links
 
+- [unc CLI](#unc-cli)
+- [Documentation quick links](#documentation-quick-links)
 - [Usage](#usage)
 - [Installation](#installation)
 - [User Guide](#user-guide)
