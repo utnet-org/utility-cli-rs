@@ -8,7 +8,7 @@ pub struct AddNetworkConnection {
     /// What is the unc network? (e.g. mainnet, testnet, shardnet)
     network_name: String,
     #[interactive_clap(long)]
-    /// What is the connection name? (e.g. pagoda-mainnet)
+    /// What is the connection name? (e.g. mainnet)
     connection_name: String,
     #[interactive_clap(long)]
     /// What is the RPC endpoint?

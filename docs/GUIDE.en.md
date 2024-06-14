@@ -2095,17 +2095,17 @@ rpc_url = "https://archival-rpc.testnet.unc.org/"
 wallet_url = "https://wallet.testnet.unc.org/"
 explorer_transaction_url = "https://explorer.testnet.unc.org/transactions/"
 linkdrop_account_id = "testnet"
-faucet_url = "https://helper.unc.com/account"
+faucet_url = "https://helper.faucet.com/account"
 
-[network_connection.pagoda-testnet]
+[network_connection.testnet]
 network_name = "testnet"
-rpc_url = "https://unc-testnet.api.pagoda.co/rpc/v1/"
+rpc_url = "https://unc-testnet.api.co/rpc/v1/"
 rpc_api_key = "c0a25b3c-39c2-4f62-a621-50e208b88e64"
 wallet_url = "https://wallet.testnet.unc.org/"
 explorer_transaction_url = "https://explorer.testnet.unc.org/transactions/"
 linkdrop_account_id = "testnet"
-faucet_url = "https://helper.unc.com/account"
-meta_transaction_relayer_url = "https://unc-testnet.api.pagoda.co/relay"
+faucet_url = "https://helper.faucet.com/account"
+meta_transaction_relayer_url = "https://unc-testnet.api.co/relay"
 ```
 </details>
 
@@ -2116,21 +2116,21 @@ To add network details to the configuration file (_config.toml_), you can use in
 unc config \
     add-connection \
         --network-name testnet \
-        --connection-name pagoda-testnet \
-        --rpc-url https://unc-testnet.api.pagoda.co/rpc/v1/ \
+        --connection-name testnet \
+        --rpc-url https://unc-testnet.api.co/rpc/v1/ \
         --wallet-url https://wallet.testnet.unc.org/ \
         --explorer-transaction-url https://explorer.testnet.unc.org/transactions/ \
         --rpc-api-key 'c0a25b3c-39c2-4f62-a621-50e208b88e64' \
         --linkdrop-account-id testnet \
-        --faucet-url https://helper.unc.com/account \
-        --meta-transaction-relayer-url https://unc-testnet.api.pagoda.co/relay
+        --faucet-url https://helper.faucet.com/account \
+        --meta-transaction-relayer-url https://unc-testnet.api.co/relay
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
 Configuration data is stored in a file "/Users/frovolod/Library/Application Support/unc-cli/config.toml"
-Network connection "pagoda-testnet" was successfully added to config.toml
+Network connection "testnet" was successfully added to config.toml
 ```
 </details>
 
@@ -2144,13 +2144,13 @@ Network connection "pagoda-testnet" was successfully added to config.toml
 
 To remove the network from the configuration file (_config.toml_), you can use interactive mode or type in the terminal command line:
 ```txt
-unc config delete-connection pagoda-testnet
+unc config delete-connection testnet
 ```
 
 <details><summary><i>The result of this command will be as follows:</i></summary>
 
 ```txt
 Configuration data is stored in a file "/Users/frovolod/Library/Application Support/unc-cli/config.toml"
-Network connection "pagoda-testnet" was successfully removed from config.toml
+Network connection "testnet" was successfully removed from config.toml
 ```
 </details>

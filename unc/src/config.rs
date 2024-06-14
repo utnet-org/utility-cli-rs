@@ -35,7 +35,7 @@ impl Default for Config {
                     .unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
-                faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
+                faucet_url: Some("https://helper.faucet.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
         );
@@ -50,7 +50,7 @@ impl Default for Config {
                     .unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
-                faucet_url: Some("https://helper.unc.com/account".parse().unwrap()),
+                faucet_url: Some("https://helper.faucet.com/account".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
         );
