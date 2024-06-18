@@ -35,14 +35,14 @@ impl Default for Config {
                     .unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
-                faucet_url: Some("https://helper.faucet.com/account".parse().unwrap()),
+                faucet_url: Some("https://unc-faucet.xyz666.org/api/faucet/tokens".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
         );
         network_connection.insert(
             "custom".to_string(),
             NetworkConfig {
-                network_name: "betanet".to_string(),
+                network_name: "custom".to_string(),
                 rpc_url: "http://127.0.0.1:3034".parse().unwrap(),
                 wallet_url: "https://testnet.wallet.com/".parse().unwrap(),
                 explorer_transaction_url: "https://explorer.testnet.unc.org/transactions/"
@@ -50,7 +50,7 @@ impl Default for Config {
                     .unwrap(),
                 rpc_api_key: None,
                 linkdrop_account_id: Some("testnet".parse().unwrap()),
-                faucet_url: Some("https://helper.faucet.com/account".parse().unwrap()),
+                faucet_url: Some("https://unc-faucet.xyz666.org/api/faucet/tokens".parse().unwrap()),
                 meta_transaction_relayer_url: None,
             },
         );

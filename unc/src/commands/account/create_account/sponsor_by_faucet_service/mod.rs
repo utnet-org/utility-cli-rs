@@ -65,7 +65,7 @@ impl NewAccount {
 pub fn before_creating_account(
     network_config: &crate::config::NetworkConfig,
     new_account_id: &crate::types::account_id::AccountId,
-    public_key: &unc_crypto::PublicKey,
+    _public_key: &unc_crypto::PublicKey,
     credentials_home_dir: &std::path::Path,
 ) -> crate::CliResult {
     let faucet_service_url = match &network_config.faucet_url {
@@ -76,8 +76,9 @@ pub fn before_creating_account(
         )))
     };
     let mut data = std::collections::HashMap::new();
-    data.insert("newAccountId", new_account_id.to_string());
-    data.insert("newAccountPublicKey", public_key.to_string());
+    data.insert("contractId", "4e0375672ec30f2efe3a6c5a14ff81d37f1271c439501eac2fb445df262b2c32".to_string());
+    data.insert("receiverId", new_account_id.to_string());
+    data.insert("amount", "10".to_string());
 
     let client = reqwest::blocking::Client::new();
     match client.post(faucet_service_url.clone()).json(&data).send() {
