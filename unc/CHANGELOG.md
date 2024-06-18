@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.2](https://github.com/utnet-org/utility-cli-rs/compare/unc-v0.14.1...unc-v0.14.2) - 2024-06-18
+
+### Other
+- Update faucet URL to use new API endpoint
+- Update faucet URL in config files
+
 ## [0.12.5](https://github.com/utnet-org/utility-cli-rs/compare/unc-v0.12.4...unc-v0.12.5) - 2024-05-28
 
 ### Other
