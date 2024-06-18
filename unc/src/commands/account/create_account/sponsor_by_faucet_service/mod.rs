@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 pub mod add_key;
 pub mod network;
 
@@ -91,35 +93,24 @@ pub fn before_creating_account(
             }
 
             let account_creation_transaction =
-                response.json::<unc_jsonrpc_client::methods::tx::RpcTransactionStatusResponse>()?;
-            match account_creation_transaction.status {
-                unc_primitives::views::FinalExecutionStatus::SuccessValue(ref value) => {
-                    if value == b"false" {
-                        eprintln!(
-                            "The new account <{}> could not be created successfully.",
-                            &new_account_id
-                        );
-                    } else {
-                        crate::common::update_used_account_list_as_signer(
-                            credentials_home_dir,
-                            new_account_id.as_ref(),
-                        );
-                        eprintln!("New account <{}> created successfully.", &new_account_id);
-                    }
-                    eprintln!("Transaction ID: {id}\nTo see the transaction in the transaction explorer, please open this url in your browser:\n{path}{id}\n",
-                        id=account_creation_transaction.transaction_outcome.id,
-                        path=network_config.explorer_transaction_url
-                    );
-                }
-                _ => {
-                    crate::common::print_transaction_status(
-                        &account_creation_transaction,
-                        network_config,
-                    )?;
-                }
-            }
+                response.json::<Transaction>()?;
+
+            crate::common::update_used_account_list_as_signer(
+                credentials_home_dir,
+                new_account_id.as_ref(),
+            );
+            eprintln!("New account <{}> created successfully.", &new_account_id);
+            eprintln!("Processing transaction...\nPlease wait for 6 blocks to confirm, use command: unc transaction view-status <tx_hash>");
+            eprintln!("Transaction ID: {id}\nTo see the transaction in the transaction explorer, please open this url in your browser:\n{path}{id}\n",
+            id=account_creation_transaction.txh,
+            path=network_config.explorer_transaction_url);
             Ok(())
         }
         Err(err) => Err(color_eyre::Report::msg(err.to_string())),
     }
+}
+
+#[derive(Debug, Deserialize)]
+struct Transaction {
+    txh: String,
 }
