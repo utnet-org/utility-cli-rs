@@ -291,7 +291,7 @@ impl Deposit {
         eprintln!();
         Ok(Some(
             CustomType::new(
-                "Enter deposit for a function call (example: 10 UNC or 0.5 unc or 10000 attounc):",
+                "Enter deposit for a function call (example: 1 UNC or 0.5 unc or 10000 attounc):",
             )
             .with_starting_input("1 attounc")
             .prompt()?,
